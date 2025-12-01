@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using DialogueSystem.Runtime;
+using Localization;
+using Localization.Editor;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -14,6 +16,8 @@ namespace DialogueSystem.Editor
         public Port InputPort { get; private set; }
         private readonly List<Port> outputPorts = new List<Port>();
         private readonly DialogueGraphView graphView;
+        private TextField englishPreviewField;
+        private TextField localizationKeyField;
 
         public DialogueNodeView(DialogueNodeData data, DialogueGraphView graphView)
         {
@@ -49,6 +53,20 @@ namespace DialogueSystem.Editor
                 textField.RegisterValueChangedCallback(evt => OnChoiceTextChanged(choice, port, evt.newValue));
                 port.Add(textField);
 
+                var localizationKey = new TextField("Key")
+                {
+                    value = choice.LocalizationKey,
+                    style =
+                    {
+                        minWidth = 180
+                    }
+                };
+                localizationKey.RegisterValueChangedCallback(evt => OnChoiceKeyChanged(choice, evt.newValue));
+                port.Add(localizationKey);
+
+                var translateButton = new Button(() => AutoTranslateChoice(choice, localizationKey)) { text = "Auto EN" };
+                port.Add(translateButton);
+
                 var deleteButton = new Button(() => RemoveChoicePort(choice, port)) { text = "X" };
                 port.Add(deleteButton);
 
@@ -61,9 +79,28 @@ namespace DialogueSystem.Editor
 
         private void CreateBody()
         {
-            var textField = new TextField("Dialogue") { value = Data.Text, multiline = true };
+            var textField = new TextField("Dialogue (RU)") { value = Data.Text, multiline = true };
             textField.RegisterValueChangedCallback(evt => OnTextChanged(evt.newValue));
             mainContainer.Add(textField);
+
+            localizationKeyField = new TextField("Localization Key")
+            {
+                value = Data.LocalizationKey,
+                multiline = false
+            };
+            localizationKeyField.RegisterValueChangedCallback(evt => OnLocalizationKeyChanged(evt.newValue));
+            mainContainer.Add(localizationKeyField);
+
+            englishPreviewField = new TextField("English (preview)")
+            {
+                value = GetLocalizedPreview(),
+                multiline = true
+            };
+            englishPreviewField.SetEnabled(false);
+            mainContainer.Add(englishPreviewField);
+
+            var translateButton = new Button(AutoTranslateNodeText) { text = "Auto translate to EN" };
+            mainContainer.Add(translateButton);
         }
 
         public Port GetPortForChoice(DialogueChoiceData choice)
@@ -101,6 +138,15 @@ namespace DialogueSystem.Editor
             Data.Text = value;
             title = string.IsNullOrEmpty(value) ? "Dialogue" : value;
             EditorUtility.SetDirty(graphView.Tree);
+            UpdateEnglishPreview();
+        }
+
+        private void OnLocalizationKeyChanged(string value)
+        {
+            Undo.RecordObject(graphView.Tree, "Edit Dialogue Localization Key");
+            Data.LocalizationKey = value;
+            EditorUtility.SetDirty(graphView.Tree);
+            UpdateEnglishPreview();
         }
 
         private void OnChoiceTextChanged(DialogueChoiceData choice, Port port, string value)
@@ -109,6 +155,107 @@ namespace DialogueSystem.Editor
             choice.Text = value;
             port.portName = string.IsNullOrEmpty(value) ? "Choice" : value;
             EditorUtility.SetDirty(graphView.Tree);
+            UpdateEnglishPreview();
+        }
+
+        private void OnChoiceKeyChanged(DialogueChoiceData choice, string value)
+        {
+            Undo.RecordObject(graphView.Tree, "Edit Dialogue Choice Key");
+            choice.LocalizationKey = value;
+            EditorUtility.SetDirty(graphView.Tree);
+            UpdateEnglishPreview();
+        }
+
+        private void AutoTranslateNodeText()
+        {
+            async void TranslateAsync()
+            {
+                try
+                {
+                    var table = LocalizationEditorUtility.GetOrCreateDefaultTable();
+                    var key = EnsureNodeLocalizationKey();
+                    var translation = await LocalizationTranslator.TranslateRuToEn(Data.Text, LocalizationTranslatorProvider.Google);
+                    table.SetValue(key, LocalizationLanguage.Russian, Data.Text);
+                    table.SetValue(key, LocalizationLanguage.English, translation);
+                    EditorUtility.SetDirty(table);
+                    EditorUtility.SetDirty(graphView.Tree);
+                    englishPreviewField.value = translation;
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError($"Localization translation failed: {ex.Message}");
+                }
+            }
+
+            TranslateAsync();
+        }
+
+        private void AutoTranslateChoice(DialogueChoiceData choice, TextField keyField)
+        {
+            async void TranslateAsync()
+            {
+                try
+                {
+                    var table = LocalizationEditorUtility.GetOrCreateDefaultTable();
+                    var key = EnsureChoiceLocalizationKey(choice, keyField);
+                    var translation = await LocalizationTranslator.TranslateRuToEn(choice.Text, LocalizationTranslatorProvider.Google);
+                    table.SetValue(key, LocalizationLanguage.Russian, choice.Text);
+                    table.SetValue(key, LocalizationLanguage.English, translation);
+                    EditorUtility.SetDirty(table);
+                    EditorUtility.SetDirty(graphView.Tree);
+                    englishPreviewField.value = GetLocalizedPreview();
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError($"Localization translation failed: {ex.Message}");
+                }
+            }
+
+            TranslateAsync();
+        }
+
+        private string EnsureNodeLocalizationKey()
+        {
+            if (string.IsNullOrEmpty(Data.LocalizationKey))
+            {
+                Data.LocalizationKey = $"dialogue_{Data.Guid}";
+                if (localizationKeyField != null)
+                {
+                    localizationKeyField.value = Data.LocalizationKey;
+                }
+            }
+
+            return Data.LocalizationKey;
+        }
+
+        private string EnsureChoiceLocalizationKey(DialogueChoiceData choice, TextField field)
+        {
+            if (string.IsNullOrEmpty(choice.LocalizationKey))
+            {
+                choice.LocalizationKey = $"choice_{Data.Guid}_{Data.Choices.IndexOf(choice)}";
+                field.value = choice.LocalizationKey;
+            }
+
+            return choice.LocalizationKey;
+        }
+
+        private string GetLocalizedPreview()
+        {
+            var table = LocalizationEditorUtility.LoadDefaultTable();
+            if (table == null || string.IsNullOrEmpty(Data.LocalizationKey))
+            {
+                return string.Empty;
+            }
+
+            return table.GetValue(Data.LocalizationKey, LocalizationLanguage.English, string.Empty);
+        }
+
+        private void UpdateEnglishPreview()
+        {
+            if (englishPreviewField != null)
+            {
+                englishPreviewField.value = GetLocalizedPreview();
+            }
         }
 
         private void AddChoicePort()

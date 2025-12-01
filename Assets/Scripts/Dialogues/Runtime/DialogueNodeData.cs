@@ -9,6 +9,7 @@ namespace DialogueSystem.Runtime
     {
         public string Guid = string.Empty;
         public string Text = "";
+        public string LocalizationKey = string.Empty;
         public Vector2 Position;
         public List<DialogueChoiceData> Choices = new List<DialogueChoiceData>();
     }
