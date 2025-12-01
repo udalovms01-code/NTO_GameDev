@@ -1,0 +1,15 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace DialogueSystem.Runtime
+{
+    [Serializable]
+    public class DialogueNodeData
+    {
+        public string Guid = string.Empty;
+        public string Text = "";
+        public Vector2 Position;
+        public List<DialogueChoiceData> Choices = new List<DialogueChoiceData>();
+    }
+}
