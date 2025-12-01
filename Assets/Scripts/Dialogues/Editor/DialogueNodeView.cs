@@ -14,75 +14,93 @@ namespace DialogueSystem.Editor
     {
         public DialogueNodeData Data { get; }
         public Port InputPort { get; private set; }
-        private readonly List<Port> outputPorts = new List<Port>();
+        private readonly List<Port> outputPorts = new();
         private readonly DialogueGraphView graphView;
-        private TextField englishPreviewField;
+
+        private TextField textRuField;
         private TextField localizationKeyField;
+        private TextField englishPreviewField;
+
+        private VisualElement choicesContainer;
 
         public DialogueNodeView(DialogueNodeData data, DialogueGraphView graphView)
         {
             Data = data;
             this.graphView = graphView;
+
             viewDataKey = data.Guid;
-            styleSheets.Add(Resources.Load<StyleSheet>("DialogueGraphStyles"));
+
+            title = data.Text is { Length: > 0 } ? data.Text : "Dialogue";
 
             CreateInput();
             CreateOutputs();
             CreateBody();
+
+            RefreshExpandedState();
+            RefreshPorts();
         }
+
+        /* ----------------------
+         * INPUT PORT
+         * ---------------------- */
 
         private void CreateInput()
         {
-            InputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(float));
-            InputPort.portName = "In";
+            InputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+            InputPort.portName = "Input";
             inputContainer.Add(InputPort);
         }
+
+        /* ----------------------
+         * OUTPUT PORTS
+         * ---------------------- */
 
         private void CreateOutputs()
         {
             outputPorts.Clear();
             outputContainer.Clear();
 
-            foreach (var choice in Data.Choices)
+            for (var i = 0; i < Data.Choices.Count; i++)
             {
-                var port = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(float));
-                port.portName = string.IsNullOrEmpty(choice.Text) ? "Choice" : choice.Text;
+                var port = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+                port.portName = Data.Choices[i].Text; 
                 outputPorts.Add(port);
-
-                var textField = new TextField { value = choice.Text };
-                textField.RegisterValueChangedCallback(evt => OnChoiceTextChanged(choice, port, evt.newValue));
-                port.Add(textField);
-
-                var localizationKey = new TextField("Key")
-                {
-                    value = choice.LocalizationKey,
-                    style =
-                    {
-                        minWidth = 180
-                    }
-                };
-                localizationKey.RegisterValueChangedCallback(evt => OnChoiceKeyChanged(choice, evt.newValue));
-                port.Add(localizationKey);
-
-                var translateButton = new Button(() => AutoTranslateChoice(choice, localizationKey)) { text = "Auto EN" };
-                port.Add(translateButton);
-
-                var deleteButton = new Button(() => RemoveChoicePort(choice, port)) { text = "X" };
-                port.Add(deleteButton);
-
                 outputContainer.Add(port);
             }
-
-            var addButton = new Button(AddChoicePort) { text = "+ Choice" };
-            outputContainer.Add(addButton);
         }
+
+        public Port GetPortForChoice(DialogueChoiceData choice)
+        {
+            int index = Data.Choices.IndexOf(choice);
+            if (index >= 0 && index < outputPorts.Count)
+                return outputPorts[index];
+            return null;
+        }
+
+        public DialogueChoiceData GetChoiceForPort(Port port)
+        {
+            int index = outputPorts.IndexOf(port);
+            if (index >= 0 && index < Data.Choices.Count)
+                return Data.Choices[index];
+            return null;
+        }
+
+        /* ----------------------
+         * BODY (UI)
+         * ---------------------- */
 
         private void CreateBody()
         {
-            var textField = new TextField("Dialogue (RU)") { value = Data.Text, multiline = true };
-            textField.RegisterValueChangedCallback(evt => OnTextChanged(evt.newValue));
-            mainContainer.Add(textField);
+            /* --- Dialogue RU --- */
+            textRuField = new TextField("Dialogue (RU)")
+            {
+                value = Data.Text,
+                multiline = true
+            };
+            textRuField.RegisterValueChangedCallback(evt => OnTextChanged(evt.newValue));
+            mainContainer.Add(textRuField);
 
+            /* --- Localization Key --- */
             localizationKeyField = new TextField("Localization Key")
             {
                 value = Data.LocalizationKey,
@@ -91,6 +109,7 @@ namespace DialogueSystem.Editor
             localizationKeyField.RegisterValueChangedCallback(evt => OnLocalizationKeyChanged(evt.newValue));
             mainContainer.Add(localizationKeyField);
 
+            /* --- English preview (readonly) --- */
             englishPreviewField = new TextField("English (preview)")
             {
                 value = GetLocalizedPreview(),
@@ -99,38 +118,151 @@ namespace DialogueSystem.Editor
             englishPreviewField.SetEnabled(false);
             mainContainer.Add(englishPreviewField);
 
-            var translateButton = new Button(AutoTranslateNodeText) { text = "Auto translate to EN" };
-            mainContainer.Add(translateButton);
+            /* --- Auto-translate (one button) --- */
+            var btnTranslateNode = new Button(AutoTranslateNodeText)
+            {
+                text = "Auto translate to EN"
+            };
+            mainContainer.Add(btnTranslateNode);
+
+            /* -----------------------
+             * CHOICES SECTION
+             * ----------------------- */
+
+            var choicesTitle = new Label("Choices:")
+            {
+                style =
+                {
+                    unityFontStyleAndWeight = FontStyle.Bold,
+                    marginTop = 6,
+                    marginBottom = 4
+                }
+            };
+            mainContainer.Add(choicesTitle);
+
+            choicesContainer = new VisualElement();
+            mainContainer.Add(choicesContainer);
+
+            DrawChoicesSection();
+
+            var btnAddChoice = new Button(AddChoice)
+            {
+                text = "+ Add Choice"
+            };
+            mainContainer.Add(btnAddChoice);
         }
 
-        public Port GetPortForChoice(DialogueChoiceData choice)
+        private void DrawChoicesSection()
         {
-            var index = Data.Choices.IndexOf(choice);
+            choicesContainer.Clear();
+
+            for (int i = 0; i < Data.Choices.Count; i++)
+            {
+                int index = i;
+                DialogueChoiceData choice = Data.Choices[index];
+
+                var row = new VisualElement();
+                row.style.flexDirection = FlexDirection.Row;
+                row.style.marginBottom = 4;
+
+                /* --- Text --- */
+                var textField = new TextField()
+                {
+                    value = choice.Text
+                };
+                textField.style.minWidth = 120;
+                textField.RegisterValueChangedCallback(evt =>
+                {
+                    Undo.RecordObject(graphView.Tree, "Edit Choice Text");
+                    choice.Text = evt.newValue;
+                    UpdateOutputPortName(index, evt.newValue);
+                    EditorUtility.SetDirty(graphView.Tree);
+                });
+                row.Add(textField);
+
+                /* --- Key --- */
+                var keyField = new TextField()
+                {
+                    value = choice.LocalizationKey,
+                };
+                keyField.style.minWidth = 120;
+                keyField.RegisterValueChangedCallback(evt =>
+                {
+                    Undo.RecordObject(graphView.Tree, "Edit Choice Key");
+                    choice.LocalizationKey = evt.newValue;
+                    EditorUtility.SetDirty(graphView.Tree);
+                });
+                row.Add(keyField);
+
+                /* --- Delete --- */
+                var deleteButton = new Button(() => RemoveChoice(index))
+                {
+                    text = "X"
+                };
+                deleteButton.style.unityFontStyleAndWeight = FontStyle.Bold;
+                deleteButton.style.color = Color.red;
+                row.Add(deleteButton);
+
+                choicesContainer.Add(row);
+            }
+        }
+
+        /* ----------------------
+         * LOGIC: update text, keys, choices
+         * ---------------------- */
+
+        private void UpdateOutputPortName(int index, string newName)
+        {
             if (index >= 0 && index < outputPorts.Count)
             {
-                return outputPorts[index];
+                outputPorts[index].portName = newName;
             }
-
-            return null;
         }
 
-        public DialogueChoiceData GetChoiceForPort(Port port)
+        private void AddChoice()
         {
-            var index = outputPorts.IndexOf(port);
-            if (index >= 0 && index < Data.Choices.Count)
+            Undo.RecordObject(graphView.Tree, "Add Dialogue Choice");
+
+            Data.Choices.Add(new DialogueChoiceData
             {
-                return Data.Choices[index];
-            }
+                Text = "New Choice",
+                LocalizationKey = ""
+            });
 
-            return null;
-        }
-
-        public override void SetPosition(Rect newPos)
-        {
-            base.SetPosition(newPos);
-            Data.Position = newPos.position;
             EditorUtility.SetDirty(graphView.Tree);
+
+            CreateOutputs();
+            DrawChoicesSection();
+            RefreshExpandedState();
+            RefreshPorts();
         }
+
+        private void RemoveChoice(int index)
+        {
+            if (index < 0 || index >= Data.Choices.Count)
+                return;
+
+            Undo.RecordObject(graphView.Tree, "Remove Dialogue Choice");
+
+            var choice = Data.Choices[index];
+            var port = outputPorts[index];
+
+            // Disconnect edges
+            foreach (var edge in port.connections.ToList())
+                graphView.RemoveElement(edge);
+
+            Data.Choices.RemoveAt(index);
+            EditorUtility.SetDirty(graphView.Tree);
+
+            CreateOutputs();
+            DrawChoicesSection();
+            RefreshExpandedState();
+            RefreshPorts();
+        }
+
+        /* ----------------------
+         * TEXT + LOCALIZATION
+         * ---------------------- */
 
         private void OnTextChanged(string value)
         {
@@ -149,103 +281,11 @@ namespace DialogueSystem.Editor
             UpdateEnglishPreview();
         }
 
-        private void OnChoiceTextChanged(DialogueChoiceData choice, Port port, string value)
-        {
-            Undo.RecordObject(graphView.Tree, "Edit Dialogue Choice");
-            choice.Text = value;
-            port.portName = string.IsNullOrEmpty(value) ? "Choice" : value;
-            EditorUtility.SetDirty(graphView.Tree);
-            UpdateEnglishPreview();
-        }
-
-        private void OnChoiceKeyChanged(DialogueChoiceData choice, string value)
-        {
-            Undo.RecordObject(graphView.Tree, "Edit Dialogue Choice Key");
-            choice.LocalizationKey = value;
-            EditorUtility.SetDirty(graphView.Tree);
-            UpdateEnglishPreview();
-        }
-
-        private void AutoTranslateNodeText()
-        {
-            async void TranslateAsync()
-            {
-                try
-                {
-                    var table = LocalizationEditorUtility.GetOrCreateDefaultTable();
-                    var key = EnsureNodeLocalizationKey();
-                    var translation = await LocalizationTranslator.TranslateRuToEn(Data.Text, LocalizationTranslatorProvider.Google);
-                    table.SetValue(key, LocalizationLanguage.Russian, Data.Text);
-                    table.SetValue(key, LocalizationLanguage.English, translation);
-                    EditorUtility.SetDirty(table);
-                    EditorUtility.SetDirty(graphView.Tree);
-                    englishPreviewField.value = translation;
-                }
-                catch (System.Exception ex)
-                {
-                    Debug.LogError($"Localization translation failed: {ex.Message}");
-                }
-            }
-
-            TranslateAsync();
-        }
-
-        private void AutoTranslateChoice(DialogueChoiceData choice, TextField keyField)
-        {
-            async void TranslateAsync()
-            {
-                try
-                {
-                    var table = LocalizationEditorUtility.GetOrCreateDefaultTable();
-                    var key = EnsureChoiceLocalizationKey(choice, keyField);
-                    var translation = await LocalizationTranslator.TranslateRuToEn(choice.Text, LocalizationTranslatorProvider.Google);
-                    table.SetValue(key, LocalizationLanguage.Russian, choice.Text);
-                    table.SetValue(key, LocalizationLanguage.English, translation);
-                    EditorUtility.SetDirty(table);
-                    EditorUtility.SetDirty(graphView.Tree);
-                    englishPreviewField.value = GetLocalizedPreview();
-                }
-                catch (System.Exception ex)
-                {
-                    Debug.LogError($"Localization translation failed: {ex.Message}");
-                }
-            }
-
-            TranslateAsync();
-        }
-
-        private string EnsureNodeLocalizationKey()
-        {
-            if (string.IsNullOrEmpty(Data.LocalizationKey))
-            {
-                Data.LocalizationKey = $"dialogue_{Data.Guid}";
-                if (localizationKeyField != null)
-                {
-                    localizationKeyField.value = Data.LocalizationKey;
-                }
-            }
-
-            return Data.LocalizationKey;
-        }
-
-        private string EnsureChoiceLocalizationKey(DialogueChoiceData choice, TextField field)
-        {
-            if (string.IsNullOrEmpty(choice.LocalizationKey))
-            {
-                choice.LocalizationKey = $"choice_{Data.Guid}_{Data.Choices.IndexOf(choice)}";
-                field.value = choice.LocalizationKey;
-            }
-
-            return choice.LocalizationKey;
-        }
-
         private string GetLocalizedPreview()
         {
             var table = LocalizationEditorUtility.LoadDefaultTable();
             if (table == null || string.IsNullOrEmpty(Data.LocalizationKey))
-            {
                 return string.Empty;
-            }
 
             return table.GetValue(Data.LocalizationKey, LocalizationLanguage.English, string.Empty);
         }
@@ -253,41 +293,57 @@ namespace DialogueSystem.Editor
         private void UpdateEnglishPreview()
         {
             if (englishPreviewField != null)
-            {
                 englishPreviewField.value = GetLocalizedPreview();
-            }
         }
 
-        private void AddChoicePort()
-        {
-            Undo.RecordObject(graphView.Tree, "Add Dialogue Choice");
-            var choice = new DialogueChoiceData { Text = "Choice" };
-            Data.Choices.Add(choice);
-            EditorUtility.SetDirty(graphView.Tree);
-            graphView.SetTree(graphView.Tree);
-        }
+        /* ----------------------
+         * AUTO TRANSLATE
+         * ---------------------- */
 
-        private void RemoveChoicePort(DialogueChoiceData choice, Port port)
+        private async void AutoTranslateNodeText()
         {
-            Undo.RecordObject(graphView.Tree, "Remove Dialogue Choice");
-
-            var connectedEdges = port.connections.ToList();
-            foreach (var edge in connectedEdges)
+            try
             {
-                edge.input.Disconnect(edge);
-                edge.output.Disconnect(edge);
-                graphView.RemoveElement(edge);
-            }
+                var table = LocalizationEditorUtility.GetOrCreateDefaultTable();
 
-            Data.Choices.Remove(choice);
-            EditorUtility.SetDirty(graphView.Tree);
-            graphView.SetTree(graphView.Tree);
+                if (string.IsNullOrEmpty(Data.LocalizationKey))
+                {
+                    Data.LocalizationKey = $"dialogue_{Data.Guid}";
+                    localizationKeyField.value = Data.LocalizationKey;
+                }
+
+                var translation = await LocalizationTranslator.TranslateRuToEn(
+                    Data.Text, LocalizationTranslatorProvider.Google);
+
+                table.SetValue(Data.LocalizationKey, LocalizationLanguage.Russian, Data.Text);
+                table.SetValue(Data.LocalizationKey, LocalizationLanguage.English, translation);
+
+                EditorUtility.SetDirty(table);
+                EditorUtility.SetDirty(graphView.Tree);
+
+                englishPreviewField.value = translation;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Localization translation failed: {ex.Message}");
+            }
         }
+
+        /* ----------------------
+         * SELECTION
+         * ---------------------- */
 
         public override void OnSelected()
         {
             base.OnSelected();
             graphView.NotifySelection(this);
+        }
+
+        public override void SetPosition(Rect newPos)
+        {
+            base.SetPosition(newPos);
+            Data.Position = newPos.position;
+            EditorUtility.SetDirty(graphView.Tree);
         }
     }
 }

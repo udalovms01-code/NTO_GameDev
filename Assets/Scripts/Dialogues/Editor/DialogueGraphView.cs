@@ -19,7 +19,7 @@ namespace DialogueSystem.Editor
         public DialogueGraphView(DialogueGraphWindow window)
         {
             this.window = window;
-            styleSheets.Add(Resources.Load<StyleSheet>("DialogueGraphStyles"));
+            // styleSheets.Add(Resources.Load<StyleSheet>("DialogueGraphStyles"));
 
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
             this.AddManipulator(new ContentDragger());

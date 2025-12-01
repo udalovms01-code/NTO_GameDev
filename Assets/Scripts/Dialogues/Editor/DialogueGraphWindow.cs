@@ -24,11 +24,16 @@ namespace DialogueSystem.Editor
         private void OnEnable()
         {
             rootVisualElement.Clear();
+
             CreateToolbar();
             CreateGraphView();
             CreateInspector();
+            BuildSplitLayout();
         }
 
+        // -------------------------
+        // TOOLBAR
+        // -------------------------
         private void CreateToolbar()
         {
             var toolbar = new Toolbar();
@@ -50,16 +55,20 @@ namespace DialogueSystem.Editor
             rootVisualElement.Add(toolbar);
         }
 
+        // -------------------------
+        // GRAPH VIEW
+        // -------------------------
         private void CreateGraphView()
         {
             graphView = new DialogueGraphView(this)
             {
                 name = "Dialogue Graph"
             };
-            graphView.StretchToParentSize();
-            rootVisualElement.Add(graphView);
         }
 
+        // -------------------------
+        // INSPECTOR PANEL
+        // -------------------------
         private void CreateInspector()
         {
             inspectorContainer = new IMGUIContainer(DrawInspector)
@@ -67,30 +76,43 @@ namespace DialogueSystem.Editor
                 style =
                 {
                     unityTextAlign = TextAnchor.UpperLeft,
-                    paddingTop = 4,
+                    paddingTop = 6,
                     paddingLeft = 8,
                     paddingRight = 8,
                     paddingBottom = 8
                 }
             };
+        }
 
-            var inspectorBorder = new VisualElement();
-            inspectorBorder.style.borderLeftWidth = 1;
-            inspectorBorder.style.borderLeftColor = new Color(0.25f, 0.25f, 0.25f);
-            inspectorBorder.style.width = 250;
-            inspectorBorder.style.flexShrink = 0;
-            inspectorBorder.Add(inspectorContainer);
-
-            var splitView = new TwoPaneSplitView(0, -1, TwoPaneSplitViewOrientation.Horizontal)
+        // -------------------------
+        // SPLIT VIEW LAYOUT
+        // -------------------------
+        private void BuildSplitLayout()
+        {
+            var splitView = new TwoPaneSplitView(0, 650, TwoPaneSplitViewOrientation.Horizontal)
             {
                 name = "DialogueGraphSplitView"
             };
+
+            // Left panel — Graph
             splitView.Add(graphView);
+
+            // Right panel — Inspector
+            var inspectorBorder = new VisualElement();
+            inspectorBorder.style.width = 280;
+            inspectorBorder.style.flexShrink = 0;
+            inspectorBorder.style.borderLeftWidth = 1;
+            inspectorBorder.style.borderLeftColor = new Color(.25f, .25f, .25f);
+            inspectorBorder.Add(inspectorContainer);
+
             splitView.Add(inspectorBorder);
 
             rootVisualElement.Add(splitView);
         }
 
+        // -------------------------
+        // INSPECTOR DRAW
+        // -------------------------
         private void DrawInspector()
         {
             if (inspectedNode == null)
@@ -102,7 +124,7 @@ namespace DialogueSystem.Editor
             var data = inspectedNode.Data;
             if (data == null)
             {
-                EditorGUILayout.LabelField("Invalid selection.");
+                EditorGUILayout.LabelField("Invalid node data.");
                 return;
             }
 
@@ -112,8 +134,9 @@ namespace DialogueSystem.Editor
             var tree = graphView.Tree;
             if (tree != null)
             {
-                var isStart = tree.StartNodeGuid == data.Guid;
-                var newStart = EditorGUILayout.Toggle("Start Node", isStart);
+                bool isStart = tree.StartNodeGuid == data.Guid;
+                bool newStart = EditorGUILayout.Toggle("Start Node", isStart);
+
                 if (newStart != isStart)
                 {
                     Undo.RecordObject(tree, "Set Start Node");
@@ -123,21 +146,28 @@ namespace DialogueSystem.Editor
             }
 
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Validation", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Outgoing Links", inspectedNode.outputContainer.childCount.ToString());
         }
 
+        // -------------------------
+        // TREE MANAGEMENT
+        // -------------------------
         private void CreateNewTree()
         {
-            var path = EditorUtility.SaveFilePanelInProject("Create Dialogue Tree", "DialogueTree", "asset", "Choose location for dialogue tree asset.");
+            var path = EditorUtility.SaveFilePanelInProject(
+                "Create Dialogue Tree",
+                "DialogueTree",
+                "asset",
+                "Choose location"
+            );
+
             if (string.IsNullOrEmpty(path))
-            {
                 return;
-            }
 
             var tree = ScriptableObject.CreateInstance<DialogueTree>();
             AssetDatabase.CreateAsset(tree, path);
             AssetDatabase.SaveAssets();
+
             LoadTree(tree);
             treeField.value = tree;
         }
