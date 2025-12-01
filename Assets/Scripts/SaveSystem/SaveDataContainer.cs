@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BalatroFeel.Scripts.SaveSystem
+namespace SaveSystem
 {
     [Serializable]
     public class SaveDataContainer

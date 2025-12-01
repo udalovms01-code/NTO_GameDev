@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BalatroFeel.Scripts.SaveSystem
+namespace SaveSystem
 {
     public class SaveRegistry
     {

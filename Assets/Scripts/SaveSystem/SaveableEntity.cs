@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace BalatroFeel.Scripts.SaveSystem
+namespace SaveSystem
 {
     public interface ISavePayloadProvider
     {

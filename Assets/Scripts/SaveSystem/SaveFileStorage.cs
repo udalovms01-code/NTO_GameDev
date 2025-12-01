@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace BalatroFeel.Scripts.SaveSystem
+namespace SaveSystem
 {
     public class SaveFileStorage
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace BalatroFeel.Scripts.SaveSystem
+namespace SaveSystem
 {
     public interface ISaveDataSource
     {
