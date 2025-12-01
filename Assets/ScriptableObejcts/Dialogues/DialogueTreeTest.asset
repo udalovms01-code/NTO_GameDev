@@ -16,41 +16,66 @@ MonoBehaviour:
   - Guid: d6162b4a-2a90-4744-99fe-4179e3165826
     Text: "\u0422\u0443\u0442 \u0442\u0435\u043A\u0441\u0442 \u0434\u0438\u0430\u043B\u043E\u0433\u0430"
     LocalizationKey: dialogue_d6162b4a-2a90-4744-99fe-4179e3165826
-    Position: {x: 176, y: -530.4}
+    OnEnter: {fileID: 0}
+    Position: {x: -163.2, y: -619.2}
     Choices:
     - Text: "\u042F \u0433\u0435\u0439"
       LocalizationKey: "\u042D\u0442\u043E \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0439
         \u0442\u0435\u043A\u0441\u0442"
       TargetNodeGuid: 157bf56d-4b16-4d4e-acdb-2f9f715de005
     - Text: "\u042F \u043B\u043E\u0445"
-      LocalizationKey: 
+      LocalizationKey: I'm a sucker
       TargetNodeGuid: ff07e60c-744a-4af9-a246-c66877f2a51a
     - Text: "\u0425\u0437 \u043D\u0435 \u043F\u0440\u0438\u0434\u0443\u043C\u0430\u043B"
       LocalizationKey: 
-      TargetNodeGuid: 
+      TargetNodeGuid: 984e4373-a34f-4f72-aac9-28e3ba108069
   - Guid: ff07e60c-744a-4af9-a246-c66877f2a51a
     Text: "\u041F\u0440\u0438\u0432\u0435\u0442 \u043B\u043E\u0445"
-    LocalizationKey: 
-    Position: {x: 711.2, y: -342.40002}
+    LocalizationKey: dialogue_ff07e60c-744a-4af9-a246-c66877f2a51a
+    OnEnter: {fileID: 0}
+    Position: {x: 399.2, y: -619.2}
     Choices:
     - Text: "\u042F \u043A\u0440\u0443\u0442\u043E\u0439 \u043B\u043E\u0445"
       LocalizationKey: 
-      TargetNodeGuid: 
+      TargetNodeGuid: 86dc6390-d134-4ba4-a024-d159b2177bff
     - Text: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C"
-      LocalizationKey: 
-      TargetNodeGuid: 
+      LocalizationKey: Continue
+      TargetNodeGuid: 29360cb6-4d9e-43c2-a5c5-c239c08babfd
   - Guid: 157bf56d-4b16-4d4e-acdb-2f9f715de005
     Text: "\u041F\u0440\u0438\u0432\u0435\u0442 \u0433\u0435\u0439"
     LocalizationKey: dialogue_157bf56d-4b16-4d4e-acdb-2f9f715de005
-    Position: {x: 746.4, y: -649.60004}
+    OnEnter: {fileID: 0}
+    Position: {x: 399.2, y: -896.8}
     Choices:
     - Text: Next
       LocalizationKey: choice_157bf56d-4b16-4d4e-acdb-2f9f715de005_0
       TargetNodeGuid: 86dc6390-d134-4ba4-a024-d159b2177bff
   - Guid: 86dc6390-d134-4ba4-a024-d159b2177bff
     Text: Dialogue
+    LocalizationKey: dialogue_86dc6390-d134-4ba4-a024-d159b2177bff
+    OnEnter: {fileID: 0}
+    Position: {x: 1192, y: -660.8}
+    Choices:
+    - Text: Next
+      LocalizationKey: 
+      TargetNodeGuid: 
+  - Guid: 984e4373-a34f-4f72-aac9-28e3ba108069
+    Text: "\u0432\u044B\u0430\u0444\u0432\u0430\u0444\u0432\u0430\u0444\u044B\u0432\u0430\u0444\u044B"
     LocalizationKey: 
-    Position: {x: 1298.4, y: -497.6}
+    OnEnter: {fileID: 0}
+    Position: {x: 409.6, y: -280.8}
+    Choices:
+    - Text: Next
+      LocalizationKey: 
+      TargetNodeGuid: 29360cb6-4d9e-43c2-a5c5-c239c08babfd
+    - Text: "\u0421\u043A\u0430\u0437\u0430\u0442\u044C \u0447\u0442\u043E-\u0442\u043E"
+      LocalizationKey: say something
+      TargetNodeGuid: 86dc6390-d134-4ba4-a024-d159b2177bff
+  - Guid: 29360cb6-4d9e-43c2-a5c5-c239c08babfd
+    Text: "\u0414\u0440\u0443\u0433\u043E\u0439 \u0434\u0438\u0430\u043B\u043E\u0433"
+    LocalizationKey: 
+    OnEnter: {fileID: 0}
+    Position: {x: 1201.6, y: -373.59998}
     Choices:
     - Text: Next
       LocalizationKey: 

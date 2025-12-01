@@ -5,6 +5,7 @@ using Localization;
 using Localization.Editor;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -30,7 +31,7 @@ namespace DialogueSystem.Editor
 
             viewDataKey = data.Guid;
 
-            title = data.Text is { Length: > 0 } ? data.Text : "Dialogue";
+            title = string.IsNullOrEmpty(data.Text) ? "Dialogue" : data.Text;
 
             CreateInput();
             CreateOutputs();
@@ -41,12 +42,17 @@ namespace DialogueSystem.Editor
         }
 
         /* ----------------------
-         * INPUT PORT
+         * INPUT PORT (MULTI)
          * ---------------------- */
 
         private void CreateInput()
         {
-            InputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+            InputPort = InstantiatePort(
+                Orientation.Horizontal,
+                Direction.Input,
+                Port.Capacity.Multi, // несколько входящих связей
+                typeof(bool)
+            );
             InputPort.portName = "Input";
             inputContainer.Add(InputPort);
         }
@@ -62,8 +68,16 @@ namespace DialogueSystem.Editor
 
             for (var i = 0; i < Data.Choices.Count; i++)
             {
-                var port = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
-                port.portName = Data.Choices[i].Text; 
+                var choice = Data.Choices[i];
+
+                var port = InstantiatePort(
+                    Orientation.Horizontal,
+                    Direction.Output,
+                    Port.Capacity.Single,
+                    typeof(bool)
+                );
+
+                port.portName = choice.Text;
                 outputPorts.Add(port);
                 outputContainer.Add(port);
             }
@@ -72,73 +86,98 @@ namespace DialogueSystem.Editor
         public Port GetPortForChoice(DialogueChoiceData choice)
         {
             int index = Data.Choices.IndexOf(choice);
-            if (index >= 0 && index < outputPorts.Count)
-                return outputPorts[index];
-            return null;
+            return index >= 0 ? outputPorts[index] : null;
         }
 
         public DialogueChoiceData GetChoiceForPort(Port port)
         {
             int index = outputPorts.IndexOf(port);
-            if (index >= 0 && index < Data.Choices.Count)
-                return Data.Choices[index];
-            return null;
+            return index >= 0 ? Data.Choices[index] : null;
         }
 
         /* ----------------------
-         * BODY (UI)
+         * BODY UI
          * ---------------------- */
 
         private void CreateBody()
         {
-            /* --- Dialogue RU --- */
-            textRuField = new TextField("Dialogue (RU)")
+            /* RU */
+            var ruRow = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+            ruRow.Add(new Label("RU")
+            {
+                style =
+                {
+                    width = 30,
+                    unityTextAlign = TextAnchor.MiddleLeft
+                }
+            });
+
+            textRuField = new TextField
             {
                 value = Data.Text,
                 multiline = true
             };
             textRuField.RegisterValueChangedCallback(evt => OnTextChanged(evt.newValue));
-            mainContainer.Add(textRuField);
+            ruRow.Add(textRuField);
+            mainContainer.Add(ruRow);
 
-            /* --- Localization Key --- */
+            /* Localization key */
             localizationKeyField = new TextField("Localization Key")
             {
-                value = Data.LocalizationKey,
-                multiline = false
+                value = Data.LocalizationKey
             };
             localizationKeyField.RegisterValueChangedCallback(evt => OnLocalizationKeyChanged(evt.newValue));
             mainContainer.Add(localizationKeyField);
 
-            /* --- English preview (readonly) --- */
-            englishPreviewField = new TextField("English (preview)")
+            /* EN (preview, редактируемый) */
+            var enRow = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+            enRow.Add(new Label("EN")
+            {
+                style =
+                {
+                    width = 30,
+                    unityTextAlign = TextAnchor.MiddleLeft
+                }
+            });
+
+            englishPreviewField = new TextField
             {
                 value = GetLocalizedPreview(),
                 multiline = true
             };
-            englishPreviewField.SetEnabled(false);
-            mainContainer.Add(englishPreviewField);
+            englishPreviewField.RegisterValueChangedCallback(evt => OnEnglishPreviewChanged(evt.newValue));
+            enRow.Add(englishPreviewField);
+            mainContainer.Add(enRow);
+            
+            var soField = new ObjectField("OnEnter Event:")
+            {
+                objectType = typeof(Dialogues.Events.Event),
+                allowSceneObjects = false,
+                value = Data.OnEnter
+            };
 
-            /* --- Auto-translate (one button) --- */
+            soField.RegisterValueChangedCallback(evt =>
+            {
+                Undo.RecordObject(graphView.Tree, "OnEnter Event");
+                Data.OnEnter = evt.newValue as Dialogues.Events.Event;
+                EditorUtility.SetDirty(graphView.Tree);
+            });
+
+            mainContainer.Add(soField);
+
+            /* Translate button */
             var btnTranslateNode = new Button(AutoTranslateNodeText)
             {
                 text = "Auto translate to EN"
             };
             mainContainer.Add(btnTranslateNode);
 
-            /* -----------------------
-             * CHOICES SECTION
-             * ----------------------- */
-
-            var choicesTitle = new Label("Choices:")
+            /* CHOICES SECTION */
+            var label = new Label("Choices:")
             {
-                style =
-                {
-                    unityFontStyleAndWeight = FontStyle.Bold,
-                    marginTop = 6,
-                    marginBottom = 4
-                }
+                style = { unityFontStyleAndWeight = FontStyle.Bold }
             };
-            mainContainer.Add(choicesTitle);
+            mainContainer.Add(label);
 
             choicesContainer = new VisualElement();
             mainContainer.Add(choicesContainer);
@@ -152,6 +191,10 @@ namespace DialogueSystem.Editor
             mainContainer.Add(btnAddChoice);
         }
 
+        /* ----------------------
+         * CHOICES
+         * ---------------------- */
+
         private void DrawChoicesSection()
         {
             choicesContainer.Clear();
@@ -159,74 +202,77 @@ namespace DialogueSystem.Editor
             for (int i = 0; i < Data.Choices.Count; i++)
             {
                 int index = i;
-                DialogueChoiceData choice = Data.Choices[index];
+                var choice = Data.Choices[index];
 
-                var row = new VisualElement();
-                row.style.flexDirection = FlexDirection.Row;
-                row.style.marginBottom = 4;
+                var row = new VisualElement
+                {
+                    style =
+                    {
+                        flexDirection = FlexDirection.Row,
+                        marginBottom = 4
+                    }
+                };
 
-                /* --- Text --- */
-                var textField = new TextField()
+                // RU
+                var ruField = new TextField
                 {
                     value = choice.Text
                 };
-                textField.style.minWidth = 120;
-                textField.RegisterValueChangedCallback(evt =>
+                ruField.style.minWidth = 120;
+                ruField.RegisterValueChangedCallback(evt =>
                 {
-                    Undo.RecordObject(graphView.Tree, "Edit Choice Text");
+                    Undo.RecordObject(graphView.Tree, "Edit choice RU");
                     choice.Text = evt.newValue;
-                    UpdateOutputPortName(index, evt.newValue);
+                    if (index < outputPorts.Count)
+                        outputPorts[index].portName = evt.newValue;
                     EditorUtility.SetDirty(graphView.Tree);
                 });
-                row.Add(textField);
+                row.Add(ruField);
 
-                /* --- Key --- */
-                var keyField = new TextField()
+                // EN (используем LocalizationKey как хранение EN-текста для варианта)
+                var enField = new TextField
                 {
-                    value = choice.LocalizationKey,
+                    value = choice.LocalizationKey
                 };
-                keyField.style.minWidth = 120;
-                keyField.RegisterValueChangedCallback(evt =>
+                enField.style.minWidth = 120;
+                enField.RegisterValueChangedCallback(evt =>
                 {
-                    Undo.RecordObject(graphView.Tree, "Edit Choice Key");
+                    Undo.RecordObject(graphView.Tree, "Edit choice EN");
                     choice.LocalizationKey = evt.newValue;
                     EditorUtility.SetDirty(graphView.Tree);
                 });
-                row.Add(keyField);
+                row.Add(enField);
 
-                /* --- Delete --- */
+                // Auto EN
+                var autoButton = new Button(() => AutoTranslateChoice(choice, enField))
+                {
+                    text = "Auto EN"
+                };
+                autoButton.style.minWidth = 70;
+                row.Add(autoButton);
+
+                // Delete
                 var deleteButton = new Button(() => RemoveChoice(index))
                 {
                     text = "X"
                 };
-                deleteButton.style.unityFontStyleAndWeight = FontStyle.Bold;
                 deleteButton.style.color = Color.red;
+                deleteButton.style.unityFontStyleAndWeight = FontStyle.Bold;
+                deleteButton.style.minWidth = 25;
                 row.Add(deleteButton);
 
                 choicesContainer.Add(row);
             }
         }
 
-        /* ----------------------
-         * LOGIC: update text, keys, choices
-         * ---------------------- */
-
-        private void UpdateOutputPortName(int index, string newName)
-        {
-            if (index >= 0 && index < outputPorts.Count)
-            {
-                outputPorts[index].portName = newName;
-            }
-        }
-
         private void AddChoice()
         {
-            Undo.RecordObject(graphView.Tree, "Add Dialogue Choice");
+            Undo.RecordObject(graphView.Tree, "Add choice");
 
             Data.Choices.Add(new DialogueChoiceData
             {
                 Text = "New Choice",
-                LocalizationKey = ""
+                LocalizationKey = string.Empty
             });
 
             EditorUtility.SetDirty(graphView.Tree);
@@ -242,12 +288,10 @@ namespace DialogueSystem.Editor
             if (index < 0 || index >= Data.Choices.Count)
                 return;
 
-            Undo.RecordObject(graphView.Tree, "Remove Dialogue Choice");
+            Undo.RecordObject(graphView.Tree, "Remove choice");
 
-            var choice = Data.Choices[index];
             var port = outputPorts[index];
 
-            // Disconnect edges
             foreach (var edge in port.connections.ToList())
                 graphView.RemoveElement(edge);
 
@@ -261,24 +305,44 @@ namespace DialogueSystem.Editor
         }
 
         /* ----------------------
-         * TEXT + LOCALIZATION
+         * TEXT & LOCALIZATION
          * ---------------------- */
 
         private void OnTextChanged(string value)
         {
-            Undo.RecordObject(graphView.Tree, "Edit Dialogue Text");
+            Undo.RecordObject(graphView.Tree, "Edit Dialogue RU");
             Data.Text = value;
             title = string.IsNullOrEmpty(value) ? "Dialogue" : value;
             EditorUtility.SetDirty(graphView.Tree);
+
             UpdateEnglishPreview();
         }
 
         private void OnLocalizationKeyChanged(string value)
         {
-            Undo.RecordObject(graphView.Tree, "Edit Dialogue Localization Key");
+            Undo.RecordObject(graphView.Tree, "Edit Dialogue Key");
             Data.LocalizationKey = value;
             EditorUtility.SetDirty(graphView.Tree);
+
             UpdateEnglishPreview();
+        }
+
+        private void OnEnglishPreviewChanged(string value)
+        {
+            // Редактируем EN вручную → пишем в таблицу
+            Undo.RecordObject(graphView.Tree, "Edit Dialogue EN");
+
+            if (string.IsNullOrEmpty(Data.LocalizationKey))
+            {
+                Data.LocalizationKey = $"dialogue_{Data.Guid}";
+                localizationKeyField.SetValueWithoutNotify(Data.LocalizationKey);
+            }
+
+            var table = LocalizationEditorUtility.GetOrCreateDefaultTable();
+            table.SetValue(Data.LocalizationKey, LocalizationLanguage.English, value);
+
+            EditorUtility.SetDirty(table);
+            EditorUtility.SetDirty(graphView.Tree);
         }
 
         private string GetLocalizedPreview()
@@ -292,28 +356,35 @@ namespace DialogueSystem.Editor
 
         private void UpdateEnglishPreview()
         {
-            if (englishPreviewField != null)
-                englishPreviewField.value = GetLocalizedPreview();
+            if (englishPreviewField == null)
+                return;
+
+            englishPreviewField.SetValueWithoutNotify(GetLocalizedPreview());
         }
 
         /* ----------------------
-         * AUTO TRANSLATE
+         * TRANSLATION
          * ---------------------- */
 
         private async void AutoTranslateNodeText()
         {
             try
             {
-                var table = LocalizationEditorUtility.GetOrCreateDefaultTable();
+                if (string.IsNullOrEmpty(Data.Text))
+                    return;
 
                 if (string.IsNullOrEmpty(Data.LocalizationKey))
                 {
                     Data.LocalizationKey = $"dialogue_{Data.Guid}";
-                    localizationKeyField.value = Data.LocalizationKey;
+                    localizationKeyField.SetValueWithoutNotify(Data.LocalizationKey);
                 }
 
+                var table = LocalizationEditorUtility.GetOrCreateDefaultTable();
+
                 var translation = await LocalizationTranslator.TranslateRuToEn(
-                    Data.Text, LocalizationTranslatorProvider.Google);
+                    Data.Text,
+                    LocalizationTranslatorProvider.Google
+                );
 
                 table.SetValue(Data.LocalizationKey, LocalizationLanguage.Russian, Data.Text);
                 table.SetValue(Data.LocalizationKey, LocalizationLanguage.English, translation);
@@ -321,16 +392,41 @@ namespace DialogueSystem.Editor
                 EditorUtility.SetDirty(table);
                 EditorUtility.SetDirty(graphView.Tree);
 
-                englishPreviewField.value = translation;
+                englishPreviewField.SetValueWithoutNotify(translation);
             }
             catch (System.Exception ex)
             {
-                Debug.LogError($"Localization translation failed: {ex.Message}");
+                Debug.LogError("Translation failed: " + ex.Message);
+            }
+        }
+
+        private async void AutoTranslateChoice(DialogueChoiceData choice, TextField enField)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(choice.Text))
+                    return;
+
+                Undo.RecordObject(graphView.Tree, "Translate choice EN");
+
+                var translation = await LocalizationTranslator.TranslateRuToEn(
+                    choice.Text,
+                    LocalizationTranslatorProvider.Google
+                );
+
+                choice.LocalizationKey = translation; // для выбора EN просто хранится как текст
+                enField.SetValueWithoutNotify(translation);
+
+                EditorUtility.SetDirty(graphView.Tree);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError("Choice translation failed: " + ex.Message);
             }
         }
 
         /* ----------------------
-         * SELECTION
+         * SELECTION / POSITION
          * ---------------------- */
 
         public override void OnSelected()
