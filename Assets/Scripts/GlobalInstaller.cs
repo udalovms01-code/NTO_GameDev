@@ -1,19 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Zenject;
+using BalatroFeel.Scripts.SaveSystem;
 
 namespace BalatroFeel.Scripts
 {
     public class GlobalInstaller : MonoInstaller
     {
-
-        //[SerializeField] private GameContext _gameContext;
-        
         public override void InstallBindings()
         {
-            //Container.BindInterfacesAndSelfTo<>().AsSingle(); 
-            //Container.Bind<GameContext>().FromInstance(_gameContext);
-            
-            
+            Container.Bind<SaveRegistry>().AsSingle();
+            Container.Bind<SaveFileStorage>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SaveManager>().AsSingle();
         }
     }
 }
