@@ -1,0 +1,219 @@
+using System;
+using System.Collections;
+using DG.Tweening;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
+
+public class FishState
+{
+    public CMSEntity model;
+    public int fishValue;
+    public FishDirection direction =  FishDirection.Right;
+    public FishSize size = FishSize.Small;
+    public InteractiveObject view;
+    public bool virused;
+}
+
+public class InteractiveObject : MonoBehaviour, IClickable
+{
+    public SpriteRenderer spriteRenderer;
+    
+    public FishState state;
+
+    public TMP_Text value;
+    
+    public MoveableBase moveable;
+    public DraggableSmoothDamp draggable;
+
+    public FishZone zone;
+    private Vector3 originScale;
+    public bool isSelected = false;
+
+
+    void Start()
+    {
+        value.text = state.model.Get<TagStartFishValue>().value.ToString();
+        draggable = GetComponent<DraggableSmoothDamp>();
+        originScale = transform.localScale;
+    }
+
+    public void SetState(FishState fishState)
+    {
+        state = fishState;
+        state.view = this;
+        
+        if (state.model.Is<TagTint>(out var tint))
+        {
+            spriteRenderer.color = tint.color;
+        }
+        
+        if (state.model.Is<TagFishView>(out var fv))
+            spriteRenderer.sprite = fv.sprite;
+        
+        
+        if (state.model.Is<TagStartFishValue>(out var sfv))
+            SetValue(sfv.value);
+        
+
+        state.direction = Random.Range(0, 2) == 0 ? FishDirection.Right : FishDirection.Left;
+        
+        if (state.direction == FishDirection.Right)
+            spriteRenderer.flipX = false;
+        else
+            spriteRenderer.flipX = true;
+
+
+        if (state.model.Is<TagSizes>(out var sz))
+        {
+            state.size = sz.possibleSizes[Random.Range(0, sz.possibleSizes.Count - 1)];
+            
+            /*if (sz.possibleSizes.Count > 1)
+            {*/
+            switch (state.size)
+            {
+                case FishSize.Medium:
+                    spriteRenderer.gameObject.transform.localScale *= 1.1f;
+                    break;
+                case FishSize.Big:
+                    spriteRenderer.gameObject.transform.localScale *= 1.2f;
+                    break;
+            }
+        }
+    }
+
+    public void SetValue(int val)
+    {
+        state.fishValue = val;
+        value.text = val.ToString();
+    }
+
+    public void Punch()
+    {
+        transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f);
+    }
+
+    private float sizeUpValue = 1f;
+
+    private void SizeUp(float value)
+    {
+        if (value <= sizeUpValue) return;
+        sizeUpValue = value;
+        transform.DOKill();
+        transform.DOBlendableScaleBy(originScale * sizeUpValue - transform.localScale, 
+            0.1f);
+    }
+    private void SizeDown(float value)
+    {
+        if (value >= sizeUpValue) return;
+        sizeUpValue = value;
+        transform.DOKill();
+        transform.DOBlendableScaleBy(originScale * sizeUpValue - transform.localScale, 
+            0.1f);
+    }
+
+    public void OnMouseExit()
+    {
+        if (isSelected && !draggable.isDragging)
+        {
+            SizeDown(1f);
+            isSelected = false;
+        }
+    }
+
+    public void OnMouseEnter()
+    {
+        if (!isSelected)
+        {
+            TiltAndReturn();
+            SizeUp(1.075f);
+            isSelected = true;
+        }
+    }
+
+    public void OnMouseDown()
+    {
+        if (!draggable.isDragging)
+            SizeUp(1.15f);
+        
+        if (zone != null)
+        {
+            zone.OnClickFish?.Invoke(this);
+        }
+    }
+
+    public void OnMouseUp()
+    {
+        SizeDown(1.075f);
+    }
+    
+    public void TiltAndReturn( 
+        float angle = 15f, float duration = 0.5f, int vibrato = 1)
+    {
+        transform.DOShakeRotation(
+            duration,
+            new Vector3(0, 0, angle),
+            vibrato,
+            randomness: 0f
+        );
+    }
+    public void Eaten()
+    {
+        StartCoroutine(EatenCoroutine());
+    }
+    public IEnumerator EatenCoroutine()
+    {
+        yield return DieAnim();
+        yield return new WaitForSeconds(0.2f);
+        yield return Die();
+    }
+
+    public void Cut()
+    {
+        StartCoroutine(CutCoroutine());
+    }
+    IEnumerator CutCoroutine()
+    {
+        yield return DieAnim();
+        G.run.pointsSum += state.fishValue;
+        yield return new WaitForSeconds(0.2f);
+        yield return Die();
+    }
+    
+    public IEnumerator DieAnim()
+    {
+        if (state.model.Is<TagFishView>(out var fv))
+        {
+            spriteRenderer.sprite = fv.dead_sprite;
+        }
+        else if (state.model.Is<TagTint>(out var tint))
+        {
+            spriteRenderer.color = Color.gray;
+        }
+        yield break;
+    }
+    public IEnumerator Die()
+    {
+        G.main.fishCount--;
+        
+        transform.DOKill();
+        Destroy(gameObject);
+        yield break;
+    }
+
+    public void MakeVirused()
+    {
+        state.virused = true;
+        if (state.model.Is<TagVirusedForm>(out var vf))
+        {
+            spriteRenderer.sprite = vf.sprite;
+            state.fishValue = vf.negativeValue;
+        }
+        else
+        {
+            spriteRenderer.color = Color.green;
+            state.fishValue = -2;
+        }
+    }
+}
