@@ -1,12 +1,14 @@
 ﻿using DialogueSystem.Runtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueExample : MonoBehaviour
 {
     [SerializeField] private DialogueTree tree;
-    [SerializeField] private TMP_Text[] choiceTexts;
     [SerializeField] private TMP_Text dialogText;
+    [SerializeField] private GameObject answerPrefab;
+    [SerializeField] private Transform answersParent;
     private DialogueRunner runner;
 
     private void Start()
@@ -43,18 +45,20 @@ public class DialogueExample : MonoBehaviour
         }
 
         dialogText.text = node.Text;
-        Debug.Log($"Реплика: {node.Text}");
         if (node.OnEnter != null) node.OnEnter.Invoke();
         var choices = runner.GetChoices();
         
-        for (var i = 0; i < choiceTexts.Length; i++)
+        foreach (Transform child in answersParent)
         {
-            choiceTexts[i].gameObject.SetActive(i < choices.Count);
+            Destroy(child.gameObject);
         }
-        for (var i = 0; i < choices.Count; i++)
+
+        for (int i = 0; i < choices.Count; i++)
         {
-            choiceTexts[i].text = choices[i].Text;
-            Debug.Log($"{i}: {choices[i].Text}");
+            var answer = Instantiate(answerPrefab, answersParent);
+            answer.GetComponentInChildren<TMP_Text>().text = choices[i].Text;
+            var i1 = i;
+            answer.GetComponentInChildren<Button>().onClick.AddListener(() => OnChoiceSelected(i1));
         }
     }
 }
