@@ -74,3 +74,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+ProjectSettings/ProjectVersion.txt
+Packages/packages-lock.json.541248146
+Packages/packages-lock.json
+Assets/Settings/UniversalRenderPipelineGlobalSettings.asset
+Assets/Fonts/Monocraft SDF.asset
+Assets/Plugins/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
