@@ -14,20 +14,20 @@ public class MoveableSmoothDamp : MoveableBase
 
     protected void MoveXY()
     {
-        if (Vector3.Distance(transform.position, targetPosition) > 0.01f || velocity.magnitude > 0.01f)
+        if (Vector3.Distance(transform.localPosition, targetPosition) > 0.01f || velocity.magnitude > 0.01f)
         {
-            Vector3 newPosition = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime, maxVelocity, Time.deltaTime);
-            velocity = (newPosition - (Vector3)transform.position) / Time.deltaTime;
+            Vector3 newPosition = Vector3.SmoothDamp(transform.localPosition, targetPosition, ref currentVelocity, smoothTime, maxVelocity, Time.deltaTime);
+            velocity = (newPosition - (Vector3)transform.localPosition) / Time.deltaTime;
 
             if (velocity.sqrMagnitude > maxVelocity * maxVelocity)
             {
                 velocity = velocity.normalized * maxVelocity;
             }
 
-            transform.position = newPosition + velocity * Time.deltaTime;
-            if (Vector3.Distance((Vector3)transform.position, targetPosition) < 0.01f && velocity.magnitude < 0.01f)
+            transform.localPosition = newPosition + velocity * Time.deltaTime;
+            if (Vector3.Distance((Vector3)transform.localPosition, targetPosition) < 0.01f && velocity.magnitude < 0.01f)
             {
-                transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
+                transform.localPosition = new Vector3(targetPosition.x, targetPosition.y, transform.localPosition.z);
                 velocity = Vector3.zero;
             }
         }

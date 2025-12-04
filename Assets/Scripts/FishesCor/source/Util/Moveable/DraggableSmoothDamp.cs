@@ -17,8 +17,8 @@ public class DraggableSmoothDamp : MonoBehaviour, IClickable
     private void Start()
     {
         isDragging = false;
-        mainCamera = Camera.main; 
-        moveable.targetPosition = transform.position; 
+        mainCamera = Camera.main;
+        moveable.targetPosition = transform.localPosition; 
     }
 
     public void OnMouseDown()
@@ -39,17 +39,19 @@ public class DraggableSmoothDamp : MonoBehaviour, IClickable
         if (isDragging) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane tablePlane = new Plane(Vector3.up, 0);
-            if (tablePlane.Raycast(ray, out float distance))
-            {
-                Vector3 newTarget = ray.GetPoint(distance) + offset;
-                newTarget += Vector3.up * 0.2f;
-                //transform.position = Vector3.Lerp(transform.position, newPos, smoothSpeed * Time.deltaTime);
-                moveable.targetPosition = newTarget;
-            }
+            if (tablePlane.Raycast(ray, out float distance)) {
+                Vector3 worldTarget = ray.GetPoint(distance) + offset;
+                worldTarget += Vector3.up * 0.2f;
             
+                // Конвертируем в ЛОКАЛЬНЫЕ координаты относительно родителя
+                Vector3 localTarget = transform.parent.InverseTransformPoint(worldTarget);
             
+                // Теперь используйте localTarget для движения
+                moveable.targetPosition = localTarget;  // Предполагая, что moveable работает с localPosition
+            }        
         }
     }
+
 
     public void OnMouseExit()
     {

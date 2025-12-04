@@ -23,6 +23,7 @@ public class Main : MonoBehaviour
 {
     [FormerlySerializedAs("hand")] public FishZone field;
 
+    public bool Testing = false;
     public Interactor interactor;
 
     public UnityAction<InteractiveObject> OnReleaseDrag;
@@ -66,13 +67,8 @@ public class Main : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(Tusfv());
-    }
-
-    IEnumerator Tusfv()
-    {
-        yield return new WaitForSeconds(3);
-        StartGame();
+        if (Testing)
+            StartGame();
     }
 
     public void StartGame()
@@ -143,10 +139,11 @@ public class Main : MonoBehaviour
 
         for (int i = 0; i < toDel; i++)
         {
-            yield return new WaitForSeconds(.4f);
-            
             var fish = field.objects[i];
             if (fish == null) continue;
+            G.hud.ArrowSelect(fish.transform.position + Vector3.forward, duration: .1f);
+
+            yield return new WaitForSeconds(.4f);
             fish.Activate.Invoke();
             var endTurn = G.main.interactor.FindAll<IOnEndTurn>();
             foreach (var et in endTurn)
@@ -157,6 +154,8 @@ public class Main : MonoBehaviour
             else
                 yield return field.TryToEat(fish);
         }
+        G.hud.ArrowDisappear();
+        
         toDel = fishCount;
 
         field.Align();
@@ -294,7 +293,7 @@ public class Main : MonoBehaviour
         var basicDice = CMS.Get<CMSEntity>(t);
         var state = new FishState();
         state.model = basicDice;
-        var instance = Instantiate(basicDice.Get<TagPrefab>().prefab);
+        var instance = Instantiate(basicDice.Get<TagPrefab>().prefab, G.main.gameObject.transform);
         instance.SetState(state);
         field.Claim(instance);
         fishCount++;
