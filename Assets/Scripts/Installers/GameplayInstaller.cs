@@ -7,7 +7,8 @@ namespace Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<GameStateService>().AsSingle().NonLazy();
+            Container.Bind<GameStateService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CameraSwitch>().AsSingle();
         }
     }
 }

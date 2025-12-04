@@ -5,11 +5,14 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     private CharacterController controller;
     
+    [field: SerializeField] public Camera mainCamera { get; private set; }
+    
     public static PlayerMovement Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+        mainCamera = Camera.main;
         controller = GetComponent<CharacterController>();
     }
 

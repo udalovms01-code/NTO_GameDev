@@ -26,6 +26,7 @@ namespace Gameplay
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, distance, interactMask))
             {
+                
                 OutlineController oc = hit.collider.GetComponent<OutlineController>();
                 if (oc != null)
                 {
