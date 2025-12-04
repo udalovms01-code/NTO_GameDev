@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Fish
   layers:
   - Default
   - TransparentFX
@@ -11,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Interaction
+  - 
   - 
   - 
   - 
@@ -40,6 +41,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: TableItems
+    uniqueID: 2213124923
+    locked: 0
+  - name: Fish
+    uniqueID: 2080889919
+    locked: 0
+  - name: Selected
+    uniqueID: 2625190661
     locked: 0
   m_RenderingLayers:
   - Default
