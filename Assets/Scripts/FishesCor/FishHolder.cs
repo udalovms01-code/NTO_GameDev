@@ -43,7 +43,7 @@ public class FishHolder : MonoBehaviour
         if (arg0 == null)
             return false;
 
-        var isInRange = Vector2.Distance(arg0.transform.position, transform.position) < 1f;
+        var isInRange = Vector2.Distance(arg0.transform.localPosition, transform.localPosition) < 1f;
         if (!isInRange)
             return false;
 
