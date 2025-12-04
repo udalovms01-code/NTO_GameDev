@@ -30,7 +30,7 @@ public class FudgeDiceInteraction : BaseInteraction, IOnEndTurn
                 || G.main.field.ZoneIndex(view) == 0)
             {
                 view.SetValue(fish.fishValue + tfl.delta);
-                view.Punch();
+                view.spriteAnimator.Punch();
                 yield return new WaitForSeconds(0.25f);
             }
         }

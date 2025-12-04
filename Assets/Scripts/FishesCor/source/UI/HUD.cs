@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
@@ -8,8 +9,7 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI DiceView;
     //public Button EndTurn;
     public UITooltip tooltip;
-
-    //public Slider Health;
+    public Slider Health;
     //public TMP_Text HealthValue;
 
     void Awake()

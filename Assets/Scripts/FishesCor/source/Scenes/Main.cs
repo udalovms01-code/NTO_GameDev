@@ -24,6 +24,8 @@ public class Main : MonoBehaviour
     public Interactor interactor;
 
     public UnityAction<InteractiveObject> OnReleaseDrag;
+    public UnityAction SceneChange; 
+
     public Animator  animator;
 
 
@@ -90,6 +92,7 @@ public class Main : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+            SceneChange?.Invoke();
             SceneManager.LoadScene(GameSettings.MAIN_SCENE);
         }
 
@@ -126,14 +129,19 @@ public class Main : MonoBehaviour
 
         for (int i = 0; i < toDel; i++)
         {
+            yield return new WaitForSeconds(.4f);
+            
             var fish = field.objects[i];
             if (fish == null) continue;
-            fish.TiltAndReturn();
+            fish.Activate.Invoke();
             var endTurn = G.main.interactor.FindAll<IOnEndTurn>();
             foreach (var et in endTurn)
                 yield return et.OnEndTurn(fish.state);
 
-            yield return field.TryToEat(fish);
+            if (fish.state.virused)
+                yield return field.TryToInfect(fish);
+            else
+                yield return field.TryToEat(fish);
         }
         toDel = fishCount;
 
@@ -222,7 +230,6 @@ public class Main : MonoBehaviour
 
     public void ChooseVirusedFish()
     {
-        Debug.Log(fishCount);
         bool noVirusFlag = true;
         for (int i = 0; i < fishCount; i++)
         {
@@ -234,13 +241,10 @@ public class Main : MonoBehaviour
         }
 
         if (noVirusFlag) return;
-        Debug.Log(2);
         int virusedInd = Random.Range(0, fishCount - 1);
         while (field.objects[virusedInd].state.model.Is<TagCannotBeVirused>())
             virusedInd = Random.Range(0, fishCount - 1);
         
-        Debug.Log(3);
-        Debug.Log(virusedInd);
         field.objects[virusedInd].MakeVirused();
     }
 

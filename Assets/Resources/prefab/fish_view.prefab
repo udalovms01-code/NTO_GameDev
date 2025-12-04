@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 4291286957209898993}
   - component: {fileID: 7585656780296908340}
   - component: {fileID: 7479622971065340601}
+  - component: {fileID: 956204077370480297}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -189,7 +190,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!210 &7479622971065340601
@@ -201,9 +202,29 @@ SortingGroup:
   m_GameObject: {fileID: 1132620359952403791}
   m_Enabled: 1
   m_SortingLayerID: 2080889919
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &956204077370480297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132620359952403791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d224505d354442b87daea52cdf1521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 5227259204508448368}
+  sortingGroup: {fileID: 7479622971065340601}
+  selectedSize: 1.3
+  dragSize: 1.4
+  tiltAngle: 10
+  breathScale: 1.05
+  balatroRotationAngle: 4
+  balatroRotationDuration: 1
 --- !u!1 &5918704409932901641
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,11 +274,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7585656780296908340}
+  spriteAnimator: {fileID: 956204077370480297}
   value: {fileID: 6340526057729699610}
   moveable: {fileID: 1133711769951536913}
   draggable: {fileID: 150227048088338160}
-  direction: 1
-  size: 2
   zone: {fileID: 0}
   isSelected: 0
 --- !u!114 &1133711769951536913
@@ -395,7 +415,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8798253236137431146

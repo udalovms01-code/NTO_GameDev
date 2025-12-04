@@ -29,7 +29,7 @@ public class FudgeNextDiceInteraction : BaseInteraction, IOnEndTurn
             if (nextFish != null)
             {
                 nextFish.SetValue(nextFish.state.fishValue + tfl.delta);
-                nextFish.Punch();
+                nextFish.spriteAnimator.Punch();
                 yield return new WaitForSeconds(0.25f);
             }
         }

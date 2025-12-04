@@ -3,6 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
@@ -19,6 +20,7 @@ public class FishState
 public class InteractiveObject : MonoBehaviour, IClickable
 {
     public SpriteRenderer spriteRenderer;
+    public FishSpriteAnimator spriteAnimator;
     
     public FishState state;
 
@@ -31,12 +33,21 @@ public class InteractiveObject : MonoBehaviour, IClickable
     private Vector3 originScale;
     public bool isSelected = false;
 
+    public UnityAction Select;
+    public UnityAction UnSelect;
+    public UnityAction StartDrag;
+    public UnityAction EndDrag;
+    public UnityAction Activate;
+    public UnityAction OnDestroy;
+
 
     void Start()
     {
         value.text = state.model.Get<TagStartFishValue>().value.ToString();
         draggable = GetComponent<DraggableSmoothDamp>();
         originScale = transform.localScale;
+        
+        G.main.SceneChange += KillTweens;
     }
 
     public void SetState(FishState fishState)
@@ -88,36 +99,13 @@ public class InteractiveObject : MonoBehaviour, IClickable
         state.fishValue = val;
         value.text = val.ToString();
     }
-
-    public void Punch()
-    {
-        transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f);
-    }
-
     private float sizeUpValue = 1f;
-
-    private void SizeUp(float value)
-    {
-        if (value <= sizeUpValue) return;
-        sizeUpValue = value;
-        transform.DOKill();
-        transform.DOBlendableScaleBy(originScale * sizeUpValue - transform.localScale, 
-            0.1f);
-    }
-    private void SizeDown(float value)
-    {
-        if (value >= sizeUpValue) return;
-        sizeUpValue = value;
-        transform.DOKill();
-        transform.DOBlendableScaleBy(originScale * sizeUpValue - transform.localScale, 
-            0.1f);
-    }
 
     public void OnMouseExit()
     {
         if (isSelected && !draggable.isDragging)
         {
-            SizeDown(1f);
+            UnSelect.Invoke();
             isSelected = false;
         }
     }
@@ -126,16 +114,16 @@ public class InteractiveObject : MonoBehaviour, IClickable
     {
         if (!isSelected)
         {
-            TiltAndReturn();
-            SizeUp(1.075f);
+            Select.Invoke();
             isSelected = true;
         }
     }
+    
 
     public void OnMouseDown()
     {
         if (!draggable.isDragging)
-            SizeUp(1.15f);
+            StartDrag.Invoke();
         
         if (zone != null)
         {
@@ -145,18 +133,12 @@ public class InteractiveObject : MonoBehaviour, IClickable
 
     public void OnMouseUp()
     {
-        SizeDown(1.075f);
+        EndDrag.Invoke();
     }
-    
-    public void TiltAndReturn( 
-        float angle = 15f, float duration = 0.5f, int vibrato = 1)
+
+    void KillTweens()
     {
-        transform.DOShakeRotation(
-            duration,
-            new Vector3(0, 0, angle),
-            vibrato,
-            randomness: 0f
-        );
+        transform.DOKill();
     }
     public void Eaten()
     {
@@ -195,12 +177,16 @@ public class InteractiveObject : MonoBehaviour, IClickable
     }
     public IEnumerator Die()
     {
-        G.main.fishCount--;
+        OnDestroy.Invoke();
         
+        G.main.fishCount--;
+
         transform.DOKill();
         Destroy(gameObject);
         yield break;
     }
+    
+    
 
     public void MakeVirused()
     {

@@ -132,6 +132,21 @@ public class FishZone : MonoBehaviour
                 yield break;
         }
     }
+    public IEnumerator TryToInfect(InteractiveObject io)
+    {
+        InteractiveObject subj = BackFish(io);
+        if (subj != null)
+        {
+            yield return Eat(io, subj);
+        }
+        
+        subj = FrontFish(io);
+        if (subj != null)
+        {
+            yield return Eat(io, subj);
+        }
+        yield break;
+    }
     
     public IEnumerator Eat(InteractiveObject obj, InteractiveObject subj)
     {
@@ -164,6 +179,26 @@ public class FishZone : MonoBehaviour
             ind++;
         else
             ind--;  
+
+        if (ind > objects.Count - 1)
+            return null;
+        if (ind < 0)
+            return null;
+
+        return objects[ind];
+    }
+    public InteractiveObject BackFish(InteractiveObject view)
+    {
+        if (objects.Count == 0)
+            return null;
+        
+        int ind = objects.IndexOf(view);
+
+
+        if (view.state.direction == FishDirection.Right)
+            ind--;
+        else
+            ind++;  
 
         if (ind > objects.Count - 1)
             return null;
