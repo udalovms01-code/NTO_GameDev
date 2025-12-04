@@ -9,7 +9,7 @@ namespace Gameplay
         public float openAngle = 90f;   
         public float speed = 4f;
 
-        protected bool isOpen = false;
+        public bool isOpen { get; private set; }
         private Quaternion closedRotation;
         private Quaternion openRotation;
 

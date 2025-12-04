@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: LocalizationTable
   m_EditorClassIdentifier: Assembly-CSharp::Localization.LocalizationTable
   entries:
-  - key: choice_157bf56d-4b16-4d4e-acdb-2f9f715de005_0
-    russian: Next
-    english: Next
   - key: dialogue_157bf56d-4b16-4d4e-acdb-2f9f715de005
     russian: "\u041F\u0440\u0438\u0432\u0435\u0442 \u0433\u0435\u0439"
     english: Hello gay
@@ -28,3 +25,6 @@ MonoBehaviour:
   - key: dialogue_d6162b4a-2a90-4744-99fe-4179e3165826
     russian: "\u0422\u0443\u0442 \u0442\u0435\u043A\u0441\u0442 \u0434\u0438\u0430\u043B\u043E\u0433\u0430"
     english: Here is the text of the dialogue
+  - key: ui.day
+    russian: "\u0414\u0435\u043D\u044C"
+    english: Day

@@ -113,23 +113,22 @@ namespace Localization.Editor
                 {
                     var entry = table.Entries[i];
                     if (entry == null)
-                    {
                         continue;
-                    }
 
-                    if (!foldoutStates.ContainsKey(entry.Key))
-                    {
-                        foldoutStates.Add(entry.Key, false);
-                    }
+                    var foldoutKey = i.ToString();
 
-                    foldoutStates[entry.Key] = EditorGUILayout.Foldout(foldoutStates[entry.Key], entry.Key, true);
-                    if (!foldoutStates[entry.Key])
-                    {
+                    if (!foldoutStates.ContainsKey(foldoutKey))
+                        foldoutStates.Add(foldoutKey, false);
+
+                    foldoutStates[foldoutKey] =
+                        EditorGUILayout.Foldout(foldoutStates[foldoutKey], entry.Key, true);
+
+                    if (!foldoutStates[foldoutKey])
                         continue;
-                    }
 
                     EditorGUI.indentLevel++;
                     EditorGUI.BeginChangeCheck();
+
                     var key = EditorGUILayout.TextField("Key", entry.Key);
                     var ru = EditorGUILayout.TextField("Russian", entry.Russian);
                     var en = EditorGUILayout.TextField("English", entry.English);

@@ -22,5 +22,11 @@ public class PlayerMovement : MonoBehaviour
         move = transform.TransformDirection(move);
 
         controller.SimpleMove(move * speed);
+        
+        //jump
+        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
+        {
+            controller.SimpleMove(Vector3.up * 10f);
+        }
     }
 }
