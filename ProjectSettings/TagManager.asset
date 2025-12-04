@@ -42,8 +42,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: TableItems
+    uniqueID: 2213124923
+    locked: 0
   - name: Fish
     uniqueID: 2080889919
+    locked: 0
+  - name: Selected
+    uniqueID: 2625190661
     locked: 0
   m_RenderingLayers:
   - Default

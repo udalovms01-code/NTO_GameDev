@@ -222,7 +222,7 @@ MonoBehaviour:
   selectedSize: 1.3
   dragSize: 1.4
   tiltAngle: 10
-  breathScale: 1.05
+  breathScale: 1.12
   balatroRotationAngle: 4
   balatroRotationDuration: 1
 --- !u!1 &5918704409932901641
@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7585656780296908340}
+  shadowSpriteRenderer: {fileID: 4227700686590252134}
   spriteAnimator: {fileID: 956204077370480297}
   value: {fileID: 6340526057729699610}
   moveable: {fileID: 1133711769951536913}

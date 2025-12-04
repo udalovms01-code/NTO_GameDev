@@ -54,11 +54,13 @@ public class FishSpriteAnimator : MonoBehaviour
     }
     private void EndDrag()
     {
+        SetIdleAnim();
         SizeDown(selectedSize);
     }
 
     public void StartDrag()
     {
+        StopIdleAnim();
         SizeUp(dragSize);
     }
 
@@ -66,9 +68,10 @@ public class FishSpriteAnimator : MonoBehaviour
     {
         sortingGroup.sortingLayerName = "Fish";
 
-        
+
+        //SizeDown(1);
+        sizeUpValue = 1f;
         SetIdleAnim();
-        SizeDown(1);
     }
     public void Select()
     {
@@ -84,7 +87,7 @@ public class FishSpriteAnimator : MonoBehaviour
         Vector3 breathedScale = originScale * breathScale;
         
         Tween tween = transform.DOScale(breathedScale, cycleDuration)
-            .SetLoops(loops * 2, LoopType.Yoyo)
+            .SetLoops(loops * 2, LoopType.Yoyo) 
             .SetEase(Ease.InOutSine);
         
         // Если нужен случайный сдвиг, прыгаем на случайный момент в анимации
@@ -120,6 +123,8 @@ public class FishSpriteAnimator : MonoBehaviour
     
     void SetIdleAnim()
     {
+        transform.rotation = Quaternion.Euler(originRotation);
+        transform.localScale = originScale;
         //transform.DOKill();
         //yield return new WaitForSeconds(Random.Range(0f, 2f));
         idleSequence?.Kill();
@@ -154,8 +159,8 @@ public class FishSpriteAnimator : MonoBehaviour
         if (value <= sizeUpValue) return;
         sizeUpValue = value;
         transform.DOKill();
-        transform.DOBlendableScaleBy(originScale * sizeUpValue - transform.localScale, 
-            0.1f);
+        transform.DOScale(originScale * sizeUpValue, 0.1f);
+
     }
     
     private void SizeDown(float value)
@@ -163,12 +168,13 @@ public class FishSpriteAnimator : MonoBehaviour
         if (value >= sizeUpValue) return;
         sizeUpValue = value;
         transform.DOKill();
-        transform.DOBlendableScaleBy(originScale * sizeUpValue - transform.localScale, 
-            0.1f);
+        transform.DOScale(originScale * sizeUpValue, 0.1f);
+
     }
     
     public void Punch()
     {
+        transform.DOKill();
         transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f);
     }
 }

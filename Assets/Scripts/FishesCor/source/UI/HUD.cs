@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI DiceView;
     //public Button EndTurn;
     public UITooltip tooltip;
+    public Text setsCount;
     public Slider Health;
     //public TMP_Text HealthValue;
 

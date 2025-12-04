@@ -15,6 +15,8 @@ public class RunState
     
     public int health = 2;
     public int maxHealth = 2;
+
+    public bool hasBaggage = true;
 }
 
 public class Main : MonoBehaviour
@@ -64,7 +66,19 @@ public class Main : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(Turn());
+        StartCoroutine(Tusfv());
+    }
+
+    IEnumerator Tusfv()
+    {
+        yield return new WaitForSeconds(3);
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        if (G.run.hasBaggage)
+            StartCoroutine(Turn());
     }
 
     public IEnumerator Turn()

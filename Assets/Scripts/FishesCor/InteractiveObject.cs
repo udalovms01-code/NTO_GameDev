@@ -20,6 +20,7 @@ public class FishState
 public class InteractiveObject : MonoBehaviour, IClickable
 {
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer shadowSpriteRenderer;
     public FishSpriteAnimator spriteAnimator;
     
     public FishState state;
@@ -61,7 +62,10 @@ public class InteractiveObject : MonoBehaviour, IClickable
         }
         
         if (state.model.Is<TagFishView>(out var fv))
+        {
             spriteRenderer.sprite = fv.sprite;
+            shadowSpriteRenderer.sprite = fv.sprite;
+        }
         
         
         if (state.model.Is<TagStartFishValue>(out var sfv))
@@ -71,9 +75,15 @@ public class InteractiveObject : MonoBehaviour, IClickable
         state.direction = Random.Range(0, 2) == 0 ? FishDirection.Right : FishDirection.Left;
         
         if (state.direction == FishDirection.Right)
+        {
+            shadowSpriteRenderer.flipX = false;
             spriteRenderer.flipX = false;
+        }
         else
+        {
             spriteRenderer.flipX = true;
+            shadowSpriteRenderer.flipX = true;
+        }
 
 
         if (state.model.Is<TagSizes>(out var sz))
@@ -194,6 +204,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
         if (state.model.Is<TagVirusedForm>(out var vf))
         {
             spriteRenderer.sprite = vf.sprite;
+            shadowSpriteRenderer.sprite = vf.sprite;
             state.fishValue = vf.negativeValue;
         }
         else
