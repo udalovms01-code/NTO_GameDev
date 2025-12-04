@@ -17,7 +17,7 @@ public class FishZone : MonoBehaviour
 
     private void Start()
     {
-        originalPosition = transform.position;
+        originalPosition = transform.localPosition;
     }
 
     public void Claim(InteractiveObject toClaim)
@@ -43,7 +43,7 @@ public class FishZone : MonoBehaviour
         float oldOffsetX = ind * spacing - (objects.Count / 2f - 0.5f) * spacing;
         float oldPosX = originalPosition.x + oldOffsetX;
 
-        float dif = toChange.transform.position.x - oldPosX;
+        float dif = toChange.transform.localPosition.x - oldPosX;
 
         if (dif > spacing && ind != objects.Count - 1)
         {
@@ -84,6 +84,7 @@ public class FishZone : MonoBehaviour
         for (var i = 0; i < objects.Count; i++)
         {
             var targetPos = GetTargetPos(i, objects);
+            
             objects[i].moveable.targetPosition = targetPos;
         }
     }
@@ -99,7 +100,7 @@ public class FishZone : MonoBehaviour
     Vector3 GetTargetPos(int i, List<InteractiveObject> setToWatch)
     {
         var offset = i * spacing - (setToWatch.Count / 2f - 0.5f) * spacing;
-        var targetPos = transform.position + Vector3.right * offset;
+        var targetPos = transform.localPosition + Vector3.right * offset;
         return targetPos;
     }
     
@@ -109,7 +110,7 @@ public class FishZone : MonoBehaviour
         for (var i = 0; i < cnt; i++)
         {
             var offset = 2.5f * spacing - (cnt - i - 1) * spacing;
-            var targetPos = transform.position + Vector3.right * offset;
+            var targetPos = transform.localPosition + Vector3.right * offset;
             objects[i].moveable.targetPosition = targetPos;
             //alignedSet[i].moveable.targetPosition = targetPos;
         }

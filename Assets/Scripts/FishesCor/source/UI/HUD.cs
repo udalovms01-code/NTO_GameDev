@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,6 +12,8 @@ public class HUD : MonoBehaviour
     public UITooltip tooltip;
     public Text setsCount;
     public Slider Health;
+
+    public ActivationArrow activationArrow;
     //public TMP_Text HealthValue;
 
     void Awake()
@@ -66,6 +69,7 @@ public class HUD : MonoBehaviour
     {
         G.main.field.canDrag = false;
         //EndTurn.interactable = false;
+        
     }
 
     public void EnableHud()
@@ -73,6 +77,18 @@ public class HUD : MonoBehaviour
         G.main.field.canDrag = true;
         //EndTurn.interactable = true;
     }
+    
+    public void ArrowDisappear()
+    {
+        transform.localPosition = new Vector3(-6, 0, 0);
+        gameObject.SetActive(false);
+    }    
+    
+    public void ArrowSelect(Vector3 endPosition, float duration = .3f, Ease ease = Ease.InOutQuad)
+    {
+        gameObject.SetActive(true);
+        activationArrow.gameObject.transform.DOMove(endPosition, duration).SetEase(ease);
+    }    
 
     void Update()
     {

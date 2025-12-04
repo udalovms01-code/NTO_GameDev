@@ -110,7 +110,7 @@ public class FishSpriteAnimator : MonoBehaviour
         int direction = Random.value > 0.5f ? 1 : -1;
         float finalRotation = rotation * direction;
         
-        return transform.DORotate(
+        return transform.DOLocalRotate(
             new Vector3(0, 0, finalRotation),
             duration,
             RotateMode.FastBeyond360
@@ -123,7 +123,7 @@ public class FishSpriteAnimator : MonoBehaviour
     
     void SetIdleAnim()
     {
-        transform.rotation = Quaternion.Euler(originRotation);
+        transform.localRotation = Quaternion.Euler(originRotation);
         transform.localScale = originScale;
         //transform.DOKill();
         //yield return new WaitForSeconds(Random.Range(0f, 2f));
@@ -140,7 +140,7 @@ public class FishSpriteAnimator : MonoBehaviour
         idleSequence?.Kill();
         idleSequence = null;
         
-        transform.rotation = Quaternion.Euler(originRotation);
+        transform.localRotation = Quaternion.Euler(originRotation);
         transform.localScale = originScale;
     }
     public void TiltAndReturn( 
