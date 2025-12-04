@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class UI : MonoBehaviour
+public class FishUI : MonoBehaviour
 {
     public TextMeshProUGUI debug_text;
     public UIPauseMenu pause;
