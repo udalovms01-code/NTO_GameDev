@@ -13,7 +13,6 @@ namespace UI.Settings
         public void Apply(GameSettings settings)
         {
             AudioListener.volume = settings.MasterVolume;
-            Debug.Log(settings.Language);
             LocalizationManager.SetLanguage(settings.Language);
             Screen.fullScreen = settings.Fullscreen;
 
