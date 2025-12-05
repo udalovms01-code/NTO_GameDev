@@ -115,6 +115,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
     {
         if (isSelected && !draggable.isDragging)
         {
+            G.hud.tooltip.Hide();
             UnSelect.Invoke();
             isSelected = false;
         }
@@ -124,6 +125,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
     {
         if (!isSelected)
         {
+            G.hud.tooltip.Show(state);
             Select.Invoke();
             isSelected = true;
         }

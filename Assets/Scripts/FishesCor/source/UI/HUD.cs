@@ -19,7 +19,7 @@ public class HUD : MonoBehaviour
     void Awake()
     {
         G.hud = this;
-        //G.hud.tooltip.Hide();
+        G.hud.tooltip.Hide();
     }
 
     void Start()
@@ -80,8 +80,8 @@ public class HUD : MonoBehaviour
     
     public void ArrowDisappear()
     {
-        transform.localPosition = new Vector3(-6, 0, 0);
-        gameObject.SetActive(false);
+        activationArrow.transform.localPosition = new Vector3(-6, 0, 0);
+        activationArrow.gameObject.SetActive(false);
     }    
     
     public void ArrowSelect(Vector3 endPosition, float duration = .3f, Ease ease = Ease.InOutQuad)

@@ -9,7 +9,7 @@ public class MinnowFish : FishBase
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "minnow");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "minnow");
         Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "minnow");
-        Define<TagDescription>().loc = "Повышает качество на 1, если стоит первый или последний";
+        Define<TagFishView>().description = "Повышает качество на 1, если стоит первый или последний";
         Define<TagFudgeIfFirstOrLastDice>().delta = 1;
     }
 }
