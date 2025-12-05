@@ -115,5 +115,13 @@ namespace SaveSystem
         {
             return _storage.Delete(slotName);
         }
+
+        public IReadOnlyList<SaveSlotInfo> GetAvailableSaves()
+        {
+            return _storage
+                .GetAvailableSaves()
+                .OrderByDescending(info => info.SavedAtTicks)
+                .ToList();
+        }
     }
 }
