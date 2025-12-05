@@ -9,7 +9,7 @@ public class FudgeFish : FishBase
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "bream");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "bream");
         Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "bream");
-        Define<TagDescription>().loc = "Повышает качество соседнего леща на 1";
+        Define<TagFishView>().description = "Повышает качество соседнего леща на 1";
         Define<TagFudgeNextDice>().delta = 1;
     }
 }

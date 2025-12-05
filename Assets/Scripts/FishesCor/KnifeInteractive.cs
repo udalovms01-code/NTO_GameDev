@@ -6,7 +6,9 @@ public class KnifeInteractive : MonoBehaviour
     private Vector3 originScale;
     public bool isSelected = false;
     public Transform view;
-    
+    public static bool interactable = false;
+
+
     [Header("Animation")]
     public float tiltAngle = 10f;
 
@@ -16,11 +18,12 @@ public class KnifeInteractive : MonoBehaviour
         originScale = transform.localScale;
         G.main.SceneChange += () => { transform.DOKill();};
     }
-    
+
     public void Punch()
     {
         transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f);
     }
+
     public void TiltAndReturn( 
         float duration = 0.15f, int vibrato = 0)
     {
@@ -62,18 +65,24 @@ public class KnifeInteractive : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        if (!isSelected)
+        if (interactable)
         {
-            TiltAndReturn();
-            SizeUp(1.075f);
-            isSelected = true;
+            if (!isSelected)
+            {
+                TiltAndReturn();
+                SizeUp(1.075f);
+                isSelected = true;
+            }
         }
     }
 
     public void OnMouseDown()
     {
-        SizeUp(1.15f);
-        OnClickEndTurn();
+        if (interactable)
+        {
+            SizeUp(1.15f);
+            OnClickEndTurn();
+        }
     }
 
     public void OnMouseUp()

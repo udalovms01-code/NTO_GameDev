@@ -73,18 +73,21 @@ public class FishZone : MonoBehaviour
 
     public void Align()
     {
-        var copy = objects;
-        for (var i = 0; i < copy.Count; i++)
+        List<int> toDel = new List<int>();
+        for (int i = 0; i < objects.Count; i++)
         {
-            if (copy[i] == null)
-            {
-                objects.RemoveAt(i);
-            }
+            if (objects[i] == null)
+                toDel.Add(i);
         }
+        for (int i = 0; i < toDel.Count; i++)
+        {
+            objects.RemoveAt(toDel[i] - i);
+        }
+        
         for (var i = 0; i < objects.Count; i++)
         {
             var targetPos = GetTargetPos(i, objects);
-            
+
             objects[i].moveable.targetPosition = targetPos;
         }
     }

@@ -11,7 +11,7 @@ public class DraggableSmoothDamp : MonoBehaviour, IClickable
     private Camera mainCamera;
 
     Vector2 origin;
-    Vector3 offset;
+    Vector3 offset;// = new Vector3(0, 1.28f, 0);
     private Vector3 screenPoint;
 
     private void Start()
@@ -23,32 +23,37 @@ public class DraggableSmoothDamp : MonoBehaviour, IClickable
 
     public void OnMouseDown()
     {
-        G.main.StartDrag(this);
-        
-        isDragging = true;
-        
-        /*screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane tablePlane = new Plane(Vector3.up, 0); // Плоскость стола Y=0
-        if (tablePlane.Raycast(ray, out float distance)) {
-            offset = transform.position - ray.GetPoint(distance);
-        }*/
+        if(G.main.field.canDrag)
+        {
+            G.main.StartDrag(this);
+
+            isDragging = true;
+        }    
     }
 
     void OnMouseDrag() {
-        if (isDragging) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane tablePlane = new Plane(Vector3.up, 0);
-            if (tablePlane.Raycast(ray, out float distance)) {
-                Vector3 worldTarget = ray.GetPoint(distance) + offset;
-                worldTarget += Vector3.up * 0.2f;
-            
-                // Конвертируем в ЛОКАЛЬНЫЕ координаты относительно родителя
-                Vector3 localTarget = transform.parent.InverseTransformPoint(worldTarget);
-            
-                // Теперь используйте localTarget для движения
-                moveable.targetPosition = localTarget;  // Предполагая, что moveable работает с localPosition
-            }        
+        if (G.main.field.canDrag)
+        {
+            if (isDragging)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Plane tablePlane = new Plane(Vector3.up, -G.main.tableHeith);
+                if (tablePlane.Raycast(ray, out float distance))
+                {
+                    Vector3 worldTarget = ray.GetPoint(distance) + offset;
+                    //worldTarget.y = 0;
+
+
+                    //worldTarget += Vector3.up * 0.2f;
+
+                    // Конвертируем в ЛОКАЛЬНЫЕ координаты относительно родителя
+                    Vector3 localTarget = transform.parent.InverseTransformPoint(worldTarget);
+                    //localTarget.y = 0f;
+
+                    // Теперь используйте localTarget для движения
+                    moveable.targetPosition = localTarget; // Предполагая, что moveable работает с localPosition
+                }
+            }
         }
     }
 
@@ -64,10 +69,13 @@ public class DraggableSmoothDamp : MonoBehaviour, IClickable
 
     public void OnMouseUp()
     {
-        G.main.StopDrag();
-        
-        isDragging = false; 
-        moveable.targetPosition = origin;
+        if (G.main.field.canDrag)
+        {
+            G.main.StopDrag();
+
+            isDragging = false;
+            moveable.targetPosition = origin;
+        }
             
     }
 }

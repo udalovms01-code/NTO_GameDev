@@ -30,6 +30,8 @@ public class MoveableSmoothDamp : MoveableBase
                 transform.localPosition = new Vector3(targetPosition.x, targetPosition.y, transform.localPosition.z);
                 velocity = Vector3.zero;
             }
+
+            //transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
         }
     }
 }

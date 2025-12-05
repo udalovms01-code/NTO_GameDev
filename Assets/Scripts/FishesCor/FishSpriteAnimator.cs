@@ -54,86 +54,86 @@ public class FishSpriteAnimator : MonoBehaviour
     }
     private void EndDrag()
     {
+        sortingGroup.sortingLayerName = "Fish";
+        
         SetIdleAnim();
+        //transform.localPosition -= Vector3.up * 1f;
         SizeDown(selectedSize);
     }
 
     public void StartDrag()
     {
+        sortingGroup.sortingLayerName = "Selected";
+        
         StopIdleAnim();
+        //transform.localPosition += Vector3.up * 1f;
         SizeUp(dragSize);
     }
 
     public void UnSelect()
     {
-        sortingGroup.sortingLayerName = "Fish";
-
-
         //SizeDown(1);
         sizeUpValue = 1f;
         SetIdleAnim();
     }
     public void Select()
     {
-        sortingGroup.sortingLayerName = "Selected";
-        
         StopIdleAnim();
         SizeUp(selectedSize);
     } 
     
 
-    public Tween Breathe(float cycleDuration = 2f, int loops = -1, bool randomOffset = true)
+    public Tween Breathe(float cycleDuration = 2f, bool randomOffset = true)
     {
         Vector3 breathedScale = originScale * breathScale;
-        
+    
         Tween tween = transform.DOScale(breathedScale, cycleDuration)
-            .SetLoops(loops * 2, LoopType.Yoyo) 
+            .SetLoops(2, LoopType.Yoyo)  // Без -1, просто один цикл
             .SetEase(Ease.InOutSine);
-        
-        // Если нужен случайный сдвиг, прыгаем на случайный момент в анимации
+    
         if (randomOffset)
         {
             float randomTime = Random.Range(0f, cycleDuration);
             tween.Goto(randomTime, andPlay: true);
         }
-        
+    
         return tween;
     }
-    
-    public Tween BalatroTilting(
-        int vibrato = 1)
+
+    public Tween BalatroTilting(int vibrato = 1)
     {
         float duration = Random.Range(balatroRotationDuration, 2f * balatroRotationDuration);
-        float rotation = Random.Range(0, 2) == 1 ? balatroRotationAngle : -balatroRotationAngle;
-        
-        // Случайное направление: по часовой (1) или против (-1)
         int direction = Random.value > 0.5f ? 1 : -1;
-        float finalRotation = rotation * direction;
-        
+        float finalRotation = Random.Range(0, 2) == 1 ? balatroRotationAngle : -balatroRotationAngle;
+        finalRotation *= direction;
+    
         return transform.DOLocalRotate(
             new Vector3(0, 0, finalRotation),
             duration,
             RotateMode.FastBeyond360
-        ).SetRelative().SetLoops(-2, LoopType.Yoyo).SetEase(Ease.InOutSine);
-        /*return transform.DOShakeRotation(
-            1f,
-            new Vector3(0, 0, 10f)
-        ).SetLoops(-2, LoopType.Yoyo).SetEase(Ease.InOutSine);*/
+        ).SetRelative().SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
-    
+
     void SetIdleAnim()
     {
         transform.localRotation = Quaternion.Euler(originRotation);
         transform.localScale = originScale;
-        //transform.DOKill();
-        //yield return new WaitForSeconds(Random.Range(0f, 2f));
+    
         idleSequence?.Kill();
         idleSequence = DOTween.Sequence();
-        idleSequence.Append(Breathe());
+    
+        // Добавляем анимации БЕЗ циклов внутри
+        idleSequence.Append(Breathe(2f, true));
         idleSequence.Join(BalatroTilting());
+    
+        // Бесконечный цикл только на самой Sequence
+        idleSequence.SetLoops(-1, LoopType.Restart);
+    
+        // Случайный сдвиг для разнообразия
         float randomOffset = Random.Range(0f, 20f);
         idleSequence.Goto(randomOffset, true);
     }
+
     
     public void StopIdleAnim()
     {

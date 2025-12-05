@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gameplay;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -12,6 +13,7 @@ using Random = UnityEngine.Random;
 public class RunState
 {
     public int level = 0;
+    public int set = 0;
     public int drawSize = 6;
     public int pointsSum = 0;
     
@@ -26,21 +28,21 @@ public class Main : MonoBehaviour
     [FormerlySerializedAs("hand")] public FishZone field;
 
     public bool Testing = false;
+    public float tableHeith = 0f;
     public Interactor interactor;
 
     public UnityAction<InteractiveObject> OnReleaseDrag;
     public UnityAction SceneChange; 
+    public UnityAction OnGameEnd;
+    
+    
+    
 
     public Animator  animator;
     private GameStateService _gameStateService;
 
     public CMSEntity levelEntity;
-    public List<string> setsEntities = new List<string>
-    {
-        E.Id<EasySet>(),
-        E.Id<EasySet>(),
-        E.Id<EasySet>(),
-    };
+    public List<string> setsEntities;
 
 
     public int fishCount = 0;
@@ -65,6 +67,9 @@ public class Main : MonoBehaviour
         }
 
         G.main = this;
+        
+        //ЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКА
+        setsEntities = new List<string>() {E.Id<EasySet>(), E.Id<EasySet>(), E.Id<EasySet>()};
     }
     
     [Inject]
@@ -112,7 +117,7 @@ public class Main : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneChange?.Invoke();
-            SceneManager.LoadScene(GameSettings.MAIN_SCENE);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -194,18 +199,30 @@ public class Main : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         
         G.main.field.UnreezeAligning();
-        yield return DrawFish();
-        
-        
+
+        G.run.set++;
+        if (G.run.set < setsEntities.Count)
+        {
+            yield return DrawFish();
+        }
+
+
         animator.SetTrigger("CameraIn");
         yield return new WaitForSeconds(1);
 
 
-        G.hud.EnableHud();
+        if (G.run.set >= setsEntities.Count)
+        {
+            OnGameEnd?.Invoke();
+        }
+        else
+        {
+            G.hud.EnableHud();
+        }
     }
     public IEnumerator LoadLevel(CMSEntity entity)
     {
-        
+        G.run.set = 0;
         levelEntity = entity;
 
         yield return DrawFish();
@@ -214,13 +231,17 @@ public class Main : MonoBehaviour
         {
             yield return exs.toExecute();
         }
+
+        yield return new WaitForSeconds(.5f);
+        
+        G.hud.EnableHud();
     }
 
 
     private IEnumerator DrawFish()
     {
         G.audio.Play<SFX_DiceDraw>();
-        if (CMS.Get<CMSEntity>(setsEntities[0]).Is<TagSetDefinition>(out var sd))
+        if (CMS.Get<CMSEntity>(setsEntities[G.run.set]).Is<TagSetDefinition>(out var sd))
         {
             for (int i = 0; i < sd.fishCount; i++)
             {

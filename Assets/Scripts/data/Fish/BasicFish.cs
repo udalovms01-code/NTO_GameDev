@@ -8,7 +8,7 @@ public abstract class FishBase : CMSEntity
         Define<TagPrefab>().prefab = "prefab/fish_view".Load<InteractiveObject>();
         Define<TagFishView>().name = "???";
         Define<TagStartFishValue>().value = 1;
-        Define<TagDescription>().loc = "???";
+        Define<TagFishView>().description = "???";
         Define<TagRarity>().rarity = FishRarity.COMMON;
         Define<TagTint>().color = Color.white;
         Define<TagSizes>().possibleSizes = new List<FishSize>()
@@ -24,7 +24,7 @@ public class BasicFish : FishBase
         Define<TagFishView>().name = "Гуппи";
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "guppy");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "guppy");
-        Define<TagDescription>().loc = "Ничего не делает";
+        Define<TagFishView>().description = "Ничего не делает";
         Define<TagCannotBeVirused>();
     }
 }
@@ -37,6 +37,7 @@ public class TagVirusedForm : EntityComponentDefinition
 public class TagFishView : EntityComponentDefinition
 {
     public string name;
+    public string description;
     public Sprite sprite;
     public Sprite dead_sprite;
 }
@@ -63,11 +64,6 @@ public class TagSizes : EntityComponentDefinition
 public class TagTint : EntityComponentDefinition
 {
     public Color color;
-}
-
-public class TagDescription : EntityComponentDefinition
-{
-    public string loc;
 }
 
 public class TagRarity : EntityComponentDefinition
