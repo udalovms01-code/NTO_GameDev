@@ -1,3 +1,4 @@
+using Localization;
 using UnityEngine;
 
 namespace UI.Settings
@@ -9,7 +10,7 @@ namespace UI.Settings
         private const string SfxVolumeKey = "settings.sfxVolume";
         private const string MouseSensitivityKey = "settings.mouseSensitivity";
         private const string FullscreenKey = "settings.fullscreen";
-        private const string QualityKey = "settings.quality";
+        private const string LanguageKey = "settings.quality";
 
         public GameSettings Load()
         {
@@ -20,7 +21,7 @@ namespace UI.Settings
                 SfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, 1f),
                 MouseSensitivity = PlayerPrefs.GetFloat(MouseSensitivityKey, 1f),
                 Fullscreen = PlayerPrefs.GetInt(FullscreenKey, 1) == 1,
-                QualityLevel = PlayerPrefs.GetInt(QualityKey, QualitySettings.GetQualityLevel())
+                Language = (LocalizationLanguage)PlayerPrefs.GetInt(LanguageKey, 0)
             };
 
             return settings;
@@ -33,7 +34,7 @@ namespace UI.Settings
             PlayerPrefs.SetFloat(SfxVolumeKey, settings.SfxVolume);
             PlayerPrefs.SetFloat(MouseSensitivityKey, settings.MouseSensitivity);
             PlayerPrefs.SetInt(FullscreenKey, settings.Fullscreen ? 1 : 0);
-            PlayerPrefs.SetInt(QualityKey, settings.QualityLevel);
+            PlayerPrefs.SetInt(LanguageKey, (int)settings.Language);
             PlayerPrefs.Save();
         }
     }

@@ -1,5 +1,8 @@
+using System.Linq;
+using Localization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI.Settings
@@ -16,7 +19,7 @@ namespace UI.Settings
 
         [Header("Video")]
         [SerializeField] private Toggle _fullscreenToggle;
-        [SerializeField] private TMP_Dropdown _qualityDropdown;
+        [SerializeField] private TMP_Dropdown _languageDropdown;
 
         [SerializeField] private Button _applyButton;
         [SerializeField] private Button _resetButton;
@@ -34,6 +37,9 @@ namespace UI.Settings
             SyncUIFromSettings();
             _applier.Apply(_settings);
             HookButtons();
+            
+            LocalizationManager.LanguageChanged += (value) =>
+                InitializeQualityDropdown();
         }
 
         private void OnDestroy()
@@ -73,14 +79,14 @@ namespace UI.Settings
             {
                 _settings = new GameSettings();
             }
-
+            
             _settings.MasterVolume = _masterVolume != null ? _masterVolume.value : 1f;
             _settings.MusicVolume = _musicVolume != null ? _musicVolume.value : 1f;
             _settings.SfxVolume = _sfxVolume != null ? _sfxVolume.value : 1f;
             _settings.MouseSensitivity = _mouseSensitivity != null ? _mouseSensitivity.value : 1f;
             _settings.Fullscreen = _fullscreenToggle == null || _fullscreenToggle.isOn;
-            _settings.QualityLevel = _qualityDropdown != null ? _qualityDropdown.value : QualitySettings.GetQualityLevel();
-
+            _settings.Language = _languageDropdown != null ? (LocalizationLanguage)_languageDropdown.value : LocalizationLanguage.Russian;
+            
             _storage.Save(_settings);
             _applier.Apply(_settings);
         }
@@ -119,21 +125,21 @@ namespace UI.Settings
                 _fullscreenToggle.SetIsOnWithoutNotify(_settings.Fullscreen);
             }
 
-            if (_qualityDropdown != null && _qualityDropdown.options.Count > _settings.QualityLevel)
+            if (_languageDropdown != null)
             {
-                _qualityDropdown.SetValueWithoutNotify(_settings.QualityLevel);
+                _languageDropdown.SetValueWithoutNotify((int)_settings.Language);
             }
         }
 
         private void InitializeQualityDropdown()
         {
-            if (_qualityDropdown == null)
+            if (_languageDropdown == null)
             {
                 return;
             }
-
-            _qualityDropdown.ClearOptions();
-            _qualityDropdown.AddOptions(new System.Collections.Generic.List<string>(QualitySettings.names));
+            _languageDropdown.ClearOptions();
+            _languageDropdown.AddOptions(new[] { LocalizationManager.Get("rus"), LocalizationManager.Get("eng") }.ToList());
+            _languageDropdown.SetValueWithoutNotify((int)_settings.Language);
         }
     }
 }

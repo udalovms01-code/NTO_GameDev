@@ -25,11 +25,6 @@ namespace Localization
                     activeTable = table;
                 }
 
-                if (language.HasValue && language.Value != currentLanguage)
-                {
-                    SetLanguage(language.Value, false);
-                }
-
                 return;
             }
 

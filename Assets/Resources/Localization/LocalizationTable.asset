@@ -14,20 +14,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Localization.LocalizationTable
   entries:
   - key: dialogue_157bf56d-4b16-4d4e-acdb-2f9f715de005
+    category: 
     russian: "\u041F\u0440\u0438\u0432\u0435\u0442 \u0433\u0435\u0439"
     english: Hello gay
   - key: dialogue_86dc6390-d134-4ba4-a024-d159b2177bff
+    category: 
     russian: Dialogue
     english: Dialogue
   - key: dialogue_ff07e60c-744a-4af9-a246-c66877f2a51a
+    category: 
     russian: "\u041F\u0440\u0438\u0432\u0435\u0442 \u043B\u043E\u0445"
     english: Hello sucker
   - key: dialogue_d6162b4a-2a90-4744-99fe-4179e3165826
+    category: 
     russian: "\u0422\u0443\u0442 \u0442\u0435\u043A\u0441\u0442 \u0434\u0438\u0430\u043B\u043E\u0433\u0430"
     english: Here is the text of the dialogue
   - key: ui.day
+    category: 
     russian: "\u0414\u0435\u043D\u044C"
     english: Day
   - key: ui.reload
+    category: 
     russian: "\u041F\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C"
     english: Reboot
+  - key: startgame
+    category: main_menu
+    russian: "\u041D\u0430\u0447\u0430\u0442\u044C \u0438\u0433\u0440\u0443"
+    english: Start game
+  - key: saves
+    category: main_menu
+    russian: "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F"
+    english: Saves
+  - key: settings
+    category: main_menu
+    russian: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"
+    english: Settings
+  - key: quit
+    category: main_menu
+    russian: "\u0412\u044B\u0439\u0442\u0438"
+    english: Quit
+  - key: gv
+    category: main_menu
+    russian: "\u041E\u0431\u0449\u0430\u044F \u0433\u0440\u043E\u043C\u043A\u043E\u0441\u0442\u044C"
+    english: General volume
+  - key: mv
+    category: main_menu
+    russian: "\u0413\u0440\u043E\u043C\u043A\u043E\u0441\u0442\u044C \u043C\u0443\u0437\u044B\u043A\u0438"
+    english: Music volume
+  - key: vfxv
+    category: main_menu
+    russian: "\u0413\u0440\u043E\u043C\u043A\u043E\u0441\u0442\u044C \u044D\u0444\u0444\u0435\u043A\u0442\u043E\u0432"
+    english: Effects Volume
+  - key: fs
+    category: main_menu
+    russian: "\u041F\u043E\u043B\u043D\u044B\u0439 \u044D\u043A\u0440\u0430\u043D"
+    english: Full screen
+  - key: ac
+    category: main_menu
+    russian: "\u041F\u0440\u0438\u043D\u044F\u0442\u044C"
+    english: Accept
+  - key: rev
+    category: main_menu
+    russian: "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C"
+    english: Reset
+  - key: lg
+    category: main_menu
+    russian: "\u042F\u0437\u044B\u043A"
+    english: Language
+  - key: sn
+    category: main_menu
+    russian: "\u0427\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C
+      \u043C\u044B\u0448\u0438"
+    english: Mouse sensitivity
+  - key: rus
+    category: main_menu
+    russian: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439"
+    english: Russian
+  - key: eng
+    category: main_menu
+    russian: "\u0410\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0439"
+    english: English

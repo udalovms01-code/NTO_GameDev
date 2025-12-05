@@ -1,4 +1,6 @@
 using System;
+using Localization;
+using UnityEngine.Serialization;
 
 namespace UI.Settings
 {
@@ -10,6 +12,6 @@ namespace UI.Settings
         public float SfxVolume = 1f;
         public float MouseSensitivity = 1f;
         public bool Fullscreen = true;
-        public int QualityLevel = 2;
+        public LocalizationLanguage Language = LocalizationLanguage.Russian;
     }
 }

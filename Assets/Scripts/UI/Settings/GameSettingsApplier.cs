@@ -1,4 +1,5 @@
 using System;
+using Localization;
 using UnityEngine;
 
 namespace UI.Settings
@@ -12,7 +13,8 @@ namespace UI.Settings
         public void Apply(GameSettings settings)
         {
             AudioListener.volume = settings.MasterVolume;
-            QualitySettings.SetQualityLevel(settings.QualityLevel, true);
+            Debug.Log(settings.Language);
+            LocalizationManager.SetLanguage(settings.Language);
             Screen.fullScreen = settings.Fullscreen;
 
             MusicVolumeChanged?.Invoke(settings.MusicVolume);

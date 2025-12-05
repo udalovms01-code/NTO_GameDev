@@ -16,7 +16,7 @@ namespace Localization
         private string[] formatArguments = new string[0];
 
         [SerializeField]
-        private bool initializeManager = true;
+        private bool initializeManager = false;
 
         private TMP_Text tmpText;
         private Text uiText;
