@@ -6,12 +6,16 @@ namespace Localization.Editor
 {
     public class LocalizationTableWindow : EditorWindow
     {
+        private const string AllCategoriesOption = "All";
+        private const string UncategorizedCategoryLabel = "Uncategorized";
+
         private LocalizationTable table;
         private LocalizationTranslatorProvider translator = LocalizationTranslatorProvider.Google;
         private Vector2 scrollPosition;
         private readonly Dictionary<string, bool> foldoutStates = new Dictionary<string, bool>();
         private string quickRussianSample = string.Empty;
         private string quickEnglishResult = string.Empty;
+        private string selectedCategory = AllCategoriesOption;
 
         [MenuItem("Window/Localization/Table")]
         public static void Open()
@@ -106,6 +110,8 @@ namespace Localization.Editor
             }
 
             EditorGUILayout.LabelField("Entries", EditorStyles.boldLabel);
+            DrawCategoryFilter();
+            EditorGUILayout.Space();
             using (var scroll = new EditorGUILayout.ScrollViewScope(scrollPosition))
             {
                 scrollPosition = scroll.scrollPosition;
@@ -113,6 +119,9 @@ namespace Localization.Editor
                 {
                     var entry = table.Entries[i];
                     if (entry == null)
+                        continue;
+
+                    if (!IsEntryVisible(entry))
                         continue;
 
                     var foldoutKey = i.ToString();
@@ -130,12 +139,14 @@ namespace Localization.Editor
                     EditorGUI.BeginChangeCheck();
 
                     var key = EditorGUILayout.TextField("Key", entry.Key);
+                    var category = EditorGUILayout.TextField("Category", entry.Category);
                     var ru = EditorGUILayout.TextField("Russian", entry.Russian);
                     var en = EditorGUILayout.TextField("English", entry.English);
 
                     if (EditorGUI.EndChangeCheck())
                     {
                         entry.Key = key;
+                        entry.Category = category;
                         entry.Russian = ru;
                         entry.English = en;
                         table.RebuildLookup();
@@ -171,7 +182,10 @@ namespace Localization.Editor
             if (GUILayout.Button("Add Entry"))
             {
                 Undo.RecordObject(table, "Add localization entry");
-                table.AddEntry($"key_{table.Entries.Count}");
+                var category = selectedCategory == AllCategoriesOption
+                    ? string.Empty
+                    : ConvertLabelToCategory(selectedCategory);
+                table.AddEntry($"key_{table.Entries.Count}", category);
                 table.RebuildLookup();
                 EditorUtility.SetDirty(table);
             }
@@ -193,6 +207,62 @@ namespace Localization.Editor
             }
 
             TranslateAsync();
+        }
+
+        private void DrawCategoryFilter()
+        {
+            var categoryOptions = BuildCategoryOptions();
+            var currentIndex = Mathf.Max(0, categoryOptions.IndexOf(selectedCategory));
+            var newIndex = EditorGUILayout.Popup("Filter by category", currentIndex, categoryOptions.ToArray());
+
+            selectedCategory = categoryOptions[Mathf.Clamp(newIndex, 0, categoryOptions.Count - 1)];
+        }
+
+        private List<string> BuildCategoryOptions()
+        {
+            var options = new HashSet<string>();
+
+            foreach (var entry in table.Entries)
+            {
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                options.Add(GetCategoryLabel(entry.Category));
+            }
+
+            var categories = new List<string> { AllCategoriesOption };
+            var sorted = new List<string>(options);
+            sorted.Sort();
+            categories.AddRange(sorted);
+
+            if (categories.Count == 1)
+            {
+                categories.Add(UncategorizedCategoryLabel);
+            }
+
+            return categories;
+        }
+
+        private bool IsEntryVisible(LocalizationEntry entry)
+        {
+            if (selectedCategory == AllCategoriesOption)
+            {
+                return true;
+            }
+
+            return GetCategoryLabel(entry.Category) == selectedCategory;
+        }
+
+        private static string GetCategoryLabel(string category)
+        {
+            return string.IsNullOrEmpty(category) ? UncategorizedCategoryLabel : category;
+        }
+
+        private static string ConvertLabelToCategory(string label)
+        {
+            return label == UncategorizedCategoryLabel ? string.Empty : label;
         }
     }
 }

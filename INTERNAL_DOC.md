@@ -4,9 +4,10 @@
 - `LocalizationManager.Initialize(table, language)` loads settings/table (Resources/Localization) and raises `LanguageChanged`; `SetLanguage` persists choice via PlayerPrefs.
 - `LocalizationManager.Get(key, params object[])` returns formatted localized string, `GetRaw`/`TryGet` provide raw access.
 - `LocalizedText` updates `TMP_Text`/`Text` components when language changes and supports runtime argument injection.
-- `LocalizationTable.AddEntry/RemoveEntry/RebuildLookup` manage ScriptableObject storage for RU/EN pairs.
+- `LocalizationTable.AddEntry(key, category)`/`RemoveEntry`/`RebuildLookup` manage ScriptableObject storage for RU/EN pairs and track entry categories.
+- `LocalizationTable.GetCategories()` returns unique category values from existing entries.
 - `LocalizationTranslator.TranslateRuToEn` (Editor) hits Google by default or Yandex (API key via `EditorPrefs`) and is used by both the localization window and dialogue nodes.
-- `LocalizationTableWindow` manages table assets, runs auto-translate, and allows quick translation snippets.
+- `LocalizationTableWindow` manages table assets, filters entries by category, edits category text per entry, seeds new entries with the active category filter, runs auto-translate, and allows quick translation snippets.
 - `DialogueNodeView` now edits localization keys, previews EN text, and triggers auto-translation for nodes/choices, writing results into the default table.
 - `DialogueLocalizationExtensions.GetLocalizedText` returns localized dialogue/choice text with fallbacks to raw strings.
 - `SaveFileStorage.GetAvailableSaves()` собирает метаданные всех `.json` слотов из `Application.persistentDataPath/Saves` и пытается прочитать `Version`, `SavedAtTicks`, `ActiveScene`.
@@ -19,8 +20,8 @@
 
 ## Types
 - `LocalizationLanguage` enum with `Russian`, `English`.
-- `LocalizationEntry` holds `Key`, `Russian`, `English` fields.
-- `LocalizationTable` ScriptableObject storing entry list and lookup dictionary.
+- `LocalizationEntry` holds `Key`, `Category`, `Russian`, `English` fields.
+- `LocalizationTable` ScriptableObject storing entry list, lookup dictionary, and exposing category enumeration.
 - `LocalizationSettings` ScriptableObject with default table/language/playerPrefs key.
 - `LocalizationBootstrapper` MonoBehaviour to initialize localization in scenes.
 - `LocalizedText` MonoBehaviour for UI binding.
