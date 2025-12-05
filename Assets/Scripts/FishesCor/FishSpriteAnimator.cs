@@ -54,29 +54,30 @@ public class FishSpriteAnimator : MonoBehaviour
     }
     private void EndDrag()
     {
+        sortingGroup.sortingLayerName = "Fish";
+        
         SetIdleAnim();
+        //transform.localPosition -= Vector3.up * 1f;
         SizeDown(selectedSize);
     }
 
     public void StartDrag()
     {
+        sortingGroup.sortingLayerName = "Selected";
+        
         StopIdleAnim();
+        //transform.localPosition += Vector3.up * 1f;
         SizeUp(dragSize);
     }
 
     public void UnSelect()
     {
-        sortingGroup.sortingLayerName = "Fish";
-
-
         //SizeDown(1);
         sizeUpValue = 1f;
         SetIdleAnim();
     }
     public void Select()
     {
-        sortingGroup.sortingLayerName = "Selected";
-        
         StopIdleAnim();
         SizeUp(selectedSize);
     } 

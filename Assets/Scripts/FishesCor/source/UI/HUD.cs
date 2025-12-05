@@ -68,14 +68,15 @@ public class HUD : MonoBehaviour
     public void DisableHud()
     {
         G.main.field.canDrag = false;
-        //EndTurn.interactable = false;
-        
+        KnifeInteractive.interactable = false;
+        //InteractiveObject.globalInteractive = false;
     }
 
     public void EnableHud()
     {
         G.main.field.canDrag = true;
-        //EndTurn.interactable = true;
+        KnifeInteractive.interactable = true;
+        //InteractiveObject.globalInteractive = true;
     }
     
     public void ArrowDisappear()

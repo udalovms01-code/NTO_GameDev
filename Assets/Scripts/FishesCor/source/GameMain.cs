@@ -19,8 +19,8 @@ public class ServicedMain : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("================");
-        Debug.Log("entrypoint hit");
+        /*Debug.Log("================");
+        Debug.Log("entrypoint hit");*/
         
         // game entrypoint
 
