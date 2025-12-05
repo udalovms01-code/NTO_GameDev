@@ -10,6 +10,9 @@ namespace Localization
         private string key = string.Empty;
 
         [SerializeField]
+        private string category = string.Empty;
+
+        [SerializeField]
         [TextArea]
         private string russian = string.Empty;
 
@@ -21,6 +24,12 @@ namespace Localization
         {
             get => key;
             set => key = value;
+        }
+
+        public string Category
+        {
+            get => category;
+            set => category = value;
         }
 
         public string Russian
