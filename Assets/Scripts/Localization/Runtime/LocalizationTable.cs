@@ -13,6 +13,23 @@ namespace Localization
 
         public IReadOnlyList<LocalizationEntry> Entries => entries;
 
+        public IEnumerable<string> GetCategories()
+        {
+            var categories = new HashSet<string>();
+
+            foreach (var entry in entries)
+            {
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                categories.Add(entry.Category);
+            }
+
+            return categories;
+        }
+
         private void OnEnable()
         {
             RebuildLookup();
@@ -61,7 +78,7 @@ namespace Localization
             return GetEntry(key) != null;
         }
 
-        public LocalizationEntry AddEntry(string key)
+        public LocalizationEntry AddEntry(string key, string category = "")
         {
             var candidateKey = key;
             var index = 0;
@@ -72,7 +89,11 @@ namespace Localization
                 candidateKey = $"{key}_{index}";
             }
 
-            var entry = new LocalizationEntry { Key = candidateKey };
+            var entry = new LocalizationEntry
+            {
+                Key = candidateKey,
+                Category = category,
+            };
             entries.Add(entry);
             lookup[candidateKey] = entry;
             return entry;
