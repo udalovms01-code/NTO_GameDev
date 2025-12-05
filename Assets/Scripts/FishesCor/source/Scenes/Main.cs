@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Gameplay;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class RunState
@@ -30,7 +32,7 @@ public class Main : MonoBehaviour
     public UnityAction SceneChange; 
 
     public Animator  animator;
-
+    private GameStateService _gameStateService;
 
     public CMSEntity levelEntity;
     public List<string> setsEntities = new List<string>
@@ -64,6 +66,12 @@ public class Main : MonoBehaviour
 
         G.main = this;
     }
+    
+    [Inject]
+    public void Construct(GameStateService gameStateService)
+    {
+        _gameStateService = gameStateService;
+    }
 
     void Start()
     {
@@ -95,6 +103,7 @@ public class Main : MonoBehaviour
 
     void Update()
     {
+        if (_gameStateService is { IsFishesSlicedStarted: false }) return;
         G.ui.debug_text.text = "";
         G.ui.debug_text.text += "R-reload\n";
         G.ui.debug_text.text += "D-add dice\n";

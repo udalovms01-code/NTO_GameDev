@@ -8,11 +8,21 @@ namespace Gameplay
         public bool IsDialogEnded { get; private set; }
         public bool IsFishesSliced { get; private set; }
         public int CurrentDay { get; private set; } = 1;
+        public bool IsFishesSlicedStarted { get; private set; }
         
         public event Action<bool> OnTutorialCompleted;
         public event Action<bool> OnDialogEnded;
         public event Action<bool> OnFishesSliced;
         public event Action<int> OnDayChanged;
+        public event Action<bool> OnFishesSlicedStarted;
+        
+        public void SetFishesSlicedStarted(bool value)
+        {
+            if (IsFishesSlicedStarted == value) return; 
+
+            IsFishesSlicedStarted = value;
+            OnFishesSlicedStarted?.Invoke(value);
+        }
         
         public void SetDay(int day)
         {

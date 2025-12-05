@@ -17,8 +17,8 @@ namespace Gameplay
 
         public void ChangeCamera3d(bool state)
         {
-            PlayerMovement.Instance.enabled = !state;
-            MouseLook.Instance.SetActive(!state);
+            PlayerMovement.Instance.enabled = state;
+            MouseLook.Instance.SetActive(state);
             Camera3dState.Instance.EnableElements(state);
         }
 

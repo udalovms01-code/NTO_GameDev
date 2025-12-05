@@ -6,7 +6,6 @@ namespace Gameplay
     [RequireComponent(typeof(OutlineController))]
     public class FishTable : MonoBehaviour, IIteractable
     {
-        [SerializeField] private GameObject _camera;
         private GameStateService _gameStateService;
         private CameraSwitch _cameraSwitch;
         
@@ -24,8 +23,8 @@ namespace Gameplay
 
         public void OnClick()
         {
+            _gameStateService.SetFishesSlicedStarted(true);
             G.main.StartGame();
-            _camera.SetActive(true);
             _cameraSwitch.SwitchCamera(false);
             _gameStateService.SetFishesSliced(true);
         }

@@ -6,7 +6,12 @@ namespace Gameplay
     {
         [SerializeField] private GameObject[] _elements;
         
-        public static Camera2dState Instance { get; private set; }
+        public static Camera3dState Instance { get; private set; }
+        
+        private void Awake()
+        {
+            Instance = this;
+        }
         
         public void EnableElements(bool state)
         {
