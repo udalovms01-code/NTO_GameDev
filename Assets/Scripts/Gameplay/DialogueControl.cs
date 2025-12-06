@@ -49,14 +49,14 @@ public class DialogueExample : MonoBehaviour
     
     private void DialogueEnd()
     {
-        if (_gameStateService.IsDialogEnded) return;
+        // if (_gameStateService.IsDialogEnded) return;
         
         foreach (Transform child in answersParent)
         {
             Destroy(child.gameObject);
         }
         
-        _gameStateService.SetDialogEnded(true);
+        // _gameStateService.SetDialogEnded(true);
         if(doorTo2DInteract.isOpen) doorTo2DInteract.ToggleDoor(PlayerMovement.Instance.transform.position);
     }
 

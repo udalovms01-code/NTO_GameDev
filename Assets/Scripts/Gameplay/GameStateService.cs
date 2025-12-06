@@ -1,38 +1,53 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Gameplay
 {
+    public enum GameState
+    {
+        WaitingForSlicedFish = 0,
+        SlicedFish,
+        WaitingForDialog,
+        Dialog,
+        WaitingForSleep,
+        Sleep
+    }
+    
     public class GameStateService
     {
+        public GameState CurrentState { get; private set; }
         public bool IsTutorialCompleted { get; private set; }
-        public bool IsDialogEnded { get; private set; }
-        public bool IsFishesSliced { get; private set; }
         public int CurrentDay { get; private set; } = 1;
         public bool IsFishesSlicedStarted { get; private set; }
+        public float Hunger { get; private set; }
         
         public event Action<bool> OnTutorialCompleted;
-        public event Action<bool> OnDialogEnded;
-        public event Action<bool> OnFishesSliced;
         public event Action<int> OnDayChanged;
-        public event Action<bool> OnFishesSlicedStarted;
+        public event Action<float> OnHungerChanged;
+        public event Action<GameState> OnStateChanged;
         
-        public void SetFishesSlicedStarted(bool value)
+        public void SetHunger(float value)
         {
-            if (IsFishesSlicedStarted == value) return; 
-
-            IsFishesSlicedStarted = value;
-            OnFishesSlicedStarted?.Invoke(value);
+            if (Mathf.Approximately(Hunger, value)) return;
+            
+            Hunger = value;
+            OnHungerChanged?.Invoke(value);
         }
         
         public void SetDay(int day)
         {
             if (CurrentDay == day) return;
             
-            SetFishesSliced(false);
-            SetDialogEnded(false);
-            
             CurrentDay = day;
             OnDayChanged?.Invoke(day);
+        }
+        
+        public void SetState(GameState state)
+        {
+            if (CurrentState == state) return;
+            
+            CurrentState = state;
+            OnStateChanged?.Invoke(state);
         }
 
         public void SetTutorialCompleted(bool value)
@@ -41,22 +56,6 @@ namespace Gameplay
 
             IsTutorialCompleted = value;
             OnTutorialCompleted?.Invoke(value);
-        }
-        
-        public void SetDialogEnded(bool value)
-        {
-            if (IsDialogEnded == value) return;
-
-            IsDialogEnded = value;  
-            OnDialogEnded?.Invoke(value);
-        }
-        
-        public void SetFishesSliced(bool value)
-        {
-            if (IsFishesSliced == value) return;    
-
-            IsFishesSliced = value;
-            OnFishesSliced?.Invoke(value);
         }
     }
 }

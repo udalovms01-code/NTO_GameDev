@@ -23,7 +23,7 @@ namespace Gameplay
 
         public void OnClick()
         {
-            _gameStateService.SetFishesSlicedStarted(true);
+            // _gameStateService.SetFishesSlicedStarted(true);
             G.main.StartGame();
             _cameraSwitch.SwitchCamera(false);
             G.main.OnGameEnd += Close;
@@ -32,9 +32,9 @@ namespace Gameplay
         public void Close()
         {
             G.main.OnGameEnd -= Close;
-            _gameStateService.SetFishesSlicedStarted(false);
+            // _gameStateService.SetFishesSlicedStarted(false);
             _cameraSwitch.SwitchCamera(true);
-            _gameStateService.SetFishesSliced(true);
+            // _gameStateService.SetFishesSliced(true);
         }
 
         public void UnInteract()
