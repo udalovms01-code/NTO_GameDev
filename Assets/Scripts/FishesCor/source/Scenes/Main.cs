@@ -42,7 +42,8 @@ public class Main : MonoBehaviour
     private GameStateService _gameStateService;
 
     public CMSEntity levelEntity;
-    public List<string> setsEntities;
+    public string setEntity;
+    //public List<string> setsEntities;
 
 
     public int fishCount = 0;
@@ -50,7 +51,7 @@ public class Main : MonoBehaviour
     List<string> levelSeq = new List<string>()
     {
         E.Id<Level1>(),
-        E.Id<Level2>()
+        //E.Id<Level2>()
     };
 
     void Awake()
@@ -69,7 +70,7 @@ public class Main : MonoBehaviour
         G.main = this;
         
         //ЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКА
-        setsEntities = new List<string>() {E.Id<EasySet>(), E.Id<EasySet>(), E.Id<EasySet>()};
+        //setsEntities = new List<string>() {E.Id<EasySet>(), E.Id<EasySet>(), E.Id<EasySet>()};
     }
     
     [Inject]
@@ -81,16 +82,10 @@ public class Main : MonoBehaviour
     void Start()
     {
         if (Testing)
-            StartGame();
+            StartCoroutine(TurnCoroutine());
     }
 
-    public void StartGame()
-    {
-        if (G.run.hasBaggage)
-            StartCoroutine(Turn());
-    }
-
-    public IEnumerator Turn()
+    public IEnumerator TurnCoroutine()
     {
         CMS.Init();
         
@@ -98,12 +93,21 @@ public class Main : MonoBehaviour
         
         fishCount = 0;
         
+        
         if (G.run.level < levelSeq.Count)
             yield return LoadLevel(CMS.Get<CMSEntity>(levelSeq[G.run.level]));
         else
-            SceneManager.LoadScene("ldgame/end_screen");
+            yield return LoadLevel(CMS.Get<Level1>());
         
         yield break;
+    }
+
+    public void StartGame()
+    {
+        if (G.run.hasBaggage)
+        {
+            StartCoroutine(TurnCoroutine());
+        }
     }
 
     void Update()
@@ -169,8 +173,8 @@ public class Main : MonoBehaviour
                 yield return field.TryToEat(fish);
         }
         G.hud.ArrowDisappear();
-        
-        toDel = fishCount;
+
+        toDel = levelEntity.Get<TagDifficulty>().cutPerTurn;//fishCount;
 
         field.Align();
         
@@ -190,7 +194,7 @@ public class Main : MonoBehaviour
             animator.SetTrigger("Cut");
             yield return new WaitForSeconds(0.55f);
             G.feel.UIPunchSoft();
-            field.objects[fishCount - 1].Cut();
+            yield return field.objects[fishCount - 1].CutCoroutine();
             field.objects.RemoveAt(fishCount - 1);
             yield return new WaitForSeconds(.35f);
         }
@@ -200,8 +204,8 @@ public class Main : MonoBehaviour
         
         G.main.field.UnreezeAligning();
 
-        G.run.set++;
-        if (G.run.set < setsEntities.Count)
+        //G.run.set++;
+        if (G.run.pointsSum < levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set < setsEntities.Count)
         {
             yield return DrawFish();
         }
@@ -211,7 +215,7 @@ public class Main : MonoBehaviour
         yield return new WaitForSeconds(1);
 
 
-        if (G.run.set >= setsEntities.Count)
+        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set >= setsEntities.Count)
         {
             OnGameEnd?.Invoke();
         }
@@ -223,7 +227,14 @@ public class Main : MonoBehaviour
     public IEnumerator LoadLevel(CMSEntity entity)
     {
         G.run.set = 0;
+        fishCount = 0;
+        
         levelEntity = entity;
+        if (levelEntity.Is<TagLevelContent>(out var lc))
+            setEntity = lc.startSet;
+        else
+            setEntity = E.Id<EasySet>();
+        
 
         yield return DrawFish();
 
@@ -241,9 +252,10 @@ public class Main : MonoBehaviour
     private IEnumerator DrawFish()
     {
         G.audio.Play<SFX_DiceDraw>();
-        if (CMS.Get<CMSEntity>(setsEntities[G.run.set]).Is<TagSetDefinition>(out var sd))
+        if (CMS.Get<CMSEntity>(setEntity).Is<TagSetDefinition>(out var sd))
         {
-            for (int i = 0; i < sd.fishCount; i++)
+            int dice_count = sd.fishOnTheBoardCount - fishCount;
+            for (int i = 0; i < dice_count; i++)
             {
                 float seed = Random.Range(0f, 1f);
                 float cursum = 0;

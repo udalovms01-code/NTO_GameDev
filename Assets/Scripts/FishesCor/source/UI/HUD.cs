@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    public bool Testing;
+    
     public TextMeshProUGUI DiceView;
     //public Button EndTurn;
     public UITooltip tooltip;
@@ -21,45 +23,6 @@ public class HUD : MonoBehaviour
         G.hud = this;
         G.hud.tooltip.Hide();
     }
-
-    void Start()
-    {
-        //EndTurn.onClick.AddListener(OnClickEndTurn);
-
-        //StartCoroutine(TrackHealth());
-    }
-
-    /*IEnumerator TrackHealth()
-    {
-        Health.value = G.run.maxHealth / 2;
-        yield return UpdateHP();
-        
-        while (true)
-        {
-            if (Health.value > G.run.health)
-            {
-                Health.value--;
-                yield return UpdateHP();
-            }
-
-            if (Health.value < G.run.health)
-            {
-                Health.value++;
-                yield return UpdateHP();
-            }
-            
-            Health.maxValue = G.run.maxHealth;
-            yield return new WaitForEndOfFrame();
-        }
-    }*/
-
-    /*IEnumerator UpdateHP()
-    {
-        yield return G.ui.ScaleCountIn(HealthValue.transform);
-        HealthValue.text = Health.value + "/" + G.run.maxHealth;
-        yield return G.ui.ScaleCountOut(HealthValue.transform);
-    }*/
-
     void OnClickEndTurn()
     {
         G.main.EndTurn();

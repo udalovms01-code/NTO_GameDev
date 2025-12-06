@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 /*public class TagListSets : EntityComponentDefinition
 {
@@ -16,15 +17,19 @@ public class FishSet : EntityComponentDefinition
     }
 }*/
 
+
 public class TagSetDefinition : EntityComponentDefinition
 {
-    public int fishCount;
+    public int fishOnTheBoardCount = 6;
     public List<FishSpawnData> datas = new List<FishSpawnData>();
 }
+
+
 
 public class TagDifficulty : EntityComponentDefinition
 {
     public int virusPerSet = 1;
+    public int cutPerTurn = 1;
 }
 
 public class TagLevelScript : EntityComponentDefinition
@@ -32,8 +37,11 @@ public class TagLevelScript : EntityComponentDefinition
     public Func<IEnumerator> toExecute;
 }
 
-public class TagLevelTarget : EntityComponentDefinition
+public class TagLevelContent : EntityComponentDefinition
 {
-    public int poits;
+    public int totalPoints;
+    public string startSet;
+    public Dictionary<int, string> badFishSpawns = new Dictionary<int, string>();
+    public Dictionary<int, string> setChanges = new Dictionary<int, string>();
 }
 

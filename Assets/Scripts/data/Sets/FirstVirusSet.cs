@@ -5,23 +5,23 @@ public class FirstVirusSet : CMSEntity
 {
     public FirstVirusSet()
     {
-        Define<TagSetDefinition>().fishCount = 7;
+        Define<TagSetDefinition>().fishOnTheBoardCount = 7;
         
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish:E.Id<BasicFish>(), 
-            percentage:0.25f
+            fish_id:E.Id<BasicFish>(), 
+            new_percentage:0.25f
             ));
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish:E.Id<FudgeFish>(), 
-            percentage:0.25f
+            fish_id:E.Id<FudgeFish>(), 
+            new_percentage:0.25f
             ));
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish:E.Id<MinnowFish>(), 
-            percentage:0.25f
+            fish_id:E.Id<MinnowFish>(), 
+            new_percentage:0.25f
         ));
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish:E.Id<FattyFish>(), 
-            percentage:0.25f
+            fish_id:E.Id<FattyFish>(), 
+            new_percentage:0.25f
         ));
     }
 }

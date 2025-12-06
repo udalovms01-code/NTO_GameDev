@@ -7,7 +7,7 @@ public class Level2 : CMSEntity
     {
         Define<TagLevelScript>().toExecute = Script;
         Define<TagDifficulty>().virusPerSet = 1;
-        Define<TagLevelTarget>().poits = 7;
+        Define<TagLevelContent>().totalPoints = 7;
     }
 
     IEnumerator Script()

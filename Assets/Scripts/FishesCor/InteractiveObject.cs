@@ -168,16 +168,18 @@ public class InteractiveObject : MonoBehaviour, IClickable
     public IEnumerator EatenCoroutine()
     {
         yield return DieAnim();
+        yield return GetPoints();
         yield return new WaitForSeconds(0.2f);
         yield return Die();
     }
 
-    public void Cut()
+    IEnumerator GetPoints()
     {
-        StartCoroutine(CutCoroutine());
+        G.run.pointsSum += state.fishValue;
+        yield break;
     }
 
-    IEnumerator CutCoroutine()
+    public IEnumerator CutCoroutine()
     {
         yield return DieAnim();
         G.run.pointsSum += state.fishValue;

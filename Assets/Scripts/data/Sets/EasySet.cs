@@ -5,23 +5,23 @@ public class EasySet : CMSEntity
 {
     public EasySet()
     {
-        Define<TagSetDefinition>().fishCount = 6;
+        Define<TagSetDefinition>().fishOnTheBoardCount = 6;
         
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish:E.Id<BasicFish>(), 
-            percentage:0.35f
+            fish_id:E.Id<BasicFish>(), 
+            new_percentage:0.35f
             ));
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish:E.Id<FudgeFish>(), 
-            percentage:0.35f
+            fish_id:E.Id<FudgeFish>(), 
+            new_percentage:0.35f
             ));
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish:E.Id<MinnowFish>(), 
-            percentage:0.15f
+            fish_id:E.Id<MinnowFish>(), 
+            new_percentage:0.15f
         ));
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish:E.Id<FattyFish>(), 
-            percentage:0.15f
+            fish_id:E.Id<FattyFish>(), 
+            new_percentage:0.15f
         ));
     }
 }
