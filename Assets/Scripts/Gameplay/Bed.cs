@@ -20,7 +20,7 @@ namespace Gameplay
 
         public void OnClick()
         {
-            if(!_gameStateService.IsFishesSliced || !_gameStateService.IsDialogEnded) return;
+            // if(!_gameStateService.IsFishesSliced || !_gameStateService.IsDialogEnded) return;
             
             FadeController.Instance.FadeIn(() =>
             {
