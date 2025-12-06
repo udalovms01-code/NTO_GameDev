@@ -8,7 +8,7 @@ public static class G
     public static Main main;
     public static FishUI ui;
     public static HUD hud;
-    public static HungerUI HungerUI;
+    //public static HungerUI HungerUI;
     public static Savefile save;
     public static CameraHandle camera;
     public static Feel feel;

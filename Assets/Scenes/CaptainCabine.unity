@@ -119,6 +119,19 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1239037604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7923139603830656956, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+  m_PrefabInstance: {fileID: 182650327081302979}
+  m_PrefabAsset: {fileID: 0}
+--- !u!81 &1239037609
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239037604}
+  m_Enabled: 1
 --- !u!212 &1334800580 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3700091710730604938, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
@@ -203,7 +216,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7923139603830656956, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1239037609}
   m_SourcePrefab: {fileID: 100100000, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

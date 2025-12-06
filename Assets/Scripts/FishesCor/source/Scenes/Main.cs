@@ -188,8 +188,9 @@ public class Main : MonoBehaviour
         
         yield return new WaitForSeconds(0.3f);
         
-        for (int i = 0; i < toDel; i++)
+        for (int i = 0; i < 6; i++)
         {
+            Debug.Log(i);
             G.main.field.AlignSetForCutting();
             animator.SetTrigger("Cut");
             yield return new WaitForSeconds(0.55f);
@@ -203,6 +204,8 @@ public class Main : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         
         G.main.field.UnreezeAligning();
+        
+        
 
         //G.run.set++;
         if (G.run.pointsSum < levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set < setsEntities.Count)
@@ -215,14 +218,15 @@ public class Main : MonoBehaviour
         yield return new WaitForSeconds(1);
 
 
-        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set >= setsEntities.Count)
+        /*if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set >= setsEntities.Count)
         {
             OnGameEnd?.Invoke();
         }
         else
         {
             G.hud.EnableHud();
-        }
+        }*/
+        OnGameEnd?.Invoke();
     }
     public IEnumerator LoadLevel(CMSEntity entity)
     {
