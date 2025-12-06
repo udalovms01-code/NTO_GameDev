@@ -188,7 +188,7 @@ public class Main : MonoBehaviour
         
         yield return new WaitForSeconds(0.3f);
         
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 1; i++)
         {
             Debug.Log(i);
             G.main.field.AlignSetForCutting();

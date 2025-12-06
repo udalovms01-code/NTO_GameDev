@@ -14,7 +14,7 @@ namespace Gameplay
         
         void Awake()
         {
-            G.HungerUI = this;
+            //G.HungerUI = this;
         }
 
         void Start()
