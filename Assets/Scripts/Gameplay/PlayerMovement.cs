@@ -5,14 +5,14 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     private CharacterController controller;
     
-    [field: SerializeField] public Camera mainCamera { get; private set; }
+    public Camera MainCamera { get; private set; }
     
     public static PlayerMovement Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
-        mainCamera = Camera.main;
+        MainCamera = Camera.main;
         controller = GetComponent<CharacterController>();
     }
 
@@ -25,11 +25,5 @@ public class PlayerMovement : MonoBehaviour
         move = transform.TransformDirection(move);
 
         controller.SimpleMove(move * speed);
-        
-        //jump
-        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
-        {
-            controller.SimpleMove(Vector3.up * 10f);
-        }
     }
 }

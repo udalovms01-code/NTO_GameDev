@@ -1,11 +1,13 @@
 ﻿using System;
+using SaveSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Gameplay
 {
     public enum GameState
     {
-        WaitingForSlicedFish = 0,
+        WaitingForSlicedFish,
         SlicedFish,
         WaitingForDialog,
         Dialog,
@@ -13,11 +15,11 @@ namespace Gameplay
         Sleep
     }
     
-    public class GameStateService
+    public class GameStateService : ISaveDataSource, IInitializable
     {
-        public GameState CurrentState { get; private set; }
+        public GameState CurrentState { get; private set; } = GameState.Sleep;
         public bool IsTutorialCompleted { get; private set; }
-        public int CurrentDay { get; private set; } = 1;
+        public int CurrentDay { get; private set; }
         public bool IsFishesSlicedStarted { get; private set; }
         public float Hunger { get; private set; }
         
@@ -38,6 +40,7 @@ namespace Gameplay
         {
             if (CurrentDay == day) return;
             
+            SetState(GameState.WaitingForSlicedFish);
             CurrentDay = day;
             OnDayChanged?.Invoke(day);
         }
@@ -45,7 +48,6 @@ namespace Gameplay
         public void SetState(GameState state)
         {
             if (CurrentState == state) return;
-            
             CurrentState = state;
             OnStateChanged?.Invoke(state);
         }
@@ -56,6 +58,25 @@ namespace Gameplay
 
             IsTutorialCompleted = value;
             OnTutorialCompleted?.Invoke(value);
+        }
+
+        public void Capture(SaveDataContainer container)
+        {
+            container.gameplay.CurrentState = CurrentState;
+            container.gameplay.CurrentDay = CurrentDay;
+            container.gameplay.Hunger = Hunger;
+        }
+
+        public void Restore(SaveDataContainer container)
+        {
+            SetState(container.gameplay.CurrentState);
+            SetDay(container.gameplay.CurrentDay);
+            SetHunger(container.gameplay.Hunger);
+        }
+
+        public void Initialize()
+        {
+            SetDay(1);
         }
     }
 }

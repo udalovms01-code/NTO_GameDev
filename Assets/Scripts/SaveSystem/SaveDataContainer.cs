@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Gameplay;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SaveSystem
 {
@@ -10,18 +12,16 @@ namespace SaveSystem
         public string Version;
         public long SavedAtTicks;
         public string ActiveScene;
-        public PlayerStateData Player = new PlayerStateData();
+        public GameplayStateData gameplay = new GameplayStateData();
         public List<EntityStateData> Entities = new List<EntityStateData>();
     }
 
     [Serializable]
-    public class PlayerStateData
+    public class GameplayStateData
     {
-        public string CurrentLocation;
-        public Vector3 Position;
-        public int Health;
-        public int Experience;
-        public List<string> InventoryIds = new List<string>();
+        public GameState CurrentState = GameState.WaitingForSlicedFish;
+        public int CurrentDay = 1;
+        public float Hunger = 1f;
     }
 
     [Serializable]

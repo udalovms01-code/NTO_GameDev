@@ -5,6 +5,7 @@ namespace Gameplay
 {
     public class Camera2dState : MonoBehaviour
     {
+        public Transform camera2d;
         [SerializeField] private GameObject[] _elements;
         
         public static Camera2dState Instance { get; private set; }
