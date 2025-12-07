@@ -30,7 +30,7 @@ public class KnifeInteractive : MonoBehaviour
         transform.DOKill();
         view.DOShakeRotation(
             duration,
-            new Vector3(0, 0, tiltAngle),
+            new Vector3(tiltAngle, 0, 0),
             0
         );
     }

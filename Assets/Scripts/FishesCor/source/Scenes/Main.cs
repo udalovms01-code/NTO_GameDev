@@ -173,7 +173,8 @@ public class Main : MonoBehaviour
 
     void Update()
     {
-        if (_gameStateService is { IsFishesSlicedStarted: false }) return;
+        if (!Testing)
+            if (_gameStateService != null && _gameStateService.CurrentState != GameState.SlicedFish) return;
         G.ui.debug_text.text = "";
         G.ui.debug_text.text += "R-reload\n";
         G.ui.debug_text.text += "D-add dice\n";
