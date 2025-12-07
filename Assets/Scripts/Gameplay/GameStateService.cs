@@ -21,7 +21,7 @@ namespace Gameplay
         public bool IsTutorialCompleted { get; private set; }
         public int CurrentDay { get; private set; }
         public bool IsFishesSlicedStarted { get; private set; }
-        public float Hunger { get; private set; }
+        public float Hunger { get; private set; } = 1f;
         
         public event Action<bool> OnTutorialCompleted;
         public event Action<int> OnDayChanged;
@@ -33,6 +33,7 @@ namespace Gameplay
             if (Mathf.Approximately(Hunger, value)) return;
             
             Hunger = value;
+            Hunger = Mathf.Max(Mathf.Min(Hunger, 1f), 0f);
             OnHungerChanged?.Invoke(value);
         }
         

@@ -42,6 +42,7 @@ public class Main : MonoBehaviour
     [FormerlySerializedAs("hand")] public FishZone field;
 
     public bool Testing = false;
+    public bool Strategies = false;
     public float tableHeith = 0f;
     public Interactor interactor;
 
@@ -148,14 +149,16 @@ public class Main : MonoBehaviour
         {
             levelToLoad = CMS.Get<Level1>();
         }
-        
-        //                    ---------------------------STRATEGIES---------------------
 
-        /*yield return SmartGenerateObjects();
-        Debug.Log(smartGeneratedObjects);*/
-        //                    ---------------------------STRATEGIES---------------------
-
-        yield return LoadLevel(levelToLoad);
+        if (Strategies)
+        {
+            yield return SmartGenerateObjects();
+            Debug.Log(smartGeneratedObjects);
+        }
+        else
+        {
+            yield return LoadLevel(levelToLoad);
+        }
         
         yield break;
     }
@@ -189,16 +192,12 @@ public class Main : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            /*InteractiveObject isv = "prefab/fish_view".Load<InteractiveObject>();
-            Instantiate(isv);*/
             AddFish<GuppyFish>();
-            /*if (Random.Range(0f, 1f) < 0.5f)
-                AddDice<BasicDice>();
-            else
-                AddDice<FudgeDice>();*/
 
             G.feel.UIPunchSoft();
         }
+        
+        _gameStateService.SetHunger(_gameStateService.Hunger - (Time.deltaTime / 100));
     }
 
     public void EndTurn()
@@ -223,7 +222,6 @@ public class Main : MonoBehaviour
 
         if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set >= setsEntities.Count)
         {
-            Debug.Log(G.run.pointsSum);
             OnGameEnd?.Invoke();
         }
         else
@@ -296,9 +294,8 @@ public class Main : MonoBehaviour
         animator.SetTrigger("CameraIn");
         yield return new WaitForSeconds(1 * G.visualConfig.animationSpeed);
     }
-    //                    ---------------------------STRATEGIES---------------------
 
-    /*IEnumerator SmartGenerateObjects()
+    IEnumerator SmartGenerateObjects()
     {
         G.visualConfig.animationSpeed = 0f;
         
@@ -388,7 +385,7 @@ public class Main : MonoBehaviour
 
         smartGeneratedObjects = null;
         G.visualConfig.animationSpeed = 1f;
-    }*/
+    }
 
     
     public IEnumerator LoadLevel(CMSEntity entity)
@@ -421,60 +418,61 @@ public class Main : MonoBehaviour
 
     private IEnumerator DrawFish()
     {
-        G.audio.Play<SFX_DiceDraw>();
-        int dice_count = 6;//fishCount;
-        
-        if (seedPos >= seed.Count)
+        if (!Strategies)
         {
-            yield return EndGame();
-            yield break;
-        }
-        
-        FishRun props = fishStrategiesManager.LoadFishData().runs[seed[seedPos]];
-        
-        for (int i = props.fishes.Length - 1; i >= 0; i--)
-        {
-            AddFish(props.fishes[i].id, direction: props.fishes[i].direction);
-        }
+            G.audio.Play<SFX_DiceDraw>();
+            int dice_count = 6; //fishCount;
 
-        seedPos++;
-        //ChooseVirusedFish();
-        yield break;
-        
-        
-        
-        //                    ---------------------------STRATEGIES---------------------
-
-        /*if (CMS.Get<CMSEntity>(setEntity).Is<TagSetDefinition>(out var sd))
-        {
-            int dice_count = sd.fishOnTheBoardCount - field.objects.Count;//fishCount;
-            for (int i = 0; i < dice_count; i++)
+            if (seedPos >= seed.Count)
             {
-                float seed = Random.Range(0f, 1f);
-                float cursum = 0;
-                foreach (var data in sd.fish_probabilities)
-                {
-                    cursum += data.Value;
-                    if (seed <= cursum)
-                    {
-                        AddFish(data.Key);
-                        break;
-                    }
-                }
+                yield return EndGame();
+                yield break;
             }
-            
+
+            FishRun props = fishStrategiesManager.LoadFishData().runs[seed[seedPos]];
+
+            for (int i = props.fishes.Length - 1; i >= 0; i--)
+            {
+                AddFish(props.fishes[i].id, direction: props.fishes[i].direction);
+            }
+
+            seedPos++;
             //ChooseVirusedFish();
             yield break;
         }
         else
         {
-            int dice_count = sd.fishOnTheBoardCount - field.objects.Count;
-            for (var i = 0; i < dice_count; i++)
+            if (CMS.Get<CMSEntity>(setEntity).Is<TagSetDefinition>(out var sd))
             {
-                AddFish<GuppyFish>();
-                yield return new WaitForSeconds(0.2f * G.visualConfig.animationSpeed);
+                int dice_count = sd.fishOnTheBoardCount - field.objects.Count; //fishCount;
+                for (int i = 0; i < dice_count; i++)
+                {
+                    float seed = Random.Range(0f, 1f);
+                    float cursum = 0;
+                    foreach (var data in sd.fish_probabilities)
+                    {
+                        cursum += data.Value;
+                        if (seed <= cursum)
+                        {
+                            AddFish(data.Key);
+                            break;
+                        }
+                    }
+                }
+
+                //ChooseVirusedFish();
+                yield break;
             }
-        }*/
+            else
+            {
+                int dice_count = sd.fishOnTheBoardCount - field.objects.Count;
+                for (var i = 0; i < dice_count; i++)
+                {
+                    AddFish<GuppyFish>();
+                    yield return new WaitForSeconds(0.2f * G.visualConfig.animationSpeed);
+                }
+            }
+        }
     }
 
     IEnumerator DrawFish(List<InteractiveObject> newObjects)
@@ -650,37 +648,5 @@ public class FishStrategiesManager
         }
         
         return list;
-    }
-
-    public void ExampleUsage()
-    {
-        // Создание тестовых данных
-        FishRunsData allRuns = new FishRunsData();
-        
-        for (int runIndex = 0; runIndex < 30; runIndex++)
-        {
-            allRuns.runs[runIndex] = new FishRun();
-            
-            for (int fishIndex = 0; fishIndex < 6; fishIndex++)
-            {
-                allRuns.runs[runIndex].fishes[fishIndex] = new FishSpawnProperties
-                {
-                    id = $"fish_{runIndex}_{fishIndex}",
-                    position = fishIndex * 10,
-                    direction = fishIndex % 2 == 0 ? FishDirection.Left : FishDirection.Right
-                };
-            }
-        }
-
-        // Сохранение
-        SaveFishData(allRuns);
-
-        // Загрузка
-        FishRunsData loadedData = LoadFishData();
-        
-        if (loadedData != null)
-        {
-            Debug.Log($"Первая рыба первого запуска: {loadedData.runs[0].fishes[0].id}");
-        }
     }
 }
