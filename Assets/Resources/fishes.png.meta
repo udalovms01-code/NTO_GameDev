@@ -306,8 +306,8 @@ TextureImporter:
         y: 884
         width: 49
         height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.54, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -365,7 +365,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: clown
+      name: zander
       rect:
         serializedVersion: 2
         x: 32
@@ -387,7 +387,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fishes_12
+      name: moray_eel
       rect:
         serializedVersion: 2
         x: 0
@@ -687,11 +687,9 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       bream: -320358261
-      clown: 2015395484
       fatty: -637554801
       fishes_1: -163800308
       fishes_10: 928267124
-      fishes_12: -945307436
       fishes_13: -1756439829
       fishes_15: -688447783
       fishes_17: 1851943214
@@ -709,8 +707,10 @@ TextureImporter:
       green_armored: 343172066
       guppy: -1266976946
       minnow: 439830185
+      moray_eel: -945307436
       screamer: -1835093101
       swordfish: 603056123
+      zander: 2015395484
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

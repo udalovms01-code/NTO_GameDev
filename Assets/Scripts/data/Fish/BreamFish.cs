@@ -5,7 +5,7 @@ public class BreamFish : FishBase
 {
     public BreamFish()
     {
-        Define<TagFishView>().name = "Лещ";
+        Define<TagFishView>().name = "bream";
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "bream");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "bream");
         Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "bream");
@@ -30,11 +30,11 @@ public class TagBreamInteraction : BaseInteraction, IOnEndTurn
             {
                 if (nextFish.state.model.Is<TagFishView>(out var fv))
                 {
-                    if (fv.name == "Лещ")
+                    if (fv.name == "bream")
                     {
                         fish.view.SetValue(fish.fishValue + tfl.delta);
                         fish.view.spriteAnimator.Punch();
-                        yield return new WaitForSeconds(0.25f * G.visualConfig.animationSpeed);
+                        yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
                     }
                 }
             }
@@ -58,7 +58,7 @@ public class FudgeNextDiceInteraction : BaseInteraction, IOnEndTurn
             {
                 nextFish.SetValue(nextFish.state.fishValue + tfl.delta);
                 nextFish.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.visualConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
             }
         }
     }

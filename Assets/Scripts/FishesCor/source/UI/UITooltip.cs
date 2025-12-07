@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Localization;
 using TMPro;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ public class UITooltip : MonoBehaviour
         _rectTransform.anchoredPosition = G.hud.MousePos();
         if (state.model.Is<TagFishView>(out var fv))
         {
-            name.text = fv.name;
+            name.text = LocalizationManager.Get(fv.name);
             description.text = fv.description;
         }    
     }

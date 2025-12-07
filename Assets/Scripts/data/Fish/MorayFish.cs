@@ -1,16 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FattyFish : FishBase
+public class MorayFish : FishBase
 {
-    public FattyFish()
+    public MorayFish()
     {
-        Define<TagFishView>().name = "fatty";
-        Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "fatty");
-        Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "fatty");
-        Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "fatty");
-        Define<TagFishView>().description = "Хищник\n";
+        Define<TagFishView>().name = "moray";
+        Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "moray_eel");
+        Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "moray_eel");
+        Define<TagFishView>().description = "Получает +1, если съедает рыбу";
         Define<TagFatty>().delta = 1;
         Define<TagSizes>().possibleSizes = new List<FishSize>()
         {
@@ -19,17 +18,12 @@ public class FattyFish : FishBase
     }
 }
 
-public class TagCloneFrontFish : EntityComponentDefinition
+public class TagMorayFish : EntityComponentDefinition
 {
     public int delta;
 }
 
-public class TagFatty : EntityComponentDefinition
-{
-    public int delta = 1;
-}
-
-public class FattyInteraction : BaseInteraction, IOnEat
+public class MorayInteraction : BaseInteraction, IOnEat
 {
     public IEnumerator OnEat(FishState obj_state, FishState subj_state)
     {
@@ -45,9 +39,4 @@ public class FattyInteraction : BaseInteraction, IOnEat
             }
         }
     }
-}
-
-public interface IOnEat
-{
-    public IEnumerator OnEat(FishState obj_state, FishState subj_state);
 }

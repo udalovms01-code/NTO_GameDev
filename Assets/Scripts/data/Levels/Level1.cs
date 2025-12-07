@@ -7,10 +7,11 @@ public class Level1 : CMSEntity
     {
         Define<TagLevelScript>().toExecute = Script;
         Define<TagDifficulty>().virusPerSet = 1;
-        Define<TagLevelContent>().totalPoints = 10;
+        Define<TagLevelContent>().totalPoints = 30;
         Define<TagLevelContent>().startSet = E.Id<EasySet>();
-        Define<TagLevelContent>().badFishSpawns[5] = E.Id<FattyFish>();
+        //Define<TagLevelContent>().badFishSpawns[5] = E.Id<FattyFish>();
     }
+
 
     IEnumerator Script()
     {
