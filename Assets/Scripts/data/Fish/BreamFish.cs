@@ -1,16 +1,44 @@
 using System.Collections;
 using UnityEngine;
 
-public class FudgeFish : FishBase
+public class BreamFish : FishBase
 {
-    public FudgeFish()
+    public BreamFish()
     {
         Define<TagFishView>().name = "Лещ";
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "bream");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "bream");
         Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "bream");
-        Define<TagFishView>().description = "Повышает качество соседнего леща на 1";
-        Define<TagFudgeNextDice>().delta = 1;
+        Define<TagFishView>().description = "Получает +1, если напротив Лещ";
+        Define<TagBream>().delta = 1;
+    }
+}
+
+public class TagBream : EntityComponentDefinition
+{
+    public int delta;
+}
+
+public class TagBreamInteraction : BaseInteraction, IOnEndTurn
+{
+    public IEnumerator OnEndTurn(FishState fish)
+    {
+        if (fish.model.Is<TagBream>(out var tfl))
+        {
+            var nextFish = G.main.field.FrontFish(fish.view);
+            if (nextFish != null)
+            {
+                if (nextFish.state.model.Is<TagFishView>(out var fv))
+                {
+                    if (fv.name == "Лещ")
+                    {
+                        fish.view.SetValue(fish.fishValue + tfl.delta);
+                        fish.view.spriteAnimator.Punch();
+                        yield return new WaitForSeconds(0.25f);
+                    }
+                }
+            }
+        }
     }
 }
 

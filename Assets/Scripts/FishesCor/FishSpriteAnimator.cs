@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class FishSpriteAnimator : MonoBehaviour
 {   
@@ -40,6 +42,11 @@ public class FishSpriteAnimator : MonoBehaviour
         G.main.SceneChange += KillAll;
 
         SetIdleAnim();
+    }
+
+    private void OnDisable()
+    {
+        G.main.SceneChange -= KillAll;
     }
 
     public void KillAll()

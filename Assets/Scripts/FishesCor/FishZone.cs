@@ -154,8 +154,15 @@ public class FishZone : MonoBehaviour
     
     public IEnumerator Eat(InteractiveObject obj, InteractiveObject subj)
     {
-        objects[ZoneIndex(subj)] = null;
+        //objects[ZoneIndex(subj)] = null;
+        objects.RemoveAt(ZoneIndex(subj));
         yield return subj.EatenCoroutine();
+        
+        var onEat = G.main.interactor.FindAll<IOnEat>();
+        foreach (var et in onEat)
+            yield return et.OnEat(obj.state, subj.state);
+        
+        Align();
 
 
         //objects[ZoneIndex(subj)] = objects[ZoneIndex(obj)];

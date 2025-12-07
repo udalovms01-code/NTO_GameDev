@@ -7,7 +7,7 @@ public abstract class FishBase : CMSEntity
     {
         Define<TagPrefab>().prefab = "prefab/fish_view".Load<InteractiveObject>();
         Define<TagFishView>().name = "???";
-        Define<TagStartFishValue>().value = 1;
+        Define<TagStartFishValue>().value = 0;
         Define<TagFishView>().description = "???";
         Define<TagRarity>().rarity = FishRarity.COMMON;
         Define<TagTint>().color = Color.white;
@@ -15,17 +15,6 @@ public abstract class FishBase : CMSEntity
         {
             FishSize.Small
         };
-    }
-}
-public class BasicFish : FishBase
-{
-    public BasicFish()
-    {
-        Define<TagFishView>().name = "Гуппи";
-        Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "guppy");
-        Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "guppy");
-        Define<TagFishView>().description = "Ничего не делает";
-        Define<TagCannotBeVirused>();
     }
 }
 
