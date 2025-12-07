@@ -10,7 +10,7 @@ public class FattyFish : FishBase
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "fatty");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "fatty");
         Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "fatty");
-        Define<TagFishView>().description = "Получает +1, если съедает рыбу";
+        Define<TagFishView>().description = "Хищник\n";
         Define<TagFatty>().delta = 1;
         Define<TagSizes>().possibleSizes = new List<FishSize>()
         {
@@ -41,7 +41,7 @@ public class FattyInteraction : BaseInteraction, IOnEat
             {
                 obj_view.SetValue(obj_state.fishValue + tfl.delta);
                 obj_view.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
             }
         }
     }

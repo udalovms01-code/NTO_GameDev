@@ -31,7 +31,7 @@ public class FudgeDiceInteraction : BaseInteraction, IOnEndTurn
             {
                 view.SetValue(fish.fishValue + tfl.delta);
                 view.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
             }
         }
     }

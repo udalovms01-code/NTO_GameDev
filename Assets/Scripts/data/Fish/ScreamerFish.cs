@@ -30,7 +30,7 @@ public class FudgeScreamerInteraction : BaseInteraction, IOnEndTurn
             {
                 next.SetValue(next.state.fishValue + tfl.delta);
                 next.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
             }
         }
     }

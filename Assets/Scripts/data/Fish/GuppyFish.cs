@@ -33,7 +33,7 @@ public class RotatorInteraction : BaseInteraction, IOnEndTurn
                     : FishDirection.Right;
                 nextFish.SetState(nextFish.state);
                 nextFish.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
             }
         }
     }

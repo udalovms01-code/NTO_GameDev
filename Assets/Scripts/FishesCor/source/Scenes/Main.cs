@@ -34,7 +34,7 @@ public class FishSpawnProperties
 
 public class CorGameplayConfig
 {
-    public float animationSpeed = 1f;
+    public float animationMultiplier = 0.5f;
     public float hungerMultiplier = 4f;
 }
 
@@ -109,7 +109,7 @@ public class Main : MonoBehaviour
         {
             G.CorGameplayConfig = new CorGameplayConfig();
 
-            G.CorGameplayConfig.animationSpeed = 1f;
+            G.CorGameplayConfig.animationMultiplier = 1f;
         }
 
         fishStrategiesManager = new FishStrategiesManager();
@@ -245,7 +245,7 @@ public class Main : MonoBehaviour
             if (fish == null) continue;
             G.hud.ArrowSelect(fish.transform.position + Vector3.forward, duration: .1f);
 
-            yield return new WaitForSeconds(.4f * G.CorGameplayConfig.animationSpeed);
+            yield return new WaitForSeconds(.4f * G.CorGameplayConfig.animationMultiplier);
             yield return fish.Activate();
             
 
@@ -267,40 +267,40 @@ public class Main : MonoBehaviour
 
         field.Align();
         
-        yield return new WaitForSeconds(1f * G.CorGameplayConfig.animationSpeed);
+        yield return new WaitForSeconds(1f * G.CorGameplayConfig.animationMultiplier);
         
         animator.SetTrigger("CameraOut");
         
-        yield return new WaitForSeconds(1 * G.CorGameplayConfig.animationSpeed);
+        yield return new WaitForSeconds(1 * G.CorGameplayConfig.animationMultiplier);
         
         animator.SetTrigger("CameraKnifeIn");
         
-        yield return new WaitForSeconds(0.3f * G.CorGameplayConfig.animationSpeed);
+        yield return new WaitForSeconds(0.3f * G.CorGameplayConfig.animationMultiplier);
         
         for (int i = 0; i < toDel; i++)
         {
             G.main.field.AlignSetForCutting();
             animator.SetTrigger("Cut");
-            yield return new WaitForSeconds(0.55f * G.CorGameplayConfig.animationSpeed);
+            yield return new WaitForSeconds(0.55f * G.CorGameplayConfig.animationMultiplier);
             G.feel.UIPunchSoft();
             yield return field.objects[field.objects.Count - 1].CutCoroutine();/*fishCount - 1].CutCoroutine();*/
             field.objects.RemoveAt(field.objects.Count - 1);/*fishCount - 1);*/
-            yield return new WaitForSeconds(.35f * G.CorGameplayConfig.animationSpeed);
+            yield return new WaitForSeconds(.35f * G.CorGameplayConfig.animationMultiplier);
         }
 
         field.Align();
         animator.SetTrigger("CameraKnifeOut");
 
-        yield return new WaitForSeconds(0.3f * G.CorGameplayConfig.animationSpeed);
+        yield return new WaitForSeconds(0.3f * G.CorGameplayConfig.animationMultiplier);
         G.main.field.UnreezeAligning();
         
         animator.SetTrigger("CameraIn");
-        yield return new WaitForSeconds(1 * G.CorGameplayConfig.animationSpeed);
+        yield return new WaitForSeconds(1 * G.CorGameplayConfig.animationMultiplier);
     }
 
     IEnumerator SmartGenerateObjects()
     {
-        G.CorGameplayConfig.animationSpeed = 0f;
+        G.CorGameplayConfig.animationMultiplier = 0f;
         
         int startPoints;
         int startSum;
@@ -378,7 +378,7 @@ public class Main : MonoBehaviour
                     else
                     {
                         fishStrategiesManager.SaveFishData(fishStrategiesManager.allRuns);
-                        G.CorGameplayConfig.animationSpeed = 1f;
+                        G.CorGameplayConfig.animationMultiplier = 1f;
                         yield break;
                     }
                 }
@@ -387,7 +387,7 @@ public class Main : MonoBehaviour
         }
 
         smartGeneratedObjects = null;
-        G.CorGameplayConfig.animationSpeed = 1f;
+        G.CorGameplayConfig.animationMultiplier = 1f;
     }
 
     
@@ -450,7 +450,7 @@ public class Main : MonoBehaviour
                 for (var i = 0; i < dice_count; i++)
                 {
                     AddFish<GuppyFish>();
-                    yield return new WaitForSeconds(0.2f * G.CorGameplayConfig.animationSpeed);
+                    yield return new WaitForSeconds(0.2f * G.CorGameplayConfig.animationMultiplier);
                 }
             }
         }

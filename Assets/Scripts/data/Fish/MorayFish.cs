@@ -35,7 +35,7 @@ public class MorayInteraction : BaseInteraction, IOnEat
             {
                 obj_view.SetValue(obj_state.fishValue + tfl.delta);
                 obj_view.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
             }
         }
     }

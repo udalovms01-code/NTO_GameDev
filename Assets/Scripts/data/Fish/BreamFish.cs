@@ -34,7 +34,7 @@ public class TagBreamInteraction : BaseInteraction, IOnEndTurn
                     {
                         fish.view.SetValue(fish.fishValue + tfl.delta);
                         fish.view.spriteAnimator.Punch();
-                        yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
+                        yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
                     }
                 }
             }
@@ -58,7 +58,7 @@ public class FudgeNextDiceInteraction : BaseInteraction, IOnEndTurn
             {
                 nextFish.SetValue(nextFish.state.fishValue + tfl.delta);
                 nextFish.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
             }
         }
     }

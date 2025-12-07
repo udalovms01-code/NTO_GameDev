@@ -21,8 +21,10 @@ public class EasySet : CMSEntity
 
         Define<TagSetDefinition>().fish_probabilities[E.Id<GuppyFish>()] = 0.25f;
         Define<TagSetDefinition>().fish_probabilities[E.Id<BreamFish>()] = 0.25f;
-        Define<TagSetDefinition>().fish_probabilities[E.Id<FattyFish>()] = 0.25f;
-        Define<TagSetDefinition>().fish_probabilities[E.Id<ScreamerFish>()] = 0.25f;
+        Define<TagSetDefinition>().fish_probabilities[E.Id<FattyFish>()] = 0.15f;
+        Define<TagSetDefinition>().fish_probabilities[E.Id<ScreamerFish>()] = 0.15f;
+        Define<TagSetDefinition>().fish_probabilities[E.Id<MinnowFish>()] = 0.1f;
+        Define<TagSetDefinition>().fish_probabilities[E.Id<ZanderFish>()] = 0.1f;
 
         /*Define<TagSetDefinition>().datas.Add(new FishSpawnData(
             fish_id:E.Id<GuppyFish>(),

@@ -210,7 +210,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
         yield return DieAnim();
         yield return GetPoints();
         G.run.pointsSum += state.fishValue;
-        yield return new WaitForSeconds(0.2f * G.CorGameplayConfig.animationSpeed);
+        yield return new WaitForSeconds(0.2f * G.CorGameplayConfig.animationMultiplier);
         yield return Die();
     }
 
