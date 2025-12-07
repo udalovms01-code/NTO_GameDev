@@ -122,3 +122,7 @@ MonoBehaviour:
     category: FishNames
     russian: "\u0423\u0434\u0438\u043B\u044C\u0449\u0438\u043A"
     english: Anglerfish
+  - key: zander
+    category: FishNames
+    russian: "\u0421\u0443\u0434\u0430\u043A"
+    english: Zander

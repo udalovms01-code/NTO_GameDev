@@ -5,7 +5,7 @@ public class GuppyFish : FishBase
 {
     public GuppyFish()
     {
-        Define<TagFishView>().name = "Гуппи";
+        Define<TagFishView>().name = "guppy";
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "guppy");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "guppy");
         Define<TagFishView>().description = "Разворачивает рыбу перед собой";
@@ -33,7 +33,7 @@ public class RotatorInteraction : BaseInteraction, IOnEndTurn
                     : FishDirection.Right;
                 nextFish.SetState(nextFish.state);
                 nextFish.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.visualConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
             }
         }
     }

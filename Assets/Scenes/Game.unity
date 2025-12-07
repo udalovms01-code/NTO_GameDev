@@ -1273,6 +1273,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1994526009271686761, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      propertyPath: SmartDraw
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994526009271686761, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
       propertyPath: tableHeith
       value: 0.2555923
       objectReference: {fileID: 0}

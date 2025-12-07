@@ -6,7 +6,7 @@ public class StoneFish : FishBase
 {
     public StoneFish()
     {
-        Define<TagFishView>().name = "Рыба-камень";
+        Define<TagFishView>().name = "stonefish";
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "stonefish");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "stonefish");
         Define<TagFishView>().description = "Бессмертен для хищников";

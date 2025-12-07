@@ -5,7 +5,7 @@ public class MinnowFish : FishBase
 {
     public MinnowFish()
     {
-        Define<TagFishView>().name = "Малёк";
+        Define<TagFishView>().name = "minnow";
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "minnow");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "minnow");
         Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "minnow");
@@ -31,7 +31,7 @@ public class FudgeDiceInteraction : BaseInteraction, IOnEndTurn
             {
                 view.SetValue(fish.fishValue + tfl.delta);
                 view.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f * G.visualConfig.animationSpeed);
+                yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationSpeed);
             }
         }
     }

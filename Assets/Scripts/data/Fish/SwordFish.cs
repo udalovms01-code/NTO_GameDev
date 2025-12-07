@@ -6,7 +6,7 @@ public class SwordFish : FishBase
 {
     public SwordFish()
     {
-        Define<TagFishView>().name = "Рыба-меч";
+        Define<TagFishView>().name = "swordfish";
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "swordfish");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "swordfish");
         Define<TagFishView>().description = "Получает +1, если напротив Лещ";
