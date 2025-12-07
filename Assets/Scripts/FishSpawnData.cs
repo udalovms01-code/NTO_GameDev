@@ -1,4 +1,4 @@
-﻿[System.Serializable]
+﻿/*[System.Serializable]
 public class FishSpawnData
 {
     public string fish;
@@ -8,4 +8,4 @@ public class FishSpawnData
         fish = fish_id;
         percentage = new_percentage;
     }
-}
+}*/

@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 
 public class FirstVirusSet : CMSEntity
@@ -7,12 +7,12 @@ public class FirstVirusSet : CMSEntity
     {
         Define<TagSetDefinition>().fishOnTheBoardCount = 7;
         
-        Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish_id:E.Id<BasicFish>(), 
+        /*Define<TagSetDefinition>().datas.Add(new FishSpawnData(
+            fish_id:E.Id<GuppyFish>(), 
             new_percentage:0.25f
             ));
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
-            fish_id:E.Id<FudgeFish>(), 
+            fish_id:E.Id<BreamFish>(), 
             new_percentage:0.25f
             ));
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
@@ -22,6 +22,6 @@ public class FirstVirusSet : CMSEntity
         Define<TagSetDefinition>().datas.Add(new FishSpawnData(
             fish_id:E.Id<FattyFish>(), 
             new_percentage:0.25f
-        ));
+        ));#1#
     }
-}
+}*/

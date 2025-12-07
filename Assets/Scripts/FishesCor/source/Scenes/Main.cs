@@ -23,6 +23,7 @@ public class RunState
     public bool hasBaggage = true;
 }
 
+
 public class Main : MonoBehaviour
 {
     [FormerlySerializedAs("hand")] public FishZone field;
@@ -46,7 +47,8 @@ public class Main : MonoBehaviour
     //public List<string> setsEntities;
 
 
-    public int fishCount = 0;
+    //public int fishCount = 0;
+    //public List<InteractiveObject> fishes = new List<InteractiveObject>();
     
     List<string> levelSeq = new List<string>()
     {
@@ -91,13 +93,21 @@ public class Main : MonoBehaviour
         
         G.OnGameReady?.Invoke();
         
-        fishCount = 0;
+        //fishCount = 0;
         
         
+        CMSEntity levelToLoad;
+    
         if (G.run.level < levelSeq.Count)
-            yield return LoadLevel(CMS.Get<CMSEntity>(levelSeq[G.run.level]));
+        {
+            levelToLoad = CMS.Get<CMSEntity>(levelSeq[G.run.level]);
+        }
         else
-            yield return LoadLevel(CMS.Get<Level1>());
+        {
+            levelToLoad = CMS.Get<Level1>();
+        }
+    
+        yield return LoadLevel(levelToLoad);
         
         yield break;
     }
@@ -133,7 +143,7 @@ public class Main : MonoBehaviour
         {
             /*InteractiveObject isv = "prefab/fish_view".Load<InteractiveObject>();
             Instantiate(isv);*/
-            AddFish<BasicFish>();
+            AddFish<GuppyFish>();
             /*if (Random.Range(0f, 1f) < 0.5f)
                 AddDice<BasicDice>();
             else
@@ -152,11 +162,12 @@ public class Main : MonoBehaviour
     {
         G.hud.DisableHud();
 
-        int toDel = fishCount;
+        int toActivate = field.objects.Count;//fishCount;
         field.FreezeAligning();
 
-        for (int i = 0; i < toDel; i++)
+        for (int i = 0; i < toActivate; i++)
         {
+            if (field.objects.Count <= i) continue;
             var fish = field.objects[i];
             if (fish == null) continue;
             G.hud.ArrowSelect(fish.transform.position + Vector3.forward, duration: .1f);
@@ -167,14 +178,18 @@ public class Main : MonoBehaviour
             foreach (var et in endTurn)
                 yield return et.OnEndTurn(fish.state);
 
+            /*
             if (fish.state.virused)
                 yield return field.TryToInfect(fish);
             else
                 yield return field.TryToEat(fish);
+        */
+            yield return field.TryToEat(fish);
         }
         G.hud.ArrowDisappear();
 
-        toDel = levelEntity.Get<TagDifficulty>().cutPerTurn;//fishCount;
+        int cutPerTurn = levelEntity.Get<TagDifficulty>().cutPerTurn;//fishCount;
+        int toDel = cutPerTurn == -1 ? field.objects.Count : cutPerTurn;
 
         field.Align();
         
@@ -188,24 +203,23 @@ public class Main : MonoBehaviour
         
         yield return new WaitForSeconds(0.3f);
         
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < toDel; i++)
         {
-            Debug.Log(i);
             G.main.field.AlignSetForCutting();
             animator.SetTrigger("Cut");
             yield return new WaitForSeconds(0.55f);
             G.feel.UIPunchSoft();
-            yield return field.objects[fishCount - 1].CutCoroutine();
-            field.objects.RemoveAt(fishCount - 1);
+            yield return field.objects[field.objects.Count - 1].CutCoroutine();/*fishCount - 1].CutCoroutine();*/
+            field.objects.RemoveAt(field.objects.Count - 1);/*fishCount - 1);*/
             yield return new WaitForSeconds(.35f);
         }
+
+        field.Align();
         animator.SetTrigger("CameraKnifeOut");
-        
+
         yield return new WaitForSeconds(0.3f);
-        
         G.main.field.UnreezeAligning();
-        
-        
+
 
         //G.run.set++;
         if (G.run.pointsSum < levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set < setsEntities.Count)
@@ -217,23 +231,22 @@ public class Main : MonoBehaviour
         animator.SetTrigger("CameraIn");
         yield return new WaitForSeconds(1);
 
-
-        /*if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set >= setsEntities.Count)
+        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set >= setsEntities.Count)
         {
             OnGameEnd?.Invoke();
         }
         else
         {
             G.hud.EnableHud();
-        }*/
-        OnGameEnd?.Invoke();
+        }
     }
     public IEnumerator LoadLevel(CMSEntity entity)
     {
         G.run.set = 0;
-        fishCount = 0;
+        //fishCount = 0;
         
         levelEntity = entity;
+        
         if (levelEntity.Is<TagLevelContent>(out var lc))
             setEntity = lc.startSet;
         else
@@ -258,30 +271,31 @@ public class Main : MonoBehaviour
         G.audio.Play<SFX_DiceDraw>();
         if (CMS.Get<CMSEntity>(setEntity).Is<TagSetDefinition>(out var sd))
         {
-            int dice_count = sd.fishOnTheBoardCount - fishCount;
+            int dice_count = sd.fishOnTheBoardCount - field.objects.Count;//fishCount;
             for (int i = 0; i < dice_count; i++)
             {
                 float seed = Random.Range(0f, 1f);
                 float cursum = 0;
-                foreach (var data in sd.datas)
+                foreach (var data in sd.fish_probabilities)
                 {
-                    cursum += data.percentage;
+                    cursum += data.Value;
                     if (seed <= cursum)
                     {
-                        AddFish(data.fish);
+                        AddFish(data.Key);
                         break;
                     }
                 }
             }
             
-            ChooseVirusedFish();
+            //ChooseVirusedFish();
             yield break;
         }
         else
         {
-            for (var i = 0; i < G.run.drawSize; i++)
+            int dice_count = sd.fishOnTheBoardCount - field.objects.Count;
+            for (var i = 0; i < dice_count; i++)
             {
-                AddFish<BasicFish>();
+                AddFish<GuppyFish>();
                 yield return new WaitForSeconds(0.2f);
             }
         }
@@ -290,7 +304,7 @@ public class Main : MonoBehaviour
     public void ChooseVirusedFish()
     {
         bool noVirusFlag = true;
-        for (int i = 0; i < fishCount; i++)
+        for (int i = 0; i < field.objects.Count; i++)/*fishCount; i++)*/
         {
             if (!field.objects[i].state.model.Is<TagCannotBeVirused>())
             {
@@ -300,9 +314,9 @@ public class Main : MonoBehaviour
         }
 
         if (noVirusFlag) return;
-        int virusedInd = Random.Range(0, fishCount - 1);
+        int virusedInd = Random.Range(0, field.objects.Count - 1);//fishCount - 1);
         while (field.objects[virusedInd].state.model.Is<TagCannotBeVirused>())
-            virusedInd = Random.Range(0, fishCount - 1);
+            virusedInd = Random.Range(0, field.objects.Count - 1);/*fishCount - 1);*/
         
         field.objects[virusedInd].MakeVirused();
     }
@@ -340,9 +354,9 @@ public class Main : MonoBehaviour
         var state = new FishState();
         state.model = basicDice;
         var instance = Instantiate(basicDice.Get<TagPrefab>().prefab, G.main.gameObject.transform);
-        instance.SetState(state);
+        instance.InitState(state);
         field.Claim(instance);
-        fishCount++;
+        //fishCount++;
     }
 
     public void StartDrag(DraggableSmoothDamp draggableSmoothDamp)
@@ -360,4 +374,12 @@ public class Main : MonoBehaviour
     {
         yield break;
     }
+
+    /*public void DeleteFish(InteractiveObject interactiveObject)
+    {
+        int index = fishes.IndexOf(interactiveObject);
+        fishes[index].spriteAnimator.Punch();
+        fishes.Remove(interactiveObject);
+        fishCount--;
+    }*/
 }

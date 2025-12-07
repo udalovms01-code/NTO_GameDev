@@ -72,7 +72,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
             SetValue(sfv.value);
 
 
-        state.direction = Random.Range(0, 2) == 0 ? FishDirection.Right : FishDirection.Left;
+        //state.direction = Random.Range(0, 2) == 0 ? FishDirection.Right : FishDirection.Left;
 
         if (state.direction == FishDirection.Right)
         {
@@ -88,7 +88,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
 
         if (state.model.Is<TagSizes>(out var sz))
         {
-            state.size = sz.possibleSizes[Random.Range(0, sz.possibleSizes.Count - 1)];
+            //state.size = sz.possibleSizes[Random.Range(0, sz.possibleSizes.Count - 1)];
 
             /*if (sz.possibleSizes.Count > 1)
             {*/
@@ -102,6 +102,21 @@ public class InteractiveObject : MonoBehaviour, IClickable
                     break;
             }
         }
+    }
+
+    public void InitState(FishState fishState)
+    {
+        state = fishState;
+        state.view = this;
+        
+        state.direction = Random.Range(0, 2) == 0 ? FishDirection.Right : FishDirection.Left;
+
+        if (state.model.Is<TagSizes>(out var sz))
+        {
+            state.size = sz.possibleSizes[Random.Range(0, sz.possibleSizes.Count - 1)];
+        }
+        
+        SetState(fishState);
     }
 
     public void SetValue(int val)
@@ -203,9 +218,9 @@ public class InteractiveObject : MonoBehaviour, IClickable
 
     public IEnumerator Die()
     {
-        OnDestroy.Invoke();
-
-        G.main.fishCount--;
+        OnDestroy?.Invoke();
+        
+        //G.main.DeleteFish(this);
 
         transform.DOKill();
         Destroy(gameObject);

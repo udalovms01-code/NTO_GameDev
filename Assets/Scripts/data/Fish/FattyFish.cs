@@ -10,8 +10,8 @@ public class FattyFish : FishBase
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "fatty");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "fatty");
         Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "fatty");
-        Define<TagFishView>().description = "раздваивает рыбу, перед собой.\n";
-        Define<TagCloneFrontFish>().delta = 1;
+        Define<TagFishView>().description = "Получает +1, если съедает рыбу";
+        Define<TagFatty>().delta = 1;
         Define<TagSizes>().possibleSizes = new List<FishSize>()
         {
             FishSize.Big
@@ -24,20 +24,30 @@ public class TagCloneFrontFish : EntityComponentDefinition
     public int delta;
 }
 
-public class CloneFrontInteraction : BaseInteraction, IOnEndTurn
+public class TagFatty : EntityComponentDefinition
 {
-    public IEnumerator OnEndTurn(FishState fish)
+    public int delta = 1;
+}
+
+public class FattyInteraction : BaseInteraction, IOnEat
+{
+    public IEnumerator OnEat(FishState obj_state, FishState subj_state)
     {
-        if (fish.model.Is<TagCloneFrontFish>(out var tfl))
+        if (obj_state.model.Is<TagFatty>(out var tfl))
         {
-            InteractiveObject view = fish.view;
-            if (G.main.field.IsLast(view) 
-                || G.main.field.ZoneIndex(view) == 0)
+            InteractiveObject obj_view = obj_state.view;
+            InteractiveObject subj_view = subj_state.view;
+            if (true)
             {
-                view.SetValue(fish.fishValue + tfl.delta);
-                view.spriteAnimator.Punch();
+                obj_view.SetValue(obj_state.fishValue + tfl.delta);
+                obj_view.spriteAnimator.Punch();
                 yield return new WaitForSeconds(0.25f);
             }
         }
     }
+}
+
+public interface IOnEat
+{
+    public IEnumerator OnEat(FishState obj_state, FishState subj_state);
 }
