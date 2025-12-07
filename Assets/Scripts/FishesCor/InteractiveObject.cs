@@ -38,7 +38,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
     public UnityAction UnSelect;
     public UnityAction StartDrag;
     public UnityAction EndDrag;
-    public UnityAction Activate;
+    public UnityAction OnActivate;
     public UnityAction OnDestroy;
 
 
@@ -104,12 +104,15 @@ public class InteractiveObject : MonoBehaviour, IClickable
         }
     }
 
-    public void InitState(FishState fishState)
+    public void InitState(FishState fishState, bool strategies = false, FishDirection dir = FishDirection.Right)
     {
         state = fishState;
         state.view = this;
-        
-        state.direction = Random.Range(0, 2) == 0 ? FishDirection.Right : FishDirection.Left;
+
+        if (!strategies)
+            state.direction = Random.Range(0, 2) == 0 ? FishDirection.Right : FishDirection.Left;
+        else
+            state.direction = dir;
 
         if (state.model.Is<TagSizes>(out var sz))
         {
@@ -117,6 +120,14 @@ public class InteractiveObject : MonoBehaviour, IClickable
         }
         
         SetState(fishState);
+    }
+    public IEnumerator Activate()
+    {
+        OnActivate?.Invoke();
+        
+        var endTurn = G.main.interactor.FindAll<IOnEndTurn>();
+        foreach (var et in endTurn)
+            yield return et.OnEndTurn(state);
     }
 
     public void SetValue(int val)
@@ -183,13 +194,13 @@ public class InteractiveObject : MonoBehaviour, IClickable
     public IEnumerator EatenCoroutine()
     {
         yield return DieAnim();
-        yield return GetPoints();
         yield return new WaitForSeconds(0.2f);
         yield return Die();
     }
 
     IEnumerator GetPoints()
     {
+        G.main.AddHunger(state.fishValue);
         G.run.pointsSum += state.fishValue;
         yield break;
     }
@@ -197,8 +208,9 @@ public class InteractiveObject : MonoBehaviour, IClickable
     public IEnumerator CutCoroutine()
     {
         yield return DieAnim();
+        yield return GetPoints();
         G.run.pointsSum += state.fishValue;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.2f * G.visualConfig.animationSpeed);
         yield return Die();
     }
 

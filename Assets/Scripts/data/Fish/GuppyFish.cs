@@ -9,6 +9,7 @@ public class GuppyFish : FishBase
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "guppy");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "guppy");
         Define<TagFishView>().description = "Разворачивает рыбу перед собой";
+        Define<TagRotator>();
         Define<TagCannotBeVirused>();
     }
 }
@@ -32,7 +33,7 @@ public class RotatorInteraction : BaseInteraction, IOnEndTurn
                     : FishDirection.Right;
                 nextFish.SetState(nextFish.state);
                 nextFish.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f);
+                yield return new WaitForSeconds(0.25f * G.visualConfig.animationSpeed);
             }
         }
     }

@@ -41,7 +41,7 @@ public class FattyInteraction : BaseInteraction, IOnEat
             {
                 obj_view.SetValue(obj_state.fishValue + tfl.delta);
                 obj_view.spriteAnimator.Punch();
-                yield return new WaitForSeconds(0.25f);
+                yield return new WaitForSeconds(0.25f * G.visualConfig.animationSpeed);
             }
         }
     }

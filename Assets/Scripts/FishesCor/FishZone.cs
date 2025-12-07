@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class FishZone : MonoBehaviour
 {
@@ -122,6 +124,33 @@ public class FishZone : MonoBehaviour
     {
         InteractiveObject subj = FrontFish(io);
         if (subj == null) yield break;
+
+        switch (io.state.size)
+        {
+            case FishSize.Medium:
+                if (subj.state.size == FishSize.Small)
+                {
+                    List<IOnEat> onEat;
+                    onEat = G.main.interactor.FindAll<IOnEat>();
+                    //foreach (var et in onEat)
+                    //yield return et.OnEat(obj.state, subj.state);
+                }
+
+                break;
+            case FishSize.Big:
+                if (subj.state.size == FishSize.Small || subj.state.size == FishSize.Medium)
+                {
+                    List<IOnEat> onEat;
+                    onEat = G.main.interactor.FindAll<IOnEat>();
+                    //foreach (var et in onEat)
+                    //yield return et.OnEat(obj.state, subj.state);
+                }
+
+                break;
+        }
+
+        subj = FrontFish(io);
+        if (subj == null) yield break;
         
         switch (io.state.size){
             case FishSize.Medium:
@@ -154,6 +183,8 @@ public class FishZone : MonoBehaviour
     
     public IEnumerator Eat(InteractiveObject obj, InteractiveObject subj)
     {
+        
+        
         //objects[ZoneIndex(subj)] = null;
         objects.RemoveAt(ZoneIndex(subj));
         yield return subj.EatenCoroutine();
@@ -169,6 +200,7 @@ public class FishZone : MonoBehaviour
 
         yield break;
     }
+    
     
     public InteractiveObject LastFish()
     {

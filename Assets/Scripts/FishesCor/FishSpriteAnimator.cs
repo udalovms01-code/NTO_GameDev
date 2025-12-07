@@ -36,7 +36,7 @@ public class FishSpriteAnimator : MonoBehaviour
         view.UnSelect += UnSelect;
         view.StartDrag += StartDrag;
         view.EndDrag += EndDrag;
-        view.Activate += Activate;
+        view.OnActivate += Activate;
         view.OnDestroy += KillAll;
         
         G.main.SceneChange += KillAll;

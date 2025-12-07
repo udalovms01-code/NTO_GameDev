@@ -1,0 +1,72 @@
+{
+    "runs": [
+        {
+            "fishes": [
+                {
+                    "id": "FattyFish",
+                    "position": 0,
+                    "direction": 1
+                },
+                {
+                    "id": "FattyFish",
+                    "position": 1,
+                    "direction": 1
+                },
+                {
+                    "id": "GuppyFish",
+                    "position": 2,
+                    "direction": 1
+                },
+                {
+                    "id": "MinnowFish",
+                    "position": 3,
+                    "direction": 0
+                },
+                {
+                    "id": "MinnowFish",
+                    "position": 4,
+                    "direction": 0
+                },
+                {
+                    "id": "GuppyFish",
+                    "position": 5,
+                    "direction": 1
+                }
+            ]
+        },
+        {
+            "fishes": [
+                {
+                    "id": "FattyFish",
+                    "position": 0,
+                    "direction": 0
+                },
+                {
+                    "id": "FattyFish",
+                    "position": 1,
+                    "direction": 1
+                },
+                {
+                    "id": "GuppyFish",
+                    "position": 2,
+                    "direction": 0
+                },
+                {
+                    "id": "FattyFish",
+                    "position": 3,
+                    "direction": 1
+                },
+                {
+                    "id": "BreamFish",
+                    "position": 4,
+                    "direction": 0
+                },
+                {
+                    "id": "FattyFish",
+                    "position": 5,
+                    "direction": 1
+                }
+            ]
+        }
+    ]
+}
