@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3e9f75e2aea49dd4c96a34a70b965a54
+guid: 01d2762a0e7d5c34a8e38f6217f948e3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -101,31 +101,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 994
-        width: 21
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 9, y: 5, z: 9, w: 7}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c073439f665d6a2448412baa14bc25bf
-      internalID: -1551593985
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: closeButton
-      rect:
-        serializedVersion: 2
-        x: 27
-        y: 1013
-        width: 11
-        height: 11
+        y: 1004
+        width: 22
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,42 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9129a3cec529ab04b87193e034aa9be2
-      internalID: 609789237
+      spriteID: c7d2f83f6c0817c4dbb1edec20819b54
+      internalID: -1688035279
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: buttonFrame
+      name: fishQuality
       rect:
         serializedVersion: 2
-        x: 14
-        y: 1016
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 1, z: 2, w: 1}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 483740e4b0afe834eabff107174847ce
-      internalID: -1080044280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UIsquire
-      rect:
-        serializedVersion: 2
-        x: 14
-        y: 1020
-        width: 4
-        height: 4
+        x: 29
+        y: 1009
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,74 +134,184 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d665b374e7f14c143892f4c5a6461c2b
-      internalID: -1574374142
+      spriteID: b410cafebdde32442b971e1d592890cb
+      internalID: 2117306667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slider1
+      name: MonsterFrame
       rect:
         serializedVersion: 2
-        x: 18
-        y: 1021
-        width: 5
-        height: 2
+        x: 44
+        y: 1008
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 7, y: 7, z: 7, w: 7}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d7f405727201b140a1d0a72184a1153
+      internalID: 93421230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerAnswer
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 1008
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 7, y: 7, z: 7, w: 7}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 500ff55bfa54cb6488a2e9f86bb5ee73
+      internalID: -246829264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DayCycleFrame
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 907
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 793c296828d2b0642b1361a2f1004492
-      internalID: 2054654436
+      spriteID: c0a142576b5a47e4b82468f6e7e46a52
+      internalID: 1424501867
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slider2
+      name: DayCycleTimer
       rect:
         serializedVersion: 2
-        x: 23
-        y: 1021
-        width: 4
-        height: 2
+        x: 40
+        y: 907
+        width: 34
+        height: 34
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d946797791e6fa04ea2f92882bb03dc9
-      internalID: 588897348
+      spriteID: a815bfbe00f19054a90f809724e66a14
+      internalID: -102504510
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mark
+      name: FishState
       rect:
         serializedVersion: 2
-        x: 39
-        y: 1014
-        width: 8
-        height: 8
+        x: 38
+        y: 942
+        width: 30
+        height: 30
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4a79c3277f3b454f8b73da8b47df918
-      internalID: -1027731522
+      spriteID: e4eb3b050b4b3864699a24acbb976fcf
+      internalID: -1359193725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SleepState
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 944
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a4ff2f7d2acfe04398915cf11c35dd4
+      internalID: 1793974773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DialogState
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 974
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0056f9aab9ab3e9488587c82756ab7ae
+      internalID: 322611516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 975
+        width: 36
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a6b34ff15248c34b84c4d6b7de6b024
+      internalID: 1091654159
       vertices: []
       indices: 
       edges: []
@@ -254,7 +320,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 224e4a6fd85658246987005c083d29c2
+    spriteID: 32e006467899e004ca8d5733bf846e97
     internalID: 0
     vertices: []
     indices: 
@@ -264,13 +330,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UI_0: -1551593985
-      UIsquire: -1574374142
-      buttonFrame: -1080044280
-      closeButton: 609789237
-      mark: -1027731522
-      slider1: 2054654436
-      slider2: 588897348
+      DayCycleFrame: 1424501867
+      DayCycleTimer: -102504510
+      DialogState: 322611516
+      FishState: -1359193725
+      MonsterFrame: 93421230
+      PlayerAnswer: -246829264
+      SleepState: 1793974773
+      UI_0: -1688035279
+      UI_1: 1091654159
+      fishQuality: 2117306667
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

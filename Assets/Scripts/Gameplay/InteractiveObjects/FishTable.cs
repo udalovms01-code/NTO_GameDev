@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
 namespace Gameplay
@@ -7,8 +8,13 @@ namespace Gameplay
     {
         private GameStateService _gameStateService;
         private CameraSwitch _cameraSwitch;
-        [SerializeField] private Outline _outline;
-        
+        private Outline _outline;
+
+        private void Awake()
+        {
+            _outline = GetComponent<Outline>();
+        }
+
         [Inject]
         private void Construct(GameStateService gameStateService, CameraSwitch cameraSwitch)
         {

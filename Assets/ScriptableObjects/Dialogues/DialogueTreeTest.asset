@@ -51,7 +51,7 @@ MonoBehaviour:
       LocalizationKey: choice_157bf56d-4b16-4d4e-acdb-2f9f715de005_0
       TargetNodeGuid: 86dc6390-d134-4ba4-a024-d159b2177bff
   - Guid: 86dc6390-d134-4ba4-a024-d159b2177bff
-    Text: Dialogue
+    Text: "\u0422\u0435\u0431\u0435 \u043F\u043E\u0440\u0430 \u0441\u043F\u0430\u0442\u044C..."
     LocalizationKey: dialogue_86dc6390-d134-4ba4-a024-d159b2177bff
     OnEnter: {fileID: 0}
     Position: {x: 1192, y: -660.8}
@@ -72,7 +72,7 @@ MonoBehaviour:
       LocalizationKey: say something
       TargetNodeGuid: 86dc6390-d134-4ba4-a024-d159b2177bff
   - Guid: 29360cb6-4d9e-43c2-a5c5-c239c08babfd
-    Text: "\u0414\u0440\u0443\u0433\u043E\u0439 \u0434\u0438\u0430\u043B\u043E\u0433"
+    Text: "\u0418\u0434\u0438 \u0441\u043F\u0438..."
     LocalizationKey: 
     OnEnter: {fileID: 0}
     Position: {x: 1201.6, y: -373.59998}
@@ -80,4 +80,13 @@ MonoBehaviour:
     - Text: Next
       LocalizationKey: 
       TargetNodeGuid: 
-  startNodeGuid: d6162b4a-2a90-4744-99fe-4179e3165826
+  - Guid: bf54963a-eb0b-423b-b934-884a338debda
+    Text: "\u041E\u0442\u0434\u0430\u0439 \u0440\u044B\u0431\u0443..."
+    LocalizationKey: 
+    OnEnter: {fileID: 0}
+    Position: {x: -637.6, y: -619.2}
+    Choices:
+    - Text: "\u041E\u0442\u0434\u0430\u0442\u044C \u0440\u044B\u0431\u0443"
+      LocalizationKey: 
+      TargetNodeGuid: d6162b4a-2a90-4744-99fe-4179e3165826
+  startNodeGuid: bf54963a-eb0b-423b-b934-884a338debda

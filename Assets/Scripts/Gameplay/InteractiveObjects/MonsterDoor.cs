@@ -12,7 +12,10 @@ namespace Gameplay
         private void Awake()
         {
             _outline = GetComponent<Outline>();
+            Instance = this;
         }
+        
+        public static MonsterDoor Instance { get; private set; }
 
         [Inject]
         private void Construct(GameStateService gameStateService)

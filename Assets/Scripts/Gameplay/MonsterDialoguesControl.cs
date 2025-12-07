@@ -19,7 +19,6 @@ public class MonsterDialoguesControl : MonoBehaviour
     [SerializeField] private TMP_Text dialogText;
     [SerializeField] private GameObject answerPrefab;
     [SerializeField] private Transform answersParent;
-    [SerializeField] private DoorTo2DInteract doorTo2DInteract;
     
     private DialogueRunner _runner;
     private GameStateService _gameStateService;
@@ -68,7 +67,7 @@ public class MonsterDialoguesControl : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        if(doorTo2DInteract.isOpen) doorTo2DInteract.ToggleDoor(PlayerMovement.Instance.transform.position);
+        if(MonsterDoor.Instance.isOpen) MonsterDoor.Instance.ToggleDoor(PlayerMovement.Instance.transform.position);
     }
 
     private void ShowCurrentNode()
