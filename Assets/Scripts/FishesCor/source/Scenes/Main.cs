@@ -83,7 +83,8 @@ public class Main : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(TurnCoroutine());
+        if (Testing)
+            StartCoroutine(TurnCoroutine());
     }
 
     public IEnumerator TurnCoroutine()
@@ -113,7 +114,6 @@ public class Main : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log(111);
         if (G.run.hasBaggage)
         {
             StartCoroutine(TurnCoroutine());
