@@ -51,7 +51,6 @@ namespace UI.Gameplay
                     dialogState.SetActive(false);
                     break;
                 case GameState.WaitingForSlicedFish:
-                    DOVirtual.Float(1, 0, 10, value => slider.value = value);
                     sleepState.SetActive(false);
                     slicedFishState.SetActive(true);
                     dialogState.SetActive(false);

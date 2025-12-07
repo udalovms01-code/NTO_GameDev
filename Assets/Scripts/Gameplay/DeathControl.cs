@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Gameplay
 {
@@ -10,6 +11,18 @@ namespace Gameplay
         private void Awake()
         {
             Instance = this;
+        }
+        
+        [Inject]
+        public void Construct(GameStateService gameStateService)
+        {
+            gameStateService.OnHungerChanged += v =>
+            {
+                if (v - 0.001f < 0)
+                {
+                    StartDeath();
+                }
+            };
         }
         
         public void StartDeath()
