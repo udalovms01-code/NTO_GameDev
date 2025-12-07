@@ -94,6 +94,10 @@ MonoBehaviour:
     category: main_menu
     russian: "\u0410\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0439"
     english: English
+  - key: zander
+    category: FishNames
+    russian: "\u0421\u0443\u0434\u0430\u043A"
+    english: Zander
   - key: dialogue_4ec0ba1c-ea43-4cd5-90e8-2c0f09f2e542
     category: 
     russian: "\u042F? \u041D\u0438\u0447\u0435\u0433\u043E. \u042F \u043B\u0438\u0448\u044C
