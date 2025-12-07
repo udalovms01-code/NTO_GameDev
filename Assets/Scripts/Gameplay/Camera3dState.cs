@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gameplay
 {
     public class Camera3dState : MonoBehaviour
     {
+        public Transform camera3d;
         [SerializeField] private GameObject[] _elements;
         
         public static Camera3dState Instance { get; private set; }
