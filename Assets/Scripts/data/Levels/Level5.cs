@@ -1,17 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Level1 : CMSEntity
+public class Level5 : CMSEntity
 {
-    public Level1()
+    public Level5()
     {
         Define<TagLevelScript>().toExecute = Script;
         Define<TagDifficulty>().virusPerSet = 1;
-        Define<TagLevelContent>().totalPoints = 1;
-        Define<TagLevelContent>().startSet = E.Id<Set0>();
-        //Define<TagLevelContent>().badFishSpawns[5] = E.Id<FattyFish>();
+        Define<TagLevelContent>().totalPoints = 7;
+        Define<TagLevelContent>().startSet = E.Id<Set2>();
     }
-
 
     IEnumerator Script()
     {

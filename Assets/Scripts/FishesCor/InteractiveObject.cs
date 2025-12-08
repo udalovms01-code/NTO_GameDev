@@ -201,7 +201,8 @@ public class InteractiveObject : MonoBehaviour, IClickable
     IEnumerator GetPoints()
     {
         G.main.AddHunger(state.fishValue);
-        G.run.pointsSum += state.fishValue;
+        if (state.fishValue > 0)
+            G.run.pointsSum += state.fishValue;
         yield break;
     }
 
