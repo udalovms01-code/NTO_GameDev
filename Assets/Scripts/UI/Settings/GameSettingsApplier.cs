@@ -12,7 +12,9 @@ namespace UI.Settings
 
         public void Apply(GameSettings settings)
         {
-            AudioListener.volume = settings.MasterVolume;
+            MusicVolume.Instance.SetMusicVolume(settings.MusicVolume);
+            MusicVolume.Instance.SetSFXVolume(settings.SfxVolume);
+            MusicVolume.Instance.SetMasterVolume(settings.MasterVolume);
             LocalizationManager.SetLanguage(settings.Language);
             Screen.fullScreen = settings.Fullscreen;
 
