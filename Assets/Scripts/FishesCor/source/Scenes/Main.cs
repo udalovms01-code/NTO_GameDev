@@ -218,28 +218,28 @@ public class Main : MonoBehaviour
             skip = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneChange?.Invoke();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    SceneChange?.Invoke();
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            SceneManager.LoadScene(0);
-        }
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    SceneManager.LoadScene(0);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            AddFish<GuppyFish>();
-
-            G.feel.UIPunchSoft();
-        }
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    AddFish<GuppyFish>();
+//
+        //    G.feel.UIPunchSoft();
+        //}
         
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(EndGame());
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    StartCoroutine(EndGame());
+        //}
         
         if (!pauseHunger)
         {
