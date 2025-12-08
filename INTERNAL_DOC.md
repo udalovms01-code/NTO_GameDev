@@ -25,6 +25,7 @@
 - `FadeController.Awake()` обеспечивает синглтон, сбрасывает прозрачность и автоматически добавляет `SceneTransitionController` на тот же объект.
 - `GameSaveController` (Game scene) при старте пытается загрузить слот `autosave` через `SaveManager`, при отсутствии создаёт его, и сохраняет состояние (в т.ч. текущий день) при каждом событии `OnDayChanged`.
 - `Audio.GameStateMusicController` создаётся Zenject-инсталлером, поднимает два `AudioSource` с группой `Music` из `Resources/Music/AudioMixer` и плавно кроссфейдит темы из `Resources/Music/*` при смене `GameState` (четыре разных трека покрывают шесть состояний).
+- `UI.Endings.EndingCanvasController` создаётся Zenject-инсталлером, подгружает `EndingLibrary` (Resources/Endings/EndingLibrary) или локальный список, показывает первый слайд концовки при достижении порога дня, и листает слайды по клику с затемнением/прояснением через `FadeController`.
 
 ## Types
 - `LocalizationLanguage` enum with `Russian`, `English`.
@@ -35,6 +36,8 @@
 - `LocalizedText` MonoBehaviour for UI binding.
 - `LocalizationTranslatorProvider` enum to select Google/Yandex for editor translations.
 - Dialogue data types `DialogueNodeData` and `DialogueChoiceData` gained `LocalizationKey` for binding table entries.
+- `UI.Endings.EndingDefinition` содержит `Id` и коллекцию слайдов финала, `EndingSlide` хранит текст+спрайт для отображения на экране.
+- `UI.Endings.EndingLibrary` ScriptableObject со списком `EndingDefinition`, используется как внешний источник данных для экрана концовок.
 
 ## Data Flow
 - At runtime `LocalizationBootstrapper` (or any manual call) initializes `LocalizationManager`, which loads settings and table from `Resources/Localization` (falls back to `LocalizationTable` asset) and sets the language from PlayerPrefs.
@@ -42,6 +45,7 @@
 - Dialogue presentation code should call `node.GetLocalizedText()` / `choice.GetLocalizedText()` to resolve keys via `LocalizationManager` and fall back to stored raw text.
 - In the editor, `LocalizationTableWindow` or dialogue node buttons request translation (Google/Yandex) and persist RU/EN pairs into the default table under the provided/generated keys.
 - Музыка: `GameplayInstaller` создаёт `GameStateMusicController` на отдельном объекте, сервис подписывается на `GameStateService.OnStateChanged`, подбирает клип по состоянию (пути заданы строками ресурсов) и выполняет перекрёстное затухание между двумя `AudioSource`, чтобы плавно переключать темы.
+- `GameplayInstaller` теперь создаёт `EndingCanvasController` на отдельном объекте, поэтому оверлей концовок доступен в любой игровой сцене; компонент подписывается на смену дня и использует `FadeController` для анимации переходов между слайдами.
 
 ## Notes
 - Default asset locations: `Assets/Resources/Localization/LocalizationTable.asset` for table and `Resources/Localization/LocalizationSettings.asset` for settings. The table path aligns with the editor helper used by dialogue nodes.
@@ -51,6 +55,7 @@
 - `SaveSystem.SaveManager.LoadAsync(string slotName = DefaultSlot)` (Assets/Scripts/SaveSystem/SaveManager.cs): читает контейнер из `SaveFileStorage.ReadAsync`, передаёт его в `ISaveDataSource.Restore`, затем вызывает `SaveableEntity.Restore` для найденных `Id`.
 - `SaveSystem.SaveManager.Delete(string slotName)` (Assets/Scripts/SaveSystem/SaveManager.cs): удаляет сохранение через `SaveFileStorage.Delete`.
 - Документ `Assets/Docs/SaveAndSettingsUI.md` описывает подключение UI панелей сохранений и базовых настроек.
+- Конфигурация концовок по умолчанию ищется в `Resources/Endings/EndingLibrary.asset`; если список пуст, `EndingCanvasController` создаёт базовый слайд с текстом-заглушкой, который можно заменить через ScriptableObject.
 - `DialogueSystem.Runtime.DialogueRunner.Begin()` (Assets/Scripts/Dialogues/Runtime/DialogueRunner.cs): переходит на стартовый узел `DialogueTree.StartNodeGuid`, возвращает `false`, если дерево или узел отсутствуют.
 - `DialogueSystem.Runtime.DialogueRunner.TryChoose(int index)` (Assets/Scripts/Dialogues/Runtime/DialogueRunner.cs): переходит к целевому узлу по выбору, сбрасывает текущее состояние при ошибке и возвращает `false`.
 - `DialogueSystem.Runtime.DialogueRunner.GetChoices()`/`CurrentNode`/`Reset()` (Assets/Scripts/Dialogues/Runtime/DialogueRunner.cs): читают варианты текущего узла и сбрасывают состояние.
