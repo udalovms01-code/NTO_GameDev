@@ -24,6 +24,7 @@
 - `SceneTransitionController.LoadScene(int buildIndex|string sceneName)` оборачивает загрузку сцен: затемняет экран через `FadeController`, плавно глушит `AudioListener.volume`, ждёт загрузки, затем возвращает прозрачность и громкость.
 - `FadeController.Awake()` обеспечивает синглтон, сбрасывает прозрачность и автоматически добавляет `SceneTransitionController` на тот же объект.
 - `GameSaveController` (Game scene) при старте пытается загрузить слот `autosave` через `SaveManager`, при отсутствии создаёт его, и сохраняет состояние (в т.ч. текущий день) при каждом событии `OnDayChanged`.
+- `Audio.GameStateMusicController` создаётся Zenject-инсталлером, поднимает два `AudioSource` с группой `Music` из `Resources/Music/AudioMixer` и плавно кроссфейдит темы из `Resources/Music/*` при смене `GameState` (четыре разных трека покрывают шесть состояний).
 
 ## Types
 - `LocalizationLanguage` enum with `Russian`, `English`.
@@ -40,6 +41,7 @@
 - UI components with `LocalizedText` subscribe to `LocalizationManager.LanguageChanged` to refresh displayed text when `SetLanguage` is invoked.
 - Dialogue presentation code should call `node.GetLocalizedText()` / `choice.GetLocalizedText()` to resolve keys via `LocalizationManager` and fall back to stored raw text.
 - In the editor, `LocalizationTableWindow` or dialogue node buttons request translation (Google/Yandex) and persist RU/EN pairs into the default table under the provided/generated keys.
+- Музыка: `GameplayInstaller` создаёт `GameStateMusicController` на отдельном объекте, сервис подписывается на `GameStateService.OnStateChanged`, подбирает клип по состоянию (пути заданы строками ресурсов) и выполняет перекрёстное затухание между двумя `AudioSource`, чтобы плавно переключать темы.
 
 ## Notes
 - Default asset locations: `Assets/Resources/Localization/LocalizationTable.asset` for table and `Resources/Localization/LocalizationSettings.asset` for settings. The table path aligns with the editor helper used by dialogue nodes.
@@ -79,7 +81,9 @@
 - В сцене Game `GameSaveController` инициирует автоматическую загрузку слота `autosave` и подписывается на смену дня, чтобы вызывать `SaveManager.SaveAsync`, сохраняя актуальный день в `SaveDataContainer`.
 - Список сохранений: `SaveSlotsPanel` использует `SaveManager.GetAvailableSaves()`, визуализирует каждый слот префабом `SaveSlotView`, а действия загрузки/удаления делегирует обратно в `SaveManager` с последующим обновлением панели.
 - Настройки: `GameSettingsPanel` загружает модель через `GameSettingsStorage` при `Awake`, применяет её через `GameSettingsApplier` (мастер-громкость, полноэкранность, качество) и сохраняет/сбрасывает значения при нажатии соответствующих кнопок.
+- Музыка: `GameplayInstaller` добавляет `GameStateMusicController`, который реагирует на смены `GameState`, подбирает клипы из `Resources/Music` и кроссфейдит их между двумя `AudioSource` для плавных переходов.
 
 ## Notes
 - Добавлен пользовательский документ `Docs/Dialogue_SaveSystem_Usage.md` с инструкциями по работе модулей в редакторе и из кода.
 - При добавлении новых `ISaveDataSource` нужно регистрировать их в Zenject, чтобы `SaveManager` получил список источников в конструкторе.
+- Музыкальные клипы и микшер для состояний перенесены в `Assets/Resources/Music`, чтобы их можно было грузить через `Resources.Load` без правок сцен.
