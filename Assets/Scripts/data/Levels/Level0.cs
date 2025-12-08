@@ -22,6 +22,7 @@ public class Level0 : CMSEntity
         G.hud.DisableHud();
         
         G.main.PauseHunger();
+        G.main.AddHunger(-0.4f);
         
         G.ui.click_to_continue.SetActive(true);
         yield return G.main.Say("Время обучения...");
@@ -33,7 +34,7 @@ public class Level0 : CMSEntity
         G.ui.click_to_continue.SetActive(true);
         yield return G.main.SmartWait(5f);
         G.ui.click_to_continue.SetActive(false);
-        yield return G.main.Say("Торопись! Не дай голоду упасть до 0");
+        yield return G.main.Say("Торопись ! Не дай голоду упасть до 0");
         G.ui.click_to_continue.SetActive(true);
         yield return G.main.SmartWait(5f);
         G.ui.click_to_continue.SetActive(false);
@@ -63,12 +64,28 @@ public class Level0 : CMSEntity
         yield return G.main.Say("Когда ты будешь готов, ты можешь использовать тесак и накормить чудище");
         yield return G.main.SmartWait(5f);
         
-        KnifeInteractive.interactable = false;
+        KnifeInteractive.interactable = true;
+        
+        yield return new WaitUntil(() => G.main.TutorFlag == true);
+        G.main.TutorFlag = false;
+        G.hud.DisableHud();
+        
+        
+        
+        yield return G.main.DrawFish(entity.Get<TagTutorial1Set>().secondBoard);
+
+        yield return G.main.Say("Среди рыб водятся хищники...");
+        yield return G.main.SmartWait(5f);
+        yield return G.main.Say("Хищник ест рыбку поменьше, будь с ним аккуратнее");
+        yield return G.main.SmartWait(5f);
+        yield return G.main.Unsay();
         
         G.hud.EnableHud();
         
-        yield return G.main.Unsay();
-        G.main.UnpauseHunger();
+        yield return new WaitUntil(() => G.main.TutorFlag == true);
+        G.main.TutorFlag = false;
+
+        yield return G.main.EndGame();
         yield break;
     }
 }
