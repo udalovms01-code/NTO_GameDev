@@ -2,6 +2,7 @@ using Audio;
 using Gameplay;
 using UnityEngine;
 using Zenject;
+using UI.Endings;
 
 namespace Installers
 {
@@ -18,6 +19,11 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<GameStateMusicController>()
                 .FromNewComponentOnNewGameObject()
                 .WithGameObjectName("GameStateMusic")
+                .AsSingle()
+                .NonLazy();
+            Container.BindInterfacesAndSelfTo<EndingCanvasController>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName("EndingCanvas")
                 .AsSingle()
                 .NonLazy();
         }
