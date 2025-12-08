@@ -23,6 +23,7 @@
 - `MonsterDialoguesControl.OnChoiceSelected(int index)` перед обработкой выбранного ответа воспроизводит SFX выбора.
 - `SceneTransitionController.LoadScene(int buildIndex|string sceneName)` оборачивает загрузку сцен: затемняет экран через `FadeController`, плавно глушит `AudioListener.volume`, ждёт загрузки, затем возвращает прозрачность и громкость.
 - `FadeController.Awake()` обеспечивает синглтон, сбрасывает прозрачность и автоматически добавляет `SceneTransitionController` на тот же объект.
+- `GameSaveController` (Game scene) при старте пытается загрузить слот `autosave` через `SaveManager`, при отсутствии создаёт его, и сохраняет состояние (в т.ч. текущий день) при каждом событии `OnDayChanged`.
 
 ## Types
 - `LocalizationLanguage` enum with `Russian`, `English`.
@@ -75,6 +76,7 @@
 - Исполнение диалога: потребитель создаёт `DialogueRunner` с `DialogueTree`, вызывает `Begin()`, затем опрашивает `CurrentNode` и `GetChoices`; `TryChoose` устанавливает следующий узел по `TargetNodeGuid`.
 - Сохранение: `SaveManager.SaveAsync` формирует `SaveDataContainer` с версией, сценой и временем, вызывает `ISaveDataSource.Capture`, затем `SaveableEntity.CaptureState` (включая `ISavePayloadProvider`) и записывает JSON через `SaveFileStorage`.
 - Загрузка: `SaveManager.LoadAsync` читает JSON, вызывает `ISaveDataSource.Restore`, затем ищет сущности по `Id` в `SaveRegistry` и применяет `SaveableEntity.Restore`; отсутствующие объекты отмечаются предупреждением с `PrefabId`.
+- В сцене Game `GameSaveController` инициирует автоматическую загрузку слота `autosave` и подписывается на смену дня, чтобы вызывать `SaveManager.SaveAsync`, сохраняя актуальный день в `SaveDataContainer`.
 - Список сохранений: `SaveSlotsPanel` использует `SaveManager.GetAvailableSaves()`, визуализирует каждый слот префабом `SaveSlotView`, а действия загрузки/удаления делегирует обратно в `SaveManager` с последующим обновлением панели.
 - Настройки: `GameSettingsPanel` загружает модель через `GameSettingsStorage` при `Awake`, применяет её через `GameSettingsApplier` (мастер-громкость, полноэкранность, качество) и сохраняет/сбрасывает значения при нажатии соответствующих кнопок.
 
