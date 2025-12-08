@@ -11,6 +11,8 @@ using UnityEngine.Serialization;
 using Zenject;
 using Random = UnityEngine.Random;
 using System.IO;
+using DG.Tweening;
+using TMPro;
 
 public class RunState
 {
@@ -41,10 +43,7 @@ public class CorGameplayConfig
 public class Main : MonoBehaviour
 {
     [FormerlySerializedAs("hand")] public FishZone field;
-
-    public bool Testing = false;
-    public bool Strategies = false;
-    public bool SmartDraw = true;
+    
     public float tableHeith = 0f;
     public Interactor interactor;
 
@@ -82,11 +81,18 @@ public class Main : MonoBehaviour
         E.Id<Level6>(),
         E.Id<Level7>()
     };
-
     private List<InteractiveObject> smartGeneratedObjects;
+    
+    [Header("testing stuff")]
+    public bool Testing = false;
+    public bool Strategies = false;
+    public bool SmartDraw = true;
+    public bool Tutor = false;
+    public bool TutorFlag = false;
 
     void Awake()
     {
+        TutorFlag = false;
         if (!Testing)
         {
             if (_gameStateService.CurrentDay == 1)
@@ -150,8 +156,20 @@ public class Main : MonoBehaviour
         
         
         CMSEntity levelToLoad;
-    
-        if (G.run.level < levelSeq.Count)
+        if (Tutor)
+            PlayerPrefs.SetInt("start_tutorial", 0);
+
+        if (G.run.level == 0)
+        {
+            if (PlayerPrefs.GetInt("start_tutorial", 0) == 0)
+            {
+                levelToLoad = CMS.Get<CMSEntity>(E.Id<Level0>());
+                PlayerPrefs.SetInt("start_tutorial", 1);
+            }
+            else
+                levelToLoad = CMS.Get<CMSEntity>(levelSeq[G.run.level]);
+        }
+        else if (G.run.level < levelSeq.Count)
         {
             levelToLoad = CMS.Get<CMSEntity>(levelSeq[G.run.level]);
         }
@@ -190,6 +208,11 @@ public class Main : MonoBehaviour
         G.ui.debug_text.text += "D-add dice\n";
         G.ui.debug_text.text += "I-reload with intro\n";
         G.ui.debug_text.text += "E-Auto win\n";
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            skip = true;
+        }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -214,8 +237,12 @@ public class Main : MonoBehaviour
             StartCoroutine(EndGame());
         }
         
-        _gameStateService.SetHunger(_gameStateService.Hunger - (Time.deltaTime / 100 * G.CorGameplayConfig.hungerMultiplier));
-        timeLeft -= Time.deltaTime;
+        if (!pauseHunger)
+        {
+            _gameStateService.SetHunger(_gameStateService.Hunger -
+                                        (Time.deltaTime / 100 * G.CorGameplayConfig.hungerMultiplier));
+            timeLeft -= Time.deltaTime;
+        }
     }
 
     public void EndTurn()
@@ -494,12 +521,32 @@ public class Main : MonoBehaviour
             yield break;
         }
     }
+    public void PauseHunger()
+    {
+        pauseHunger = true;
+    }
+    public void UnpauseHunger()
+    {
+        pauseHunger = false;
+    }
 
-    IEnumerator DrawFish(List<InteractiveObject> newObjects)
+    public IEnumerator DrawFish(List<InteractiveObject> newObjects)
     {
         foreach (var obj in newObjects)
         {
             AddFish(obj.state.model.id);
+        }
+        yield break;
+    }
+    public IEnumerator DrawFish(List<string> newObjects)
+    {
+        for (int i = 0; i < newObjects.Count; i++)
+        {
+            var obj = newObjects[i];
+            if (CMS.Get<CMSEntity>(obj).Is<TagTutorBream>())
+                AddFish(obj, true, i == 0 ? FishDirection.Left : FishDirection.Right);
+            else
+                AddFish(obj);
         }
         yield break;
     }
@@ -573,6 +620,10 @@ public class Main : MonoBehaviour
     public void StopDrag()
     {
         OnReleaseDrag?.Invoke(G.drag_dice);
+        var onChangePos = G.main.interactor.FindAll<IOnChangePos>();
+        foreach (var onPlay in onChangePos)
+            StartCoroutine(onPlay.OnChangePos(G.drag_dice.state));
+        
         G.drag_dice = null;
     }
     
@@ -593,6 +644,65 @@ public class Main : MonoBehaviour
                 yield return obj.Die();
             }
         yield break;
+    }
+
+    [SerializeField] private TMP_Text say_text;
+    [SerializeField] private TMP_Text say_text_shadow;
+    private bool skip;
+    public bool pauseHunger;
+
+    public IEnumerator Say(string text)
+    {
+        StartCoroutine(Print(say_text, text));
+        yield return Print(say_text_shadow, text);
+    }
+
+    public static IEnumerator Print(TMP_Text text, string actionDefinition, string fx = "wave")
+    {
+        var visibleLength = TextUtils.GetVisibleLength(actionDefinition);
+        if (visibleLength == 0) yield break;
+
+        for (var i = 0; i < visibleLength; i++)
+        {
+            text.text = $"<link={fx}>{TextUtils.CutSmart(actionDefinition, 1 + i)}</link>";
+            yield return new WaitForEndOfFrame();
+
+            G.audio.Play<SFX_TypeChar>();
+        }
+    }
+    IEnumerator Unprint(TMP_Text text, string actionDefinition)
+    {
+        var visibleLength = TextUtils.GetVisibleLength(actionDefinition);
+        if (visibleLength == 0) yield break;
+
+        var str = "";
+
+        for (var i = visibleLength - 1; i >= 0; i--)
+        {
+            str = TextUtils.CutSmart(actionDefinition, i);
+            text.text = $"<link=wave>{str}</link>";
+            yield return new WaitForEndOfFrame();
+        }
+
+        text.text = "";
+    }
+    public IEnumerator Unsay()
+    {
+        StartCoroutine(Unprint(say_text, say_text.text));
+        yield return Unprint(say_text_shadow, say_text_shadow.text);
+    }
+    public void AdjustSay(float i)
+    {
+        say_text.transform.DOMoveY(i, 0.25f);
+    }
+    public IEnumerator SmartWait(float f)
+    {
+        skip = false;
+        while (f > 0 && !skip)
+        {
+            f -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     /*public void DeleteFish(InteractiveObject interactiveObject)

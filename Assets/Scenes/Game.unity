@@ -1277,6 +1277,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &879881394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4463489668588552754, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+  m_PrefabInstance: {fileID: 1040086173}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &917782251
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1423,6 +1428,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1994526009271686761, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      propertyPath: Tutor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994526009271686761, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
       propertyPath: SmartDraw
       value: 0
       objectReference: {fileID: 0}
@@ -1518,6 +1527,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4463489668588552754, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4724500940753145947, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -1525,6 +1538,10 @@ PrefabInstance:
     - target: {fileID: 4742194308943933356, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4854764856337367366, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5062217463477977493, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
       propertyPath: m_Size.x
@@ -1598,6 +1615,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8651596501968320316, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      propertyPath: click_to_continue
+      value: 
+      objectReference: {fileID: 879881394}
     - target: {fileID: 8659314100732205328, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
       propertyPath: m_Layer
       value: 8
