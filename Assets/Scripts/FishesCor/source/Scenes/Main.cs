@@ -122,6 +122,7 @@ public class Main : MonoBehaviour
             G.CorGameplayConfig = new CorGameplayConfig();
 
             G.CorGameplayConfig.animationMultiplier = 0.9f;
+            G.CorGameplayConfig.hungerMultiplier = 1.25f;
         }
         G.run.pointsSum = 0;
 
@@ -167,7 +168,9 @@ public class Main : MonoBehaviour
                 PlayerPrefs.SetInt("start_tutorial", 1);
             }
             else
+            {
                 levelToLoad = CMS.Get<CMSEntity>(levelSeq[G.run.level]);
+            }
         }
         else if (G.run.level < levelSeq.Count)
         {
@@ -194,6 +197,7 @@ public class Main : MonoBehaviour
     {
         if (G.run.hasBaggage)
         {
+            _gameStateService.SetHunger(1f);
             StartCoroutine(TurnCoroutine());
         }
     }
@@ -202,6 +206,7 @@ public class Main : MonoBehaviour
     {
         if (!Testing)
             if (_gameStateService != null && _gameStateService.CurrentState != GameState.SlicedFish) return;
+        
         G.ui.debug_text.text = "";
         G.ui.debug_text.text += "R-reload\n";
         G.ui.debug_text.text += "D-add dice\n";
@@ -239,7 +244,7 @@ public class Main : MonoBehaviour
         if (!pauseHunger)
         {
             _gameStateService.SetHunger(_gameStateService.Hunger -
-                                        (Time.deltaTime / 100 * G.CorGameplayConfig.hungerMultiplier));
+                                        (Time.deltaTime / 100 * 1.25f));
             timeLeft -= Time.deltaTime;
         }
     }
@@ -265,9 +270,9 @@ public class Main : MonoBehaviour
             yield return DrawFish();
         }
 
-        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints || timeLeft < 0) //(G.run.set >= setsEntities.Count)
+        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints) //(G.run.set >= setsEntities.Count)
         {
-            EndGame();
+            yield return EndGame();
         }
         else
         {
@@ -447,8 +452,10 @@ public class Main : MonoBehaviour
         else
             setEntity = E.Id<Set1>();
 
+        Debug.Log(levelEntity.Get<TagLevelContent>().totalPoints);
         seed = FishStrategiesManager.GetShuffledList(fishStrategiesManager.strategiesCount);
         seedPos = 0;
+        G.run.pointsSum = 0;
 
         yield return DrawFish();
 
@@ -467,10 +474,13 @@ public class Main : MonoBehaviour
     {
         if(Strategies || !SmartDraw)
         {
+            int negCount = 0;
+            int legCount = 0;
             if (CMS.Get<CMSEntity>(setEntity).Is<TagSetDefinition>(out var sd))
             {
                 int dice_count = sd.fishOnTheBoardCount - field.objects.Count; //fishCount;
-                for (int i = 0; i < dice_count; i++)
+                int i = 0;
+                while (i < dice_count)
                 {
                     float seed = Random.Range(0f, 1f);
                     float cursum = 0;
@@ -479,8 +489,31 @@ public class Main : MonoBehaviour
                         cursum += data.Value;
                         if (seed <= cursum)
                         {
-                            AddFish(data.Key);
-                            break;
+                            if (CMS.Get<CMSEntity>(data.Key).Is<TagNegative>())
+                            {
+                                if (negCount < 2)
+                                {
+                                    AddFish(data.Key);
+                                    negCount++;
+                                    i++;
+                                }
+                                break;
+                            }
+                            else if (CMS.Get<CMSEntity>(data.Key).Is<TagLegendary>())
+                            {
+                                if (legCount < 2)
+                                {
+                                    AddFish(data.Key);
+                                    legCount++;
+                                    i++;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                AddFish(data.Key);
+                                i++;
+                            }
                         }
                     }
                 }

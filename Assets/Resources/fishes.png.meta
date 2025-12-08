@@ -321,7 +321,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fishes_17
+      name: ramp
       rect:
         serializedVersion: 2
         x: 24
@@ -343,7 +343,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fishes_18
+      name: angler
       rect:
         serializedVersion: 2
         x: 25
@@ -387,7 +387,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fishes_20
+      name: butterfly
       rect:
         serializedVersion: 2
         x: 41
@@ -510,16 +510,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      angler: 46766379
       bream: -320358261
+      butterfly: 99652199
       fatty: -637554801
       fishes_1: -163800308
       fishes_10: 928267124
       fishes_13: -1756439829
       fishes_15: -688447783
-      fishes_17: 1851943214
-      fishes_18: 46766379
       fishes_19: -1036737050
-      fishes_20: 99652199
       fishes_22: 919163475
       fishes_3: -1631902446
       fishes_4: -1975150800
@@ -532,6 +531,7 @@ TextureImporter:
       minnow: 439830185
       moray_eel: -945307436
       piranha: 898577737
+      ramp: 1851943214
       screamer: -1835093101
       swordfish: 603056123
       zander: 2015395484

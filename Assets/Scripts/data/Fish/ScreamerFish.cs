@@ -11,6 +11,7 @@ public class ScreamerFish : FishBase
         Define<TagStartFishValue>().value = 0;
         Define<TagFishView>().description = "-1 рыбе напротив";
         Define<TagScreamer>().delta = -1;
+        Define<TagNegative>();
     }
 }
 

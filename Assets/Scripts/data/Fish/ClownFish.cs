@@ -8,6 +8,6 @@ public class ClownFish : FishBase
         Define<TagFishView>().name = "clown";
         Define<TagFishView>().sprite = SpriteUtil.Load("clown", "clown1");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("clown", "clown1");
-        Define<TagFishView>().description = "";
+        Define<TagFishView>().description = "Бесполезная рыбёшка";
     }
 }

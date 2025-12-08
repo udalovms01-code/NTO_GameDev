@@ -10,6 +10,7 @@ public class ZanderFish : FishBase
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "zander");
         Define<TagFishView>().description = "+30 если вокруг хищники";
         Define<TagZander>().delta = 3;
+        Define<TagLegendary>();
     }
 }
 

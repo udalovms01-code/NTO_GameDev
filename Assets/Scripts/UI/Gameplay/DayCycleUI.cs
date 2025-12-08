@@ -16,6 +16,7 @@ namespace UI.Gameplay
         
         //private Slider slider;
         [SerializeField] private Image slider; // debuggg helo helo
+        public RectTransform uiImageRect;
         private GameStateService _gameStateService;
 
         private void Awake()
@@ -39,6 +40,7 @@ namespace UI.Gameplay
         
         public void ChangeSliderState(float value)
         {
+            uiImageRect.DOPunchScale(Vector3.one, 0.5f, 8, 1f);
             slider.fillAmount = (float)Math.Round(value, 2);
         }
 
