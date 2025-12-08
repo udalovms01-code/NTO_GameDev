@@ -167,7 +167,10 @@ public class Main : MonoBehaviour
                 PlayerPrefs.SetInt("start_tutorial", 1);
             }
             else
+            {
                 levelToLoad = CMS.Get<CMSEntity>(levelSeq[G.run.level]);
+                Debug.Log(levelToLoad.id);
+            }
         }
         else if (G.run.level < levelSeq.Count)
         {
@@ -265,9 +268,9 @@ public class Main : MonoBehaviour
             yield return DrawFish();
         }
 
-        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints || timeLeft < 0) //(G.run.set >= setsEntities.Count)
+        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints) //(G.run.set >= setsEntities.Count)
         {
-            EndGame();
+            yield return EndGame();
         }
         else
         {
@@ -447,8 +450,10 @@ public class Main : MonoBehaviour
         else
             setEntity = E.Id<Set1>();
 
+        Debug.Log(levelEntity.Get<TagLevelContent>().totalPoints);
         seed = FishStrategiesManager.GetShuffledList(fishStrategiesManager.strategiesCount);
         seedPos = 0;
+        G.run.pointsSum = 0;
 
         yield return DrawFish();
 

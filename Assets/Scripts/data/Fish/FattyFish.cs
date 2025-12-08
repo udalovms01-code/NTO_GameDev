@@ -10,7 +10,7 @@ public class FattyFish : FishBase
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "fatty");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "fatty");
         Define<TagVirusedForm>().sprite = SpriteUtil.Load("virused_fishes", "fatty");
-        Define<TagFishView>().description = "Хищник\n";
+        Define<TagFishView>().description = "Хищник\n +1 за съедение рыбы";
         Define<TagFatty>().delta = 1;
         Define<TagSizes>().possibleSizes = new List<FishSize>()
         {
