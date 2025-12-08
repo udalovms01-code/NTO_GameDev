@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d58d68c37b92c4db408d8186167ca6, type: 3}
+  m_Name: Day4
+  m_EditorClassIdentifier:
+  nodes:
+  - Guid: 10e7ef2a-a87e-4148-aaf7-c54d1f14fc21
+    Text: "Признайся, ты чувствовал мои шаги по потолку твоих снов? Я плету в них паутину. Красиво получается."
+    LocalizationKey: dialogue_10e7ef2a-a87e-4148-aaf7-c54d1f14fc21
+    OnEnter: {fileID: 0}
+    Position: {x: 0, y: 0}
+    Choices:
+    - Text: "У меня нет снов. Только реальность."
+      LocalizationKey: choice_10e7ef2a-a87e-4148-aaf7-c54d1f14fc21_0
+      TargetNodeGuid: 466551b2-ae74-4452-a3d5-2a6f1bc42aca
+    - Text: "Да… Ты снишься мне. Паутина… она душит."
+      LocalizationKey: choice_10e7ef2a-a87e-4148-aaf7-c54d1f14fc21_1
+      TargetNodeGuid: 1daf5ab0-1fd3-4d9b-b46c-a4354b9a8555
+  - Guid: 466551b2-ae74-4452-a3d5-2a6f1bc42aca
+    Text: "Реальность? Эта железная коробка? Нет. Твоя реальность — это то, что ты носишь в черепе. А я теперь там живу. Я — новый факт твоей биографии. Самый важный."
+    LocalizationKey: dialogue_466551b2-ae74-4452-a3d5-2a6f1bc42aca
+    OnEnter: {fileID: 0}
+    Position: {x: 520, y: -140}
+    Choices:
+    - Text: "Я не боюсь тебя. Я боюсь людей."
+      LocalizationKey: choice_466551b2-ae74-4452-a3d5-2a6f1bc42aca_0
+      TargetNodeGuid: 54530b38-ce38-4b3c-8e99-efbeae67d24b
+    - Text: "Моя жизнь — не пустота."
+      LocalizationKey: choice_466551b2-ae74-4452-a3d5-2a6f1bc42aca_1
+      TargetNodeGuid: 34e888b0-c67e-4d1a-8660-a60778d472ff
+  - Guid: 54530b38-ce38-4b3c-8e99-efbeae67d24b
+    Text: "Верно. Потому что люди могут осудить. А я? Я уже знаю обо всём. И от меня не спрячешься за лицемерным «прости». Поэтому я не галлюцинация. Я — приговор. И твой корабль — моя скамья подсудимых. Скоро мы вынесем вердикт."
+    LocalizationKey: dialogue_54530b38-ce38-4b3c-8e99-efbeae67d24b
+    OnEnter: {fileID: 0}
+    Position: {x: 1040, y: -280}
+    Choices:
+    - Text: Next
+      LocalizationKey: choice_54530b38-ce38-4b3c-8e99-efbeae67d24b_0
+      TargetNodeGuid:
+  - Guid: 34e888b0-c67e-4d1a-8660-a60778d472ff
+    Text: "Нет. Она полна одним-единственным воспоминанием. И я плетусь из него. Скоро оно заполнит всё, даже иллюминаторы. И тогда ты увидишь мир таким, каким вижу его я."
+    LocalizationKey: dialogue_34e888b0-c67e-4d1a-8660-a60778d472ff
+    OnEnter: {fileID: 0}
+    Position: {x: 1040, y: 0}
+    Choices:
+    - Text: Next
+      LocalizationKey: choice_34e888b0-c67e-4d1a-8660-a60778d472ff_0
+      TargetNodeGuid:
+  - Guid: 1daf5ab0-1fd3-4d9b-b46c-a4354b9a8555
+    Text: "И с каждым днём сон становится яснее, да? Ты уже не чувствуешь себя в безопасности даже за стальной дверью. Не боишься, что наша сделка уже подходит к концу? Что скоро не рыбу, а тебя самого придётся класть на весы?"
+    LocalizationKey: dialogue_1daf5ab0-1fd3-4d9b-b46c-a4354b9a8555
+    OnEnter: {fileID: 0}
+    Position: {x: 520, y: 160}
+    Choices:
+    - Text: "У нас была договорённость!"
+      LocalizationKey: choice_1daf5ab0-1fd3-4d9b-b46c-a4354b9a8555_0
+      TargetNodeGuid: eb197434-4e6c-452f-863d-98475e670391
+  - Guid: eb197434-4e6c-452f-863d-98475e670391
+    Text: "Договорённости заключают меж двух разных сторон. Скоро мы станем одним целым. Корабль уже почти мой. Куда побежишь тогда, рыбак? В океан? Он мой. В небо? Оно моё. Останешься однажды с пустыми руками и полным осознанием. Жду не дождусь."
+    LocalizationKey: dialogue_eb197434-4e6c-452f-863d-98475e670391
+    OnEnter: {fileID: 0}
+    Position: {x: 1040, y: 280}
+    Choices:
+    - Text: Next
+      LocalizationKey: choice_eb197434-4e6c-452f-863d-98475e670391_0
+      TargetNodeGuid:
+  startNodeGuid: 10e7ef2a-a87e-4148-aaf7-c54d1f14fc21

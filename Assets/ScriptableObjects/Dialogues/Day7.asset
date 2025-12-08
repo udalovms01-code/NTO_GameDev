@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d58d68c37b92c4db408d8186167ca6, type: 3}
+  m_Name: Day7
+  m_EditorClassIdentifier:
+  nodes:
+  - Guid: 2f99c16f-605e-40bb-a571-f5f854748d8c
+    Text: "Вы не знаете, что происходило ночью, но испытываете невероятное облегчение. Вы впервые чувствуете себя по-настоящему живым. Просачивающийся сквозь трещины разбитой палубы свет подаёт вам надежду на счастливое будущее."
+    LocalizationKey: dialogue_2f99c16f-605e-40bb-a571-f5f854748d8c
+    OnEnter: {fileID: 0}
+    Position: {x: 0, y: 0}
+    Choices:
+    - Text: "Подышать на воздухе. [концовка положительная]"
+      LocalizationKey: choice_2f99c16f-605e-40bb-a571-f5f854748d8c_0
+      TargetNodeGuid: 5f8a09a6-775f-4d19-83f9-135bd131f91b
+  - Guid: 5f8a09a6-775f-4d19-83f9-135bd131f91b
+    Text: "Вы выходите на палубу и делаете глубокий вдох. Мир кажется вам новым. [концовка положительная]"
+    LocalizationKey: dialogue_5f8a09a6-775f-4d19-83f9-135bd131f91b
+    OnEnter: {fileID: 0}
+    Position: {x: 520, y: 0}
+    Choices:
+    - Text: Next
+      LocalizationKey: choice_5f8a09a6-775f-4d19-83f9-135bd131f91b_0
+      TargetNodeGuid:
+  startNodeGuid: 2f99c16f-605e-40bb-a571-f5f854748d8c
