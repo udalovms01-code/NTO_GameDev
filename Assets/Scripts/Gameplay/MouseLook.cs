@@ -16,6 +16,7 @@ namespace Gameplay
         
         private void Awake()
         {
+            sensitivity = PlayerPrefs.GetFloat("settings.mouseSensitivity", 200f);
             Instance = this;
         }
 

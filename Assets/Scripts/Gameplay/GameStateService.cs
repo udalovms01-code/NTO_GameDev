@@ -23,7 +23,7 @@ namespace Gameplay
         public bool IsFishesSlicedStarted { get; private set; }
         public float Hunger { get; private set; } = 1f;
         
-        public event Action<bool> OnTutorialCompleted;
+        public static event Action<bool> OnTutorialCompleted;
         public event Action<int> OnDayChanged;
         public event Action<float> OnHungerChanged;
         public event Action<GameState> OnStateChanged;

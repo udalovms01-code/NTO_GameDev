@@ -236,6 +236,18 @@ PrefabInstance:
       propertyPath: key
       value: sn
       objectReference: {fileID: 0}
+    - target: {fileID: 9005621050930707913, guid: 6a215a7a7988e1147b8d7fa3064defae, type: 3}
+      propertyPath: m_Value
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005621050930707913, guid: 6a215a7a7988e1147b8d7fa3064defae, type: 3}
+      propertyPath: m_MaxValue
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005621050930707913, guid: 6a215a7a7988e1147b8d7fa3064defae, type: 3}
+      propertyPath: m_MinValue
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
