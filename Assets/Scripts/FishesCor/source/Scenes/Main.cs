@@ -35,7 +35,7 @@ public class FishSpawnProperties
 public class CorGameplayConfig
 {
     public float animationMultiplier = 0.5f;
-    public float hungerMultiplier = 4f;
+    public float hungerMultiplier = 2f;
 }
 
 public class Main : MonoBehaviour
@@ -61,6 +61,8 @@ public class Main : MonoBehaviour
 
     public CMSEntity levelEntity;
     public string setEntity;
+
+    public float timeLeft;
     //public List<string> setsEntities;
 
 
@@ -187,6 +189,7 @@ public class Main : MonoBehaviour
         G.ui.debug_text.text += "R-reload\n";
         G.ui.debug_text.text += "D-add dice\n";
         G.ui.debug_text.text += "I-reload with intro\n";
+        G.ui.debug_text.text += "E-Auto win\n";
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -206,7 +209,16 @@ public class Main : MonoBehaviour
             G.feel.UIPunchSoft();
         }
         
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(EndGame());
+        }
+        
         _gameStateService.SetHunger(_gameStateService.Hunger - (Time.deltaTime / 100 * G.CorGameplayConfig.hungerMultiplier));
+        if (timeLeft < 0)
+            EndGame();
+        else
+            timeLeft -= Time.deltaTime;
     }
 
     public void EndTurn()
@@ -403,6 +415,8 @@ public class Main : MonoBehaviour
         //fishCount = 0;
         
         levelEntity = entity;
+
+        timeLeft = levelEntity.Get<TagLevelContent>().levelTime;
         
         if (levelEntity.Is<TagLevelContent>(out var lc))
             setEntity = lc.startSet;
@@ -576,6 +590,11 @@ public class Main : MonoBehaviour
         StopAllCoroutines();
         OnGameEnd?.Invoke();
         G.hud.DisableHud();
+        if (field.objects.Count > 0)
+            foreach (var obj in field.objects)
+            {
+                yield return obj.Die();
+            }
         yield break;
     }
 

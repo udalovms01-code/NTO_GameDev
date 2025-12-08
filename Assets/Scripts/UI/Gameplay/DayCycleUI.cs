@@ -14,12 +14,13 @@ namespace UI.Gameplay
         [SerializeField] private GameObject slicedFishState;
         [SerializeField] private GameObject dialogState;
         
-        private Slider slider;
+        //private Slider slider;
+        [SerializeField] private Image slider; // debuggg helo helo
         private GameStateService _gameStateService;
 
         private void Awake()
         {
-            slider = GetComponent<Slider>();
+            //slider = GetComponent<Slider>();
         }
         
         [Inject]
@@ -38,11 +39,12 @@ namespace UI.Gameplay
         
         public void ChangeSliderState(float value)
         {
-            slider.value = value;
+            slider.fillAmount = (float)Math.Round(value, 2);
         }
 
         public void SetState(GameState state)
         {
+            slider.fillAmount = 0f;
             switch (state)
             {
                 case GameState.WaitingForSleep:

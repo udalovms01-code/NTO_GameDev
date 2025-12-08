@@ -7,8 +7,9 @@ public class Level1 : CMSEntity
     {
         Define<TagLevelScript>().toExecute = Script;
         Define<TagDifficulty>().virusPerSet = 1;
-        Define<TagLevelContent>().totalPoints = 1;
+        Define<TagLevelContent>().totalPoints = 8;
         Define<TagLevelContent>().startSet = E.Id<Set0>();
+        Define<TagLevelContent>().levelTime = 60f;
         //Define<TagLevelContent>().badFishSpawns[5] = E.Id<FattyFish>();
     }
 

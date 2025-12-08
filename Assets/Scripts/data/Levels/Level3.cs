@@ -9,6 +9,7 @@ public class Level3 : CMSEntity
         Define<TagDifficulty>().virusPerSet = 1;
         Define<TagLevelContent>().totalPoints = 7;
         Define<TagLevelContent>().startSet = E.Id<Set1>();
+        Define<TagLevelContent>().levelTime = 60f;
     }
 
     IEnumerator Script()

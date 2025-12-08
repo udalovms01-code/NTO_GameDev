@@ -42,6 +42,7 @@ public class TagLevelScript : EntityComponentDefinition
 public class TagLevelContent : EntityComponentDefinition
 {
     public int totalPoints;
+    public float levelTime;
     public string startSet;
     public Dictionary<int, string> badFishSpawns = new Dictionary<int, string>();
     public Dictionary<int, string> setChanges = new Dictionary<int, string>();
