@@ -30,7 +30,7 @@ namespace UI.Settings
 
         public GameSettingsApplier Applier => _applier;
 
-        private void Awake()
+        private void Start()
         {
             _settings = _storage.Load();
             InitializeQualityDropdown();

@@ -16,10 +16,10 @@ namespace UI.Settings
         {
             var settings = new GameSettings
             {
-                MasterVolume = PlayerPrefs.GetFloat(MasterVolumeKey, 1f),
-                MusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f),
-                SfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, 1f),
-                MouseSensitivity = PlayerPrefs.GetFloat(MouseSensitivityKey, 1f),
+                MasterVolume = PlayerPrefs.GetFloat(MasterVolumeKey, 0f),
+                MusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 0f),
+                SfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, 0f),
+                MouseSensitivity = PlayerPrefs.GetFloat(MouseSensitivityKey, 200f),
                 Fullscreen = PlayerPrefs.GetInt(FullscreenKey, 1) == 1,
                 Language = (LocalizationLanguage)PlayerPrefs.GetInt(LanguageKey, 0)
             };
