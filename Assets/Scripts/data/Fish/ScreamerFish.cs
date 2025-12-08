@@ -8,7 +8,8 @@ public class ScreamerFish : FishBase
         Define<TagFishView>().name = "screamer";
         Define<TagFishView>().sprite = SpriteUtil.Load("fishes", "screamer");
         Define<TagFishView>().dead_sprite = SpriteUtil.Load("dead_fishes", "screamer");
-        Define<TagFishView>().description = "-10 рыбе напротив";
+        Define<TagStartFishValue>().value = 0;
+        Define<TagFishView>().description = "-1 рыбе напротив";
         Define<TagScreamer>().delta = -1;
     }
 }

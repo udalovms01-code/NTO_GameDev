@@ -73,7 +73,12 @@ public class Main : MonoBehaviour
     List<string> levelSeq = new List<string>()
     {
         E.Id<Level1>(),
-        //E.Id<Level2>()
+        E.Id<Level2>(),
+        E.Id<Level3>(),
+        E.Id<Level4>(),
+        E.Id<Level5>(),
+        E.Id<Level6>(),
+        E.Id<Level7>()
     };
 
     private List<InteractiveObject> smartGeneratedObjects;
@@ -109,7 +114,7 @@ public class Main : MonoBehaviour
         {
             G.CorGameplayConfig = new CorGameplayConfig();
 
-            G.CorGameplayConfig.animationMultiplier = 1f;
+            G.CorGameplayConfig.animationMultiplier = 0.9f;
         }
 
         fishStrategiesManager = new FishStrategiesManager();
@@ -117,7 +122,7 @@ public class Main : MonoBehaviour
         G.main = this;
         
         //ЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКАЗАГЛУШКА
-        //setsEntities = new List<string>() {E.Id<EasySet>(), E.Id<EasySet>(), E.Id<EasySet>()};
+        //setsEntities = new List<string>() {E.Id<Set1>(), E.Id<Set1>(), E.Id<Set1>()};
     }
     
     [Inject]
@@ -139,6 +144,7 @@ public class Main : MonoBehaviour
         G.OnGameReady?.Invoke();
         
         //fishCount = 0;
+        G.run.level = _gameStateService.CurrentDay - 1;
         
         
         CMSEntity levelToLoad;
@@ -267,7 +273,7 @@ public class Main : MonoBehaviour
 
         field.Align();
         
-        yield return new WaitForSeconds(1f * G.CorGameplayConfig.animationMultiplier);
+        //yield return new WaitForSeconds(1f * G.CorGameplayConfig.animationMultiplier);
         
         animator.SetTrigger("CameraOut");
         
@@ -325,7 +331,7 @@ public class Main : MonoBehaviour
             if (levelEntity.Is<TagLevelContent>(out var lc))
                 setEntity = lc.startSet;
             else
-                setEntity = E.Id<EasySet>();
+                setEntity = E.Id<Set1>();
             yield return DrawFish();
             newObjects = field.objects.ToList();
             yield return AllFishesAcivation();
@@ -401,7 +407,7 @@ public class Main : MonoBehaviour
         if (levelEntity.Is<TagLevelContent>(out var lc))
             setEntity = lc.startSet;
         else
-            setEntity = E.Id<EasySet>();
+            setEntity = E.Id<Set1>();
 
         seed = FishStrategiesManager.GetShuffledList(fishStrategiesManager.strategiesCount);
         seedPos = 0;

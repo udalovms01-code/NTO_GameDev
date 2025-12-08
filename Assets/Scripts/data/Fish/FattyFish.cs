@@ -14,7 +14,7 @@ public class FattyFish : FishBase
         Define<TagFatty>().delta = 1;
         Define<TagSizes>().possibleSizes = new List<FishSize>()
         {
-            FishSize.Big
+            FishSize.Medium
         };
     }
 }
@@ -29,9 +29,9 @@ public class TagFatty : EntityComponentDefinition
     public int delta = 1;
 }
 
-public class FattyInteraction : BaseInteraction, IOnEat
+public class FattyInteraction : BaseInteraction//, IOnEat
 {
-    public IEnumerator OnEat(FishState obj_state, FishState subj_state)
+    /*public IEnumerator OnEat(FishState obj_state, FishState subj_state)
     {
         if (obj_state.model.Is<TagFatty>(out var tfl))
         {
@@ -44,7 +44,7 @@ public class FattyInteraction : BaseInteraction, IOnEat
                 yield return new WaitForSeconds(0.25f * G.CorGameplayConfig.animationMultiplier);
             }
         }
-    }
+    }*/
 }
 
 public interface IOnEat

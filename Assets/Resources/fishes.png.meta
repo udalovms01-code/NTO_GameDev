@@ -145,28 +145,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fishes_1
-      rect:
-        serializedVersion: 2
-        x: 185
-        y: 994
-        width: 42
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 40caf4313cdec934886d10920904404c
-      internalID: -163800308
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: bream
       rect:
         serializedVersion: 2
@@ -184,50 +162,6 @@ TextureImporter:
       bones: []
       spriteID: bd07a471b7873cd40b4dac2a5b4e53f6
       internalID: -320358261
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fishes_3
-      rect:
-        serializedVersion: 2
-        x: 121
-        y: 955
-        width: 46
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 807aa5f664fabf54c8821c4d2f137ed5
-      internalID: -1631902446
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fishes_4
-      rect:
-        serializedVersion: 2
-        x: 183
-        y: 954
-        width: 46
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e8eaec38c6637e245b1fe2c4b022578b
-      internalID: -1975150800
       vertices: []
       indices: 
       edges: []
@@ -277,28 +211,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fishes_7
-      rect:
-        serializedVersion: 2
-        x: 187
-        y: 924
-        width: 35
-        height: 25
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f8dabf96f29c0947ab106bbf880378d
-      internalID: -1021345480
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: fatty
       rect:
         serializedVersion: 2
@@ -316,50 +228,6 @@ TextureImporter:
       bones: []
       spriteID: ff256840b79063c4ca85c5e1d2f81df9
       internalID: -637554801
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fishes_9
-      rect:
-        serializedVersion: 2
-        x: 119
-        y: 882
-        width: 49
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe5cf0804636d78428d07d14df270e16
-      internalID: -206333388
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fishes_10
-      rect:
-        serializedVersion: 2
-        x: 184
-        y: 880
-        width: 49
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e0a8eb4dacbfead4bbaa7eabeffbba64
-      internalID: 928267124
       vertices: []
       indices: 
       edges: []
@@ -409,28 +277,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fishes_13
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 787
-        width: 97
-        height: 46
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 353fecaaae5f55041a3cd0b7850cf01e
-      internalID: -1756439829
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: screamer
       rect:
         serializedVersion: 2
@@ -448,28 +294,6 @@ TextureImporter:
       bones: []
       spriteID: 5a94c345990d0814595bf33da3aaf800
       internalID: -1835093101
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fishes_15
-      rect:
-        serializedVersion: 2
-        x: 138
-        y: 743
-        width: 43
-        height: 29
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 88b6ecd03033add468370fdd4c459aad
-      internalID: -688447783
       vertices: []
       indices: 
       edges: []
@@ -585,7 +409,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fishes_21
+      name: lion
       rect:
         serializedVersion: 2
         x: 46
@@ -651,7 +475,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green
+      name: piranha
       rect:
         serializedVersion: 2
         x: 39
@@ -696,18 +520,18 @@ TextureImporter:
       fishes_18: 46766379
       fishes_19: -1036737050
       fishes_20: 99652199
-      fishes_21: -1531417260
       fishes_22: 919163475
       fishes_3: -1631902446
       fishes_4: -1975150800
       fishes_6: 1988048570
       fishes_7: -1021345480
       fishes_9: -206333388
-      green: 898577737
       green_armored: 343172066
       guppy: -1266976946
+      lion: -1531417260
       minnow: 439830185
       moray_eel: -945307436
+      piranha: 898577737
       screamer: -1835093101
       swordfish: 603056123
       zander: 2015395484
