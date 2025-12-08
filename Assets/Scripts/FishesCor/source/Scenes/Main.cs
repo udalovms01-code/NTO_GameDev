@@ -181,7 +181,6 @@ public class Main : MonoBehaviour
         if (Strategies)
         {
             yield return SmartGenerateObjects();
-            Debug.Log(smartGeneratedObjects);
         }
         else
         {
@@ -258,9 +257,10 @@ public class Main : MonoBehaviour
 
         yield return AllFishesCut();
 
-
+        TutorFlag = true;
+        
         //G.run.set++;
-        if (G.run.pointsSum < levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set < setsEntities.Count)
+        if (G.run.pointsSum < levelEntity.Get<TagLevelContent>().totalPoints && !levelEntity.Is<TagTutorialLevel>())//(G.run.set < setsEntities.Count)
         {
             yield return DrawFish();
         }
