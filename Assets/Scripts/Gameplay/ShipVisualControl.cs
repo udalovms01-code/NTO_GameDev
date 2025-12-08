@@ -12,7 +12,8 @@ namespace Gameplay
     
     public class ShipVisualControl : MonoBehaviour
     {
-        [SerializeField] private ModelsStage[] _models;
+        [SerializeField] private ModelsStage[] _activeModels;
+        [SerializeField] private ModelsStage[] _inactiveModels;
         
         [Inject]
         private void Construct(GameStateService gameStateService)
@@ -22,11 +23,17 @@ namespace Gameplay
         
         private void OnDayChanged(int day)
         {
-            for (int i = 0; i < _models.Length; i++)
+            for (int i = 0; i < _activeModels.Length; i++)
             {
-                for (int j = 0; j < _models[i].Models.Length; j++)
+                Debug.Log(day);
+                for (int j = 0; j < _activeModels[i].Models.Length; j++)
                 {
-                    _models[i].Models[j].SetActive(i == day);
+                    _activeModels[i].Models[j].SetActive(day >= i+1);
+                }
+
+                for (int j = 0; j < _inactiveModels[i].Models.Length; j++)
+                {
+                    if(day >= i + 1) _inactiveModels[i].Models[j].SetActive(false);  
                 }
             }
         }

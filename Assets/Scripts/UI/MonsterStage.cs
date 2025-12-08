@@ -13,7 +13,7 @@ namespace UI
         [Inject]
         private void Construct(GameStateService gameStateService)
         {
-            gameStateService.OnStateChanged += (state) => _spriteRenderer.sprite = _sprites[(int) state];
+            gameStateService.OnDayChanged += (state) => _spriteRenderer.sprite = _sprites[state-1];
         }
     }
 }

@@ -41,9 +41,14 @@ namespace Gameplay
             if(_gameStateService.CurrentState != GameState.WaitingForSleep) return;
             FadeController.Instance.FadeIn(() =>
             {
-                _gameStateService.SetDay(_gameStateService.CurrentDay + 1);
-                FadeController.Instance.FadeOut();
+                Invoke(nameof(FadeOut), 0.5f);
             });
+        }
+
+        public void FadeOut()
+        {
+            _gameStateService.SetDay(_gameStateService.CurrentDay + 1);
+                            FadeController.Instance.FadeOut();
         }
 
         public void UnInteract()
