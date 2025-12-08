@@ -18,6 +18,16 @@ public abstract class FishBase : CMSEntity
     }
 }
 
+public class TagNegative : EntityComponentDefinition
+{
+    
+}
+
+public class TagLegendary : EntityComponentDefinition
+{
+    
+}
+
 public class TagVirusedForm : EntityComponentDefinition
 {
     public Sprite sprite;

@@ -15,6 +15,7 @@ public class SwordFish : FishBase
         {
             FishSize.Medium
         };
+        Define<TagLegendary>();
     }
 }
 
