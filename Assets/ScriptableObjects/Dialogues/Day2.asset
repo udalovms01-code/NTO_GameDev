@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d58d68c37b92c4db408d8186167ca6, type: 3}
+  m_Name: Day2
+  m_EditorClassIdentifier:
+  nodes:
+  - Guid: 69b461bd-1fb0-4b2b-9710-d28617fc7f7b
+    Text: "Руки. Чтобы держать. Чтобы хватать. Чтобы не дать уйти. Удобно, правда? Теперь я могу стучать в твою дверь. Не только в ту, железную."
+    LocalizationKey: dialogue_69b461bd-1fb0-4b2b-9710-d28617fc7f7b
+    OnEnter: {fileID: 0}
+    Position: {x: 152.8, y: -363.2}
+    Choices:
+    - Text: "Ты не посмеешь войти."
+      LocalizationKey:
+      TargetNodeGuid: c822b1f0-1c32-49f5-b746-94683943dcb0
+    - Text: "Что ты хочешь от меня найти?"
+      LocalizationKey:
+      TargetNodeGuid: 6bcaba5a-190b-4a51-a621-c2f40216193a
+  - Guid: c822b1f0-1c32-49f5-b746-94683943dcb0
+    Text: "Я уже внутри. Я стучусь в твою память. И дверь там… совсем не крепкая. Пахнет старой ржавчиной и… страхом. Интересно, чей он?"
+    LocalizationKey: dialogue_c822b1f0-1c32-49f5-b746-94683943dcb0
+    OnEnter: {fileID: 0}
+    Position: {x: 926.4, y: -519.2}
+    Choices:
+    - Text: Next
+      LocalizationKey:
+      TargetNodeGuid:
+  - Guid: 6bcaba5a-190b-4a51-a621-c2f40216193a
+    Text: "Не «что», а «кого». Того, кем ты был до того, как стал этим пустым местом в каюте. Он спрятался очень глубоко. Но я хороший копатель."
+    LocalizationKey: dialogue_6bcaba5a-190b-4a51-a621-c2f40216193a
+    OnEnter: {fileID: 0}
+    Position: {x: 902.4, y: -172}
+    Choices:
+    - Text: "Там никого нет."
+      LocalizationKey:
+      TargetNodeGuid: b639026e-7d17-49d0-a7d4-2e315a159e42
+    - Text: "Оставь его в покое."
+      LocalizationKey:
+      TargetNodeGuid: ae0cf85d-5f51-4533-b7e3-265476589923
+  - Guid: b639026e-7d17-49d0-a7d4-2e315a159e42
+    Text: "Все так говорят. А потом рыдают, когда я показываю им фотографии. Не волнуйся, я скоро найду твой альбом."
+    LocalizationKey: dialogue_b639026e-7d17-49d0-a7d4-2e315a159e42
+    OnEnter: {fileID: 0}
+    Position: {x: 1680, y: -296}
+    Choices:
+    - Text: Next
+      LocalizationKey:
+      TargetNodeGuid:
+  - Guid: ae0cf85d-5f51-4533-b7e3-265476589923
+    Text: "Ага! Значит, ты его признаёшь! Прекрасно. Теперь у нас есть общий знакомый. Завтра поговорим о нём подробнее. Принеси рыбы."
+    LocalizationKey: dialogue_ae0cf85d-5f51-4533-b7e3-265476589923
+    OnEnter: {fileID: 0}
+    Position: {x: 1672, y: 48}
+    Choices:
+    - Text: Next
+      LocalizationKey:
+      TargetNodeGuid:
+  startNodeGuid: 69b461bd-1fb0-4b2b-9710-d28617fc7f7b
