@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d58d68c37b92c4db408d8186167ca6, type: 3}
+  m_Name: Day6
+  m_EditorClassIdentifier:
+  nodes:
+  - Guid: 95fdd266-b70f-4ee8-8f74-67f4c86e362a
+    Text: "Вы чувствуете стук громкий стук сердца. Вы осознаёте, что чудовище слилось с вашим судном, и Вас охватывает непреодолимая тревога. Решитесь ли вы на попытку?"
+    LocalizationKey: dialogue_95fdd266-b70f-4ee8-8f74-67f4c86e362a
+    OnEnter: {fileID: 0}
+    Position: {x: 0, y: 0}
+    Choices:
+    - Text: "Повредить сердце"
+      LocalizationKey: choice_95fdd266-b70f-4ee8-8f74-67f4c86e362a_0
+      TargetNodeGuid: b1625e36-03b3-4cb5-9864-627097a3c9bd
+    - Text: "Смириться. [конец]"
+      LocalizationKey: choice_95fdd266-b70f-4ee8-8f74-67f4c86e362a_1
+      TargetNodeGuid: 28d51345-b56f-44ee-a749-4c20bb38632d
+  - Guid: b1625e36-03b3-4cb5-9864-627097a3c9bd
+    Text: "Тебя не учили принимать судьбу? Как досадно [КОНЦОВКА]"
+    LocalizationKey: dialogue_b1625e36-03b3-4cb5-9864-627097a3c9bd
+    OnEnter: {fileID: 0}
+    Position: {x: 520, y: -120}
+    Choices:
+    - Text: Next
+      LocalizationKey: choice_b1625e36-03b3-4cb5-9864-627097a3c9bd_0
+      TargetNodeGuid:
+  - Guid: 28d51345-b56f-44ee-a749-4c20bb38632d
+    Text: "Вы смиряетесь и позволяете сердцу биться дальше. [конец]"
+    LocalizationKey: dialogue_28d51345-b56f-44ee-a749-4c20bb38632d
+    OnEnter: {fileID: 0}
+    Position: {x: 520, y: 120}
+    Choices:
+    - Text: Next
+      LocalizationKey: choice_28d51345-b56f-44ee-a749-4c20bb38632d_0
+      TargetNodeGuid:
+  startNodeGuid: 95fdd266-b70f-4ee8-8f74-67f4c86e362a

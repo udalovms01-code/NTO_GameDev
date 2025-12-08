@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d58d68c37b92c4db408d8186167ca6, type: 3}
+  m_Name: Day5
+  m_EditorClassIdentifier:
+  nodes:
+  - Guid: 343ab518-29d8-40d1-aa2d-48e110c28409
+    Text: "Монстр (голос исходит со всех сторон): «Как думаешь, почему проходящие мимо судна огибают нас за километр?»"
+    LocalizationKey: dialogue_343ab518-29d8-40d1-aa2d-48e110c28409
+    OnEnter: {fileID: 0}
+    Position: {x: 0, y: 0}
+    Choices:
+    - Text: "Откуда ты знаешь?"
+      LocalizationKey: choice_343ab518-29d8-40d1-aa2d-48e110c28409_0
+      TargetNodeGuid: 77c359a6-aac8-4eae-9649-0d6be503613b
+  - Guid: 77c359a6-aac8-4eae-9649-0d6be503613b
+    Text: "Моя плоть уже повсюду. Я не только контролирую штурвал, но и слежу за каждым шорохом на корабле, в том числе и от тебя. Вижу тебя насквозь. Вижу ту старую фотографию, которую ты прячешь под матрасом. Улыбаются такие..."
+    LocalizationKey: dialogue_77c359a6-aac8-4eae-9649-0d6be503613b
+    OnEnter: {fileID: 0}
+    Position: {x: 520, y: -120}
+    Choices:
+    - Text: "Что дальше?"
+      LocalizationKey: choice_77c359a6-aac8-4eae-9649-0d6be503613b_0
+      TargetNodeGuid: f582c528-326c-4085-959a-958d27b3a9bc
+    - Text: "Тогда скажи, что я чувствую сейчас."
+      LocalizationKey: choice_77c359a6-aac8-4eae-9649-0d6be503613b_1
+      TargetNodeGuid: 76b1aeff-df8b-4127-b85c-46af9de67d56
+    - Text: "А как же наша сделка?"
+      LocalizationKey: choice_77c359a6-aac8-4eae-9649-0d6be503613b_2
+      TargetNodeGuid: 74a9f62b-9c5b-4546-819f-d625ac44ce88
+  - Guid: f582c528-326c-4085-959a-958d27b3a9bc
+    Text: "Дальше? Дальше — ассимиляция. Ты кормил меня, чтобы выжить. А я ел, чтобы стать тобой. Твои страхи, твоя вина — мой лучший строительный материал. Скоро между «мной» и «тобой» не останется перегородки. Ты станешь смотрителем в музее собственной гибели."
+    LocalizationKey: dialogue_f582c528-326c-4085-959a-958d27b3a9bc
+    OnEnter: {fileID: 0}
+    Position: {x: 1040, y: -240}
+    Choices:
+    - Text: "А как же наша сделка?"
+      LocalizationKey: choice_f582c528-326c-4085-959a-958d27b3a9bc_0
+      TargetNodeGuid: 74a9f62b-9c5b-4546-819f-d625ac44ce88
+    - Text: Next
+      LocalizationKey: choice_f582c528-326c-4085-959a-958d27b3a9bc_1
+      TargetNodeGuid:
+  - Guid: 76b1aeff-df8b-4127-b85c-46af9de67d56
+    Text: "Монстр (после паузы): «Одиночество. Не тоску по людям. А фундаментальное, космическое одиночество пустоты, которая понимает, что она — пустота. И сейчас её кто-то занял. Это и есть я.»"
+    LocalizationKey: dialogue_76b1aeff-df8b-4127-b85c-46af9de67d56
+    OnEnter: {fileID: 0}
+    Position: {x: 1040, y: 0}
+    Choices:
+    - Text: "А как же наша сделка?"
+      LocalizationKey: choice_76b1aeff-df8b-4127-b85c-46af9de67d56_0
+      TargetNodeGuid: 74a9f62b-9c5b-4546-819f-d625ac44ce88
+    - Text: Next
+      LocalizationKey: choice_76b1aeff-df8b-4127-b85c-46af9de67d56_1
+      TargetNodeGuid:
+  - Guid: 74a9f62b-9c5b-4546-819f-d625ac44ce88
+    Text: "Монстр (с издевкой): «Хочешь накормить меня этими крохотными рыбёшками? Этого не хватит. Голод сменился аппетитом. Аппетитом на целое. На корабль. На историю. На тебя. Завтра мы поговорим о твоём вкладе в наше… общее дело.»"
+    LocalizationKey: dialogue_74a9f62b-9c5b-4546-819f-d625ac44ce88
+    OnEnter: {fileID: 0}
+    Position: {x: 1560, y: -120}
+    Choices:
+    - Text: Next
+      LocalizationKey: choice_74a9f62b-9c5b-4546-819f-d625ac44ce88_0
+      TargetNodeGuid:
+  startNodeGuid: 343ab518-29d8-40d1-aa2d-48e110c28409
