@@ -28,11 +28,17 @@ namespace Gameplay
         public void StartDeath()
         {
             Debug.Log("Death");
+            if (SceneTransitionController.Instance != null)
+            {
+                SceneTransitionController.Instance.LoadScene(0);
+                return;
+            }
+
             FadeController.Instance.FadeIn(() =>
             {
                 FadeController.Instance.FadeOut();
                 SceneManager.LoadScene(0);
-            }); 
+            });
         }
     }
 }

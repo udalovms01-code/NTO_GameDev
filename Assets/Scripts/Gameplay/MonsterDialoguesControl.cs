@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Audio;
 using DialogueSystem.Runtime;
 using Gameplay;
 using TMPro;
@@ -19,10 +20,13 @@ public class MonsterDialoguesControl : MonoBehaviour
     [SerializeField] private TMP_Text dialogText;
     [SerializeField] private GameObject answerPrefab;
     [SerializeField] private Transform answersParent;
-    
+    [Header("Audio")]
+    [SerializeField] private SoundEffectPlayer dialogueSoundPlayer;
+    [SerializeField] private SoundCollection choiceSelectSound;
+
     private DialogueRunner _runner;
     private GameStateService _gameStateService;
-    
+
     [Inject]
     public void Construct(GameStateService gameStateService)
     {
@@ -30,11 +34,19 @@ public class MonsterDialoguesControl : MonoBehaviour
         _gameStateService.OnStateChanged += TryStartDialog;
     }
 
+    private void Awake()
+    {
+        if (dialogueSoundPlayer == null)
+        {
+            dialogueSoundPlayer = GetComponent<SoundEffectPlayer>();
+        }
+    }
+
     private void TryStartDialog(GameState state)
     {
         if (state != GameState.Dialog) return;
         var dialogDayDetails = dialogData[_gameStateService.CurrentDay - 1];
-        
+
         _runner = new DialogueRunner(dialogDayDetails.trees[
             dialogDayDetails.trees.Length == 1 ? 0 :
             Random.Range(0, dialogDayDetails.trees.Length)]);
@@ -49,16 +61,17 @@ public class MonsterDialoguesControl : MonoBehaviour
 
     public void OnChoiceSelected(int index)
     {
+        dialogueSoundPlayer?.Play(choiceSelectSound);
         if (_runner.TryChoose(index))
         {
             ShowCurrentNode();
         }
         else
         {
-            Invoke(nameof(DialogueEnd), 0.5f); 
+            Invoke(nameof(DialogueEnd), 0.5f);
         }
     }
-    
+
     private void DialogueEnd()
     {
         if (_gameStateService.CurrentState != GameState.Dialog) return;
@@ -67,7 +80,7 @@ public class MonsterDialoguesControl : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        if(MonsterDoor.Instance.isOpen) MonsterDoor.Instance.ToggleDoor(PlayerMovement.Instance.transform.position);
+        if (MonsterDoor.Instance.isOpen) MonsterDoor.Instance.ToggleDoor(PlayerMovement.Instance.transform.position);
     }
 
     private void ShowCurrentNode()
@@ -75,14 +88,14 @@ public class MonsterDialoguesControl : MonoBehaviour
         var node = _runner.CurrentNode;
         if (node == null)
         {
-            Invoke(nameof(DialogueEnd), 0.5f); 
+            Invoke(nameof(DialogueEnd), 0.5f);
             return;
         }
 
         dialogText.text = node.Text;
         if (node.OnEnter != null) node.OnEnter.Invoke();
         var choices = _runner.GetChoices();
-        
+
         foreach (Transform child in answersParent)
         {
             Destroy(child.gameObject);

@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 namespace Gameplay
 {
@@ -10,9 +9,11 @@ namespace Gameplay
     {
         [SerializeField] private Image fadeImage;
         [SerializeField] private float duration = 0.8f;
-        
+
         public static FadeController Instance { get; private set; }
-        
+
+        public float Duration => duration;
+
         private void Awake()
         {
             if (Instance != null)
@@ -29,6 +30,11 @@ namespace Gameplay
                 c.a = 0f;
                 fadeImage.color = c;
             }
+
+            if (GetComponent<SceneTransitionController>() == null)
+            {
+                gameObject.AddComponent<SceneTransitionController>();
+            }
         }
 
         /// <summary>
@@ -38,7 +44,7 @@ namespace Gameplay
         {
             return fadeImage.DOFade(1f, duration).SetEase(Ease.Linear);
         }
-        
+
         public Tween FadeIn(Action onComplete)
         {
             return fadeImage.DOFade(1f, duration).SetEase(Ease.Linear).OnComplete(onComplete.Invoke);
@@ -51,11 +57,10 @@ namespace Gameplay
         {
             return fadeImage.DOFade(0f, duration).SetEase(Ease.Linear);
         }
-        
+
         public Tween FadeOut(Action onComplete)
         {
             return fadeImage.DOFade(0f, duration).SetEase(Ease.Linear).OnComplete(onComplete.Invoke);
         }
     }
-
 }
