@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Gameplay;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace UI
@@ -12,9 +13,9 @@ namespace UI
         
         public void PlayGame()
         {
-           if (Gameplay.SceneTransitionController.Instance != null)
+           if (SceneTransitionController.Instance != null)
            {
-               Gameplay.SceneTransitionController.Instance.LoadScene(1);
+               SceneTransitionController.Instance.LoadScene(1);
                return;
            }
 
