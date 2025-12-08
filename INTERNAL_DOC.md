@@ -17,6 +17,12 @@
 - `SaveGameButton` запускает `SaveManager.SaveAsync` по нажатию Unity-кнопки и обновляет связанную панель слотов.
 - `GameSettingsPanel` инициализирует Dropdown качеств, читает настройки через `GameSettingsStorage`, применяет их через `GameSettingsApplier`, а также сохраняет или сбрасывает значения по кнопкам Apply/Reset.
 - `GameSettingsApplier.Apply(settings)` настраивает `AudioListener.volume`, `Screen.fullScreen`, `QualitySettings.SetQualityLevel` и рассылает события изменения громкостей/чувствительности.
+- `SoundEffectPlayer.Play(SoundCollection collection)` выбирает случайный клип с учётом громкости и разброса питча и воспроизводит через `AudioSource.PlayOneShot` (компонент гарантируется на объекте).
+- `PlayerMovement.HandleFootsteps(move)` отслеживает движение/приземление `CharacterController` и с интервалом проигрывает шаги через `SoundEffectPlayer` при движении.
+- `DoorInteract.ToggleDoor(Vector3 playerPos)` теперь дополнительно проигрывает звуки открытия/закрытия двери через `SoundEffectPlayer`.
+- `MonsterDialoguesControl.OnChoiceSelected(int index)` перед обработкой выбранного ответа воспроизводит SFX выбора.
+- `SceneTransitionController.LoadScene(int buildIndex|string sceneName)` оборачивает загрузку сцен: затемняет экран через `FadeController`, плавно глушит `AudioListener.volume`, ждёт загрузки, затем возвращает прозрачность и громкость.
+- `FadeController.Awake()` обеспечивает синглтон, сбрасывает прозрачность и автоматически добавляет `SceneTransitionController` на тот же объект.
 
 ## Types
 - `LocalizationLanguage` enum with `Russian`, `English`.

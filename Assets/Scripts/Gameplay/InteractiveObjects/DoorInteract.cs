@@ -1,16 +1,20 @@
-﻿using System;
+using Audio;
 using UnityEngine;
 
 namespace Gameplay
 {
     public class DoorInteract : MonoBehaviour, IIteractable
     {
-        public Transform doorPivot;     
-        public float openAngle = 90f;   
+        public Transform doorPivot;
+        public float openAngle = 90f;
         public float speed = 4f;
 
         public bool isOpen { get; private set; }
-        
+
+        [Header("Audio")]
+        [SerializeField] private SoundEffectPlayer soundPlayer;
+        [SerializeField] private SoundCollection doorSounds;
+
         private Quaternion closedRotation;
         private Quaternion openRotation;
 
@@ -18,6 +22,11 @@ namespace Gameplay
         {
             if (doorPivot == null)
                 doorPivot = transform;
+
+            if (soundPlayer == null)
+            {
+                soundPlayer = GetComponent<SoundEffectPlayer>();
+            }
 
             closedRotation = doorPivot.localRotation;
         }
@@ -48,6 +57,7 @@ namespace Gameplay
 
             StopAllCoroutines();
             StartCoroutine(RotateDoor());
+            soundPlayer?.Play(doorSounds);
             isOpen = !isOpen;
         }
 
@@ -67,7 +77,7 @@ namespace Gameplay
 
         public virtual void Interact()
         {
-            
+
         }
 
         public virtual void OnClick()
@@ -77,7 +87,7 @@ namespace Gameplay
 
         public virtual void UnInteract()
         {
-            
+
         }
     }
 }
