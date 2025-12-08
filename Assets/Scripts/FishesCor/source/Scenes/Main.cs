@@ -110,7 +110,6 @@ public class Main : MonoBehaviour
 
             G.run.maxHealth = 2;
             G.run.health = G.run.maxHealth;
-            G.run.pointsSum = 0;
         }
         if (G.CorGameplayConfig == null)
         {
@@ -118,6 +117,7 @@ public class Main : MonoBehaviour
 
             G.CorGameplayConfig.animationMultiplier = 0.9f;
         }
+        G.run.pointsSum = 0;
 
         fishStrategiesManager = new FishStrategiesManager();
 
@@ -215,10 +215,7 @@ public class Main : MonoBehaviour
         }
         
         _gameStateService.SetHunger(_gameStateService.Hunger - (Time.deltaTime / 100 * G.CorGameplayConfig.hungerMultiplier));
-        if (timeLeft < 0)
-            EndGame();
-        else
-            timeLeft -= Time.deltaTime;
+        timeLeft -= Time.deltaTime;
     }
 
     public void EndTurn()
@@ -241,9 +238,9 @@ public class Main : MonoBehaviour
             yield return DrawFish();
         }
 
-        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints)//(G.run.set >= setsEntities.Count)
+        if (G.run.pointsSum >= levelEntity.Get<TagLevelContent>().totalPoints || timeLeft < 0) //(G.run.set >= setsEntities.Count)
         {
-            OnGameEnd?.Invoke();
+            EndGame();
         }
         else
         {
