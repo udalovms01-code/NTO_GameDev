@@ -31,6 +31,7 @@ public class UITooltip : MonoBehaviour
         _rectTransform.anchoredPosition = G.hud.MousePos();
         if (state.model.Is<TagFishView>(out var fv))
         {
+            Debug.Log((fv.name, LocalizationManager.Get(fv.name)));
             name.text = LocalizationManager.Get(fv.name);
             description.text = fv.description;
         }    

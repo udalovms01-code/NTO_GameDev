@@ -623,11 +623,9 @@ MonoBehaviour:
   field: {fileID: 1450292458687511057}
   Testing: 0
   Strategies: 0
-  SmartDraw: 1
   tableHeith: 0.2555923
   animator: {fileID: 6063096013881197225}
   setEntity: 
-  timeLeft: 0
   seed: 
   seedPos: 0
 --- !u!95 &6063096013881197225
@@ -1876,7 +1874,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2016340097050575478
 RectTransform:
   m_ObjectHideFlags: 0
