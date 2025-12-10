@@ -160,7 +160,7 @@ public class Main : MonoBehaviour
         if (Tutor)
             PlayerPrefs.SetInt("start_tutorial", 0);
         
-        PlayerPrefs.SetInt("start_tutorial", 1);
+        //PlayerPrefs.SetInt("start_tutorial", 1);
 
         if (G.run.level == 0)
         {
@@ -209,11 +209,11 @@ public class Main : MonoBehaviour
         if (!Testing)
             if (_gameStateService != null && _gameStateService.CurrentState != GameState.SlicedFish) return;
         
-        G.ui.debug_text.text = "";
+        /*G.ui.debug_text.text = "";
         G.ui.debug_text.text += "R-reload\n";
         G.ui.debug_text.text += "D-add dice\n";
         G.ui.debug_text.text += "I-reload with intro\n";
-        G.ui.debug_text.text += "E-Auto win\n";
+        G.ui.debug_text.text += "E-Auto win\n";*/
         
         if (Input.GetMouseButtonDown(0))
         {
@@ -454,12 +454,13 @@ public class Main : MonoBehaviour
         else
             setEntity = E.Id<Set1>();
 
-        Debug.Log(levelEntity.Get<TagLevelContent>().totalPoints);
+        //Debug.Log(levelEntity.Get<TagLevelContent>().totalPoints);
         seed = FishStrategiesManager.GetShuffledList(fishStrategiesManager.strategiesCount);
         seedPos = 0;
         G.run.pointsSum = 0;
 
-        yield return DrawFish();
+        if(!CMS.Get<CMSEntity>(setEntity).Is<TagEmptySet>())
+            yield return DrawFish();
 
         if (levelEntity.Is<TagLevelScript>(out var exs))
         {
@@ -468,10 +469,10 @@ public class Main : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
         
+        UnpauseHunger();
         G.hud.EnableHud();
     }
-
-
+    
     private IEnumerator DrawFish()
     {
         if(Strategies || !SmartDraw)
@@ -484,38 +485,41 @@ public class Main : MonoBehaviour
                 int i = 0;
                 while (i < dice_count)
                 {
-                    float seed = Random.Range(0f, 1f);
+                    float random_target = Random.Range(0f, 1f);
                     float cursum = 0;
                     foreach (var data in sd.fish_probabilities)
                     {
                         cursum += data.Value;
-                        if (seed <= cursum)
+                        if (random_target <= cursum)
                         {
                             if (CMS.Get<CMSEntity>(data.Key).Is<TagNegative>())
                             {
                                 if (negCount < 2)
                                 {
                                     AddFish(data.Key);
+                                    i++;
                                     negCount++;
-                                    i++;
                                 }
-                                break;
-                            }
-                            else if (CMS.Get<CMSEntity>(data.Key).Is<TagLegendary>())
-                            {
-                                if (legCount < 2)
-                                {
-                                    AddFish(data.Key);
-                                    legCount++;
-                                    i++;
-                                }
-                                break;
                             }
                             else
                             {
-                                AddFish(data.Key);
-                                i++;
+                                if (CMS.Get<CMSEntity>(data.Key).Is<TagLegendary>())
+                                {
+                                    if (legCount < 2)
+                                    {
+                                        AddFish(data.Key);
+                                        i++;
+                                        legCount++;
+                                    }
+                                }
+                                else
+                                {
+                                    AddFish(data.Key);
+                                    i++;
+                                }
                             }
+
+                            break;
                         }
                     }
                 }
@@ -556,6 +560,7 @@ public class Main : MonoBehaviour
             yield break;
         }
     }
+    
     public void PauseHunger()
     {
         pauseHunger = true;
@@ -665,7 +670,10 @@ public class Main : MonoBehaviour
     public void AddHunger(float value)
     {
         if (!Testing)
+        {
             _gameStateService.SetHunger(_gameStateService.Hunger + value);
+            _gameStateService.AddHungerByFishvalue(value);
+        }
     }
     
     public IEnumerator EndGame()

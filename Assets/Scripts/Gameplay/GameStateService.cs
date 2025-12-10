@@ -26,6 +26,7 @@ namespace Gameplay
         public static event Action<bool> OnTutorialCompleted;
         public event Action<int> OnDayChanged;
         public event Action<float> OnHungerChanged;
+        public event Action<float> OnHungerChangedByFishvalue;
         public event Action<GameState> OnStateChanged;
         
         public void SetHunger(float value)
@@ -35,6 +36,11 @@ namespace Gameplay
             Hunger = value;
             Hunger = Mathf.Max(Mathf.Min(Hunger, 1f), 0f);
             OnHungerChanged?.Invoke(value);
+        }
+
+        public void AddHungerByFishvalue(float val)
+        {
+            OnHungerChangedByFishvalue?.Invoke(val);
         }
         
         public void SetDay(int day)

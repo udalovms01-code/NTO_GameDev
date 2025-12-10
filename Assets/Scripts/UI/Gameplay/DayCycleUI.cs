@@ -30,18 +30,32 @@ namespace UI.Gameplay
             _gameStateService = gameStateService;
             gameStateService.OnStateChanged += SetState;
             gameStateService.OnHungerChanged += ChangeSliderState;
+            gameStateService.OnHungerChangedByFishvalue += ChangeSliderByFishvalue;
         }
         
         private void OnDestroy()
         {
             _gameStateService.OnStateChanged -= SetState;
             _gameStateService.OnHungerChanged -= ChangeSliderState;
+            _gameStateService.OnHungerChangedByFishvalue -= ChangeSliderByFishvalue;
         }
         
         public void ChangeSliderState(float value)
         {
-            uiImageRect.DOPunchScale(Vector3.one, 0.5f, 8, 1f);
             slider.fillAmount = (float)Math.Round(value, 2);
+        }
+        public void ChangeSliderByFishvalue(float value)
+        {
+            if (value == 0f) return;
+            uiImageRect.transform.DOKill();
+            uiImageRect.transform.DOPunchScale(value > 0 ? Vector3.one * 0.08f : Vector3.one * -0.08f, 0.5f, 0, 0f);
+            //uiImageRect.DOPunchScale(Vector3.one, 0.5f, 8, 1f);
+            //slider.fillAmount = (float)Math.Round(value, 2);
+        }
+
+        void Start()
+        {
+            //uiImageRect.transform.DOPunchScale(Vector3.one * 0.001f, 0.5f);
         }
 
         public void SetState(GameState state)
