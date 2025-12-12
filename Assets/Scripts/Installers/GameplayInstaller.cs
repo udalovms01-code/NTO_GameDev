@@ -21,11 +21,6 @@ namespace Installers
                 .WithGameObjectName("GameStateMusic")
                 .AsSingle()
                 .NonLazy();
-            Container.BindInterfacesAndSelfTo<EndingCanvasController>()
-                .FromNewComponentOnNewGameObject()
-                .WithGameObjectName("EndingCanvas")
-                .AsSingle()
-                .NonLazy();
         }
     }
 }

@@ -159,6 +159,8 @@ public class Main : MonoBehaviour
         CMSEntity levelToLoad;
         if (Tutor)
             PlayerPrefs.SetInt("start_tutorial", 0);
+        
+        PlayerPrefs.SetInt("start_tutorial", 1);
 
         if (G.run.level == 0)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using SaveSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Gameplay
@@ -40,6 +41,15 @@ namespace Gameplay
         public void SetDay(int day)
         {
             if (CurrentDay == day) return;
+            if (CurrentDay == 8)
+            {
+                FadeController.Instance.FadeIn(() =>
+                {
+                    FadeController.Instance.FadeOut();
+                    SceneManager.LoadScene(0);
+                });
+                return;
+            }
             
             SetState(GameState.WaitingForSlicedFish);
             CurrentDay = day;

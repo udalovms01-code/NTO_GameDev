@@ -152,8 +152,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 30, y: -57}
-  m_SizeDelta: {x: -443.40588, y: 152.90002}
+  m_AnchoredPosition: {x: 30, y: -106.9}
+  m_SizeDelta: {x: -443.4, y: 226.7}
   m_Pivot: {x: 0.5, y: -0.6765019}
 --- !u!114 &34867999
 MonoBehaviour:
@@ -430,7 +430,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.0020142, y: -43.299}
+  m_AnchoredPosition: {x: -0.0020142, y: -43.29895}
   m_SizeDelta: {x: 280.23, y: 86.59888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!64 &183908841
@@ -1017,7 +1017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 2
+  outlineWidth: 10
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -1418,6 +1418,7 @@ MonoBehaviour:
   slicedFishState: {fileID: 1851908417}
   dialogState: {fileID: 1947070243}
   slider: {fileID: 1076086720}
+  uiImageRect: {fileID: 0}
 --- !u!1 &774836848
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,17 +2246,17 @@ MonoBehaviour:
   - trees:
     - {fileID: 11400000, guid: 0ff3513342d87e04f9cbada8f05cab8c, type: 2}
   - trees:
-    - {fileID: 11400000, guid: 9c0f510e34cfda1438064a85ec71b7d3, type: 2}
+    - {fileID: 11400000, guid: 1adf8cde7e32422d9354d970a1124a07, type: 2}
   - trees:
-    - {fileID: 11400000, guid: 0ff3513342d87e04f9cbada8f05cab8c, type: 2}
+    - {fileID: 11400000, guid: b9394c462a264f62a1bc20d8e4563c6b, type: 2}
   - trees:
-    - {fileID: 11400000, guid: 9c0f510e34cfda1438064a85ec71b7d3, type: 2}
+    - {fileID: 11400000, guid: 50b1862722de43c895fc37f606c89caf, type: 2}
   - trees:
-    - {fileID: 11400000, guid: 9c0f510e34cfda1438064a85ec71b7d3, type: 2}
+    - {fileID: 11400000, guid: 7570e376317849ce82968c93d2d03fbe, type: 2}
   - trees:
-    - {fileID: 11400000, guid: 9c0f510e34cfda1438064a85ec71b7d3, type: 2}
+    - {fileID: 11400000, guid: 5253622ac4cd4b9eb2e318781006aee3, type: 2}
   - trees:
-    - {fileID: 11400000, guid: 9c0f510e34cfda1438064a85ec71b7d3, type: 2}
+    - {fileID: 11400000, guid: 97fe48fca02e4a2a9296f19f3f923af4, type: 2}
   dialogText: {fileID: 2074650773}
   answerPrefab: {fileID: 4890648377296664121, guid: c3be8ac4ae0a40a46b64f579e8ec3226, type: 3}
   answersParent: {fileID: 34867998}
@@ -2374,7 +2375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8254493862253338290, guid: c3be8ac4ae0a40a46b64f579e8ec3226, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 171.9
+      value: 235.8
       objectReference: {fileID: 0}
     - target: {fileID: 8254493862253338290, guid: c3be8ac4ae0a40a46b64f579e8ec3226, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2386,7 +2387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8254493862253338290, guid: c3be8ac4ae0a40a46b64f579e8ec3226, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8254493862253338290, guid: c3be8ac4ae0a40a46b64f579e8ec3226, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2406,11 +2407,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8254493862253338290, guid: c3be8ac4ae0a40a46b64f579e8ec3226, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 30
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8254493862253338290, guid: c3be8ac4ae0a40a46b64f579e8ec3226, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 321
+      value: 410.1
       objectReference: {fileID: 0}
     - target: {fileID: 8254493862253338290, guid: c3be8ac4ae0a40a46b64f579e8ec3226, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3963,7 +3964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 2
+  outlineWidth: 10
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []

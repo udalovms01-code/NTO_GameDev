@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Gameplay
@@ -20,7 +22,15 @@ namespace Gameplay
         {
             gameStateService.OnDayChanged += OnDayChanged;
         }
-        
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
+
         private void OnDayChanged(int day)
         {
             for (int i = 0; i < _activeModels.Length; i++)
@@ -28,7 +38,7 @@ namespace Gameplay
                 Debug.Log(day);
                 for (int j = 0; j < _activeModels[i].Models.Length; j++)
                 {
-                    _activeModels[i].Models[j].SetActive(day >= i+1);
+                    _activeModels[i].Models[j].SetActive(day >= i);
                 }
 
                 for (int j = 0; j < _inactiveModels[i].Models.Length; j++)
