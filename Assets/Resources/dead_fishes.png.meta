@@ -131,14 +131,14 @@ TextureImporter:
         width: 42
         height: 24
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40caf4313cdec934886d10920904404c
+      spriteID: e3bde6bb901f0e64f952233cdc255c6f
       internalID: -163800308
       vertices: []
       indices: 
@@ -153,14 +153,14 @@ TextureImporter:
         width: 46
         height: 33
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8eaec38c6637e245b1fe2c4b022578b
+      spriteID: bbf73a81645fa9047a6c85443976ad90
       internalID: -1975150800
       vertices: []
       indices: 
@@ -175,14 +175,14 @@ TextureImporter:
         width: 35
         height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f8dabf96f29c0947ab106bbf880378d
+      spriteID: 2a50dafb7a36f2d4487692e2dca09460
       internalID: -1021345480
       vertices: []
       indices: 
@@ -196,16 +196,280 @@ TextureImporter:
         y: 880
         width: 49
         height: 33
-      alignment: 9
-      pivot: {x: 0.6, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0a8eb4dacbfead4bbaa7eabeffbba64
+      spriteID: 7c9f954d7f93b17408d6f6e233e0a146
       internalID: 928267124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zander
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 837
+        width: 51
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 207ad7bed3cd1c44688da01373aa6986
+      internalID: 166884462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moray
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 785
+        width: 97
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aef2e3e5976cc584686cfa1e1069102a
+      internalID: -1222728828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: screamer
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 741
+        width: 43
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 022ec1afdb2febb46a06641b4ef58efb
+      internalID: -1266976946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: swordfish
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 689
+        width: 75
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e08adb83ed0b5e741b40c659ea06fbd2
+      internalID: 603056123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ramp
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 641
+        width: 57
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b00fa285ece422e43b85cfc89fb2ea67
+      internalID: 1136356383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: angler
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 582
+        width: 71
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a332a70989c892b49908ed4ebd332d8b
+      internalID: 1414223588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: axe
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 540
+        width: 55
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccac99cdd604183479773d50557259e7
+      internalID: -1752181449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: butterfly
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 487
+        width: 38
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ce23e3df5d6958479a67afb8e5f219e
+      internalID: 1705189529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lion
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 461
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85853501e7cd2f14db36b7b2ec565479
+      internalID: 958378777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stone
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 433
+        width: 37
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47624b050ebe8c3459ee9c601a803595
+      internalID: 1127018252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piranha_armored
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 384
+        width: 47
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e8583ccd5377e047acdc20006c8d500
+      internalID: -2039579253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piranha
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 340
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efc55a5f82e7fcb4d921cf2d9021fe86
+      internalID: -557757850
       vertices: []
       indices: 
       edges: []
@@ -224,28 +488,41 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      angler: 1414223588
+      axe: -1752181449
       bream: -1975150800
-      clown: 2015395484
+      butterfly: 1705189529
+      dead_fishes_0: 2041537911
+      dead_fishes_11: 454553782
+      dead_fishes_13: 921084459
+      dead_fishes_15: -303568943
+      dead_fishes_17: 494025834
+      dead_fishes_19: -1652655718
+      dead_fishes_2: -1318624740
+      dead_fishes_21: 1068679903
+      dead_fishes_23: -689612073
+      dead_fishes_25: -676794384
+      dead_fishes_27: -1468327843
+      dead_fishes_29: 1322106400
+      dead_fishes_3: -1008128430
+      dead_fishes_31: -48773305
+      dead_fishes_33: 693737485
+      dead_fishes_5: -1078952717
+      dead_fishes_6: 288570808
+      dead_fishes_8: 513312268
+      dead_fishes_9: -832041073
       fatty: 928267124
-      fishes_12: -945307436
-      fishes_13: -1756439829
-      fishes_14: -1835093101
-      fishes_15: -688447783
-      fishes_17: 1851943214
-      fishes_18: 46766379
-      fishes_19: -1036737050
-      fishes_20: 99652199
-      fishes_21: -1531417260
-      fishes_22: 919163475
-      fishes_3: -1631902446
-      fishes_6: 1988048570
-      fishes_9: -206333388
-      green: 898577737
-      green_armored: 343172066
       guppy: -163800308
+      lion: 958378777
       minnow: -1021345480
+      moray: -1222728828
+      piranha: -557757850
+      piranha_armored: -2039579253
+      ramp: 1136356383
       screamer: -1266976946
+      stone: 1127018252
       swordfish: 603056123
+      zander: 166884462
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
