@@ -55,6 +55,7 @@ public class Level0 : CMSEntity
         G.hud.EnableHud();
         KnifeInteractive.interactable = false;
         
+        G.main.TutorFlag = false;
         yield return new WaitUntil(() => G.main.TutorFlag == true);
         G.main.TutorFlag = false;
         G.hud.DisableHud();
@@ -64,15 +65,16 @@ public class Level0 : CMSEntity
         yield return G.main.SmartWait(5f);
         yield return G.main.Say("Когда ты будешь готов, ты можешь использовать тесак и накормить чудище");
         yield return G.main.SmartWait(5f);
-        
+        yield return G.main.Unsay();
+
         KnifeInteractive.interactable = true;
-        
+
+        G.main.TutorFlag = false;
         yield return new WaitUntil(() => G.main.TutorFlag == true);
         G.main.TutorFlag = false;
         G.hud.DisableHud();
-        
-        
-        
+
+
         yield return G.main.DrawFish(entity.Get<TagTutorial1Set>().secondBoard);
 
         yield return G.main.Say("Среди рыб водятся хищники...");
