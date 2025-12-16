@@ -1,10 +1,12 @@
 using Audio;
+using Gameplay;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     private CharacterController controller;
+    public FreezePos freezePos;
 
     [Header("Footsteps")]
     [SerializeField] private SoundEffectPlayer footstepPlayer;
@@ -40,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         controller.SimpleMove(move * speed);
 
         HandleFootsteps(move);
+        //freezePos.FreezeAxes();
     }
 
     private void HandleFootsteps(Vector3 move)

@@ -25,17 +25,16 @@ namespace Gameplay
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            /*if (Input.GetKeyDown(KeyCode.Escape))
             {
                 SceneManager.LoadScene(0);
-            }
+            }*/
         }
 
         private void OnDayChanged(int day)
         {
             for (int i = 0; i < _activeModels.Length; i++)
             {
-                Debug.Log(day);
                 for (int j = 0; j < _activeModels[i].Models.Length; j++)
                 {
                     _activeModels[i].Models[j].SetActive(day >= i);

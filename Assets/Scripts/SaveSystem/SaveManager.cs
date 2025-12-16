@@ -32,12 +32,12 @@ namespace SaveSystem
 
         public void Initialize()
         {
-            Debug.Log("SaveManager initialized. Ready to capture game state.");
+            //Debug.Log("SaveManager initialized. Ready to capture game state.");
         }
 
         public void Dispose()
         {
-            Debug.Log("SaveManager disposed.");
+            //Debug.Log("SaveManager disposed.");
         }
 
         public async Task SaveAsync(string slotName = DefaultSlot)
@@ -67,7 +67,7 @@ namespace SaveSystem
             }
 
             await _storage.WriteAsync(slotName, container);
-            Debug.Log($"Game saved to slot '{slotName}'.");
+            //Debug.Log($"Game saved to slot '{slotName}'.");
         }
 
         public async Task<bool> LoadAsync(string slotName = DefaultSlot)
@@ -107,7 +107,7 @@ namespace SaveSystem
                 entity.Restore(entityState);
             }
 
-            Debug.Log($"Game loaded from slot '{slotName}'.");
+            //Debug.Log($"Game loaded from slot '{slotName}'.");
             return true;
         }
 

@@ -189,3 +189,18 @@ MonoBehaviour:
     category: FishNames
     russian: "\u0420\u044B\u0431\u0430-\u043A\u043B\u043E\u0443\u043D"
     english: Clownfish
+  - key: description.guppy
+    category: description
+    russian: "\u0420\u0430\u0437\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u0435\u0442
+      \u0440\u044B\u0431\u0443 \u043D\u0430\u043F\u0440\u043E\u0442\u0438\u0432"
+    english: Turns the next fish
+  - key: description.fatty
+    category: description
+    russian: "\u0425\u0438\u0449\u043D\u0438\u043A\\n+1 \u043A\u043E\u0433\u0434\u0430
+      \u0435\u0441\u0442 \u0440\u044B\u0431\u0443"
+    english: Predator\n+1 when eating fish
+  - key: description.bream
+    category: description
+    russian: "+1 \u0435\u0441\u043B\u0438 \u043D\u0430\u043F\u0440\u043E\u0442\u0438\u0432
+      \u043B\u0435\u0449"
+    english: +1 if bream is next

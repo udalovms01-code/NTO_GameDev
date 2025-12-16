@@ -41,14 +41,15 @@ public class DraggableSmoothDamp : MonoBehaviour, IClickable
                 if (tablePlane.Raycast(ray, out float distance))
                 {
                     Vector3 worldTarget = ray.GetPoint(distance) + offset;
-                    //worldTarget.y = 0;
 
 
                     //worldTarget += Vector3.up * 0.2f;
 
                     // Конвертируем в ЛОКАЛЬНЫЕ координаты относительно родителя
                     Vector3 localTarget = transform.parent.InverseTransformPoint(worldTarget);
-                    //localTarget.y = 0f;
+                    localTarget.x = Math.Min(localTarget.x, G.main.fishFeelConfig.maxX);
+                    localTarget.y = Math.Min(localTarget.y, G.main.fishFeelConfig.maxY);
+                    localTarget.z = Math.Min(localTarget.z, G.main.fishFeelConfig.maxZ);
 
                     // Теперь используйте localTarget для движения
                     moveable.targetPosition = localTarget; // Предполагая, что moveable работает с localPosition

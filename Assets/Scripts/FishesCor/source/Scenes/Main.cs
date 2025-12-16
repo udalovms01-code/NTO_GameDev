@@ -58,10 +58,13 @@ public class Main : MonoBehaviour
     private GameStateService _gameStateService;
     public FishStrategiesManager fishStrategiesManager;
 
+
     public CMSEntity levelEntity;
+
     public string setEntity;
 
     public float timeLeft;
+
     //public List<string> setsEntities;
 
 
@@ -70,7 +73,9 @@ public class Main : MonoBehaviour
 
 
     public List<int> seed;
+
     public int seedPos = 0;
+
     List<string> levelSeq = new List<string>()
     {
         E.Id<Level1>(),
@@ -81,9 +86,17 @@ public class Main : MonoBehaviour
         E.Id<Level6>(),
         E.Id<Level7>()
     };
+
     private List<InteractiveObject> smartGeneratedObjects;
-    
-    [Header("testing stuff")]
+
+    [Space()]
+    [Header("Config")]
+    public FishCorConfig fishCorConfig;
+    public FishFeelConfig fishFeelConfig;
+
+    [Space()]
+    [Header("testing stuff")] 
+    public bool devMod = false;
     public bool Testing = false;
     public bool Strategies = false;
     public bool SmartDraw = true;
@@ -144,6 +157,8 @@ public class Main : MonoBehaviour
     {
         if (Testing)
             StartCoroutine(TurnCoroutine());
+        else
+            G.hud.DisableHud();
     }
 
     public IEnumerator TurnCoroutine()
@@ -208,45 +223,54 @@ public class Main : MonoBehaviour
     {
         if (!Testing)
             if (_gameStateService != null && _gameStateService.CurrentState != GameState.SlicedFish) return;
-        
-        /*G.ui.debug_text.text = "";
-        G.ui.debug_text.text += "R-reload\n";
-        G.ui.debug_text.text += "D-add dice\n";
-        G.ui.debug_text.text += "I-reload with intro\n";
-        G.ui.debug_text.text += "E-Auto win\n";*/
+
+        if (devMod)
+        {
+            G.ui.debug_text.text = "";
+            G.ui.debug_text.text += "R-reload\n";
+            G.ui.debug_text.text += "D-add dice\n";
+            G.ui.debug_text.text += "I-reload with intro\n";
+            G.ui.debug_text.text += "E-Auto win\n";
+        }
+        else
+        {
+            G.ui.debug_text.text = "";
+        }
         
         if (Input.GetMouseButtonDown(0))
         {
             skip = true;
         }
 
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    SceneChange?.Invoke();
-        //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //}
+        if (devMod)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneChange?.Invoke();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
 
-        //if (Input.GetKeyDown(KeyCode.I))
-        //{
-        //    SceneManager.LoadScene(0);
-        //}
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                SceneManager.LoadScene(0);
+            }
 
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    AddFish<GuppyFish>();
-//
-        //    G.feel.UIPunchSoft();
-        //}
-        
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    StartCoroutine(EndGame());
-        //}
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                AddFish<GuppyFish>();
+                G.feel.UIPunchSoft();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                StartCoroutine(EndGame());
+            }
+        }
         
         if (!pauseHunger)
         {
             _gameStateService.SetHunger(_gameStateService.Hunger -
-                                        (Time.deltaTime / 100 * 1.25f));
+                                        (Time.deltaTime / 100 * fishCorConfig.hungerSpeed));
             timeLeft -= Time.deltaTime;
         }
     }

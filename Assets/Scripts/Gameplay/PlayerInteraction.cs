@@ -34,8 +34,8 @@ namespace Gameplay
         public void Initialize()
         {
             _camera = Camera.main;
-            Debug.Log("PlayerInteraction initialized.");
-            Debug.Log(_camera ==null);
+            //Debug.Log("PlayerInteraction initialized.");
+            //Debug.Log(_camera ==null);
         }
 
         public void Tick()
