@@ -2042,9 +2042,6 @@ MonoBehaviour:
   dialogState: {fileID: 1947070243}
   slider: {fileID: 1076086720}
   uiImageRect: {fileID: 1076086719}
-  minPulseDuration: 0.2
-  maxPulseDuration: 1.2
-  pulseScaleMultiplier: 4
 --- !u!1 &774836848
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,7 +2475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1994526009271686761, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
       propertyPath: Tutor
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1994526009271686761, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
       propertyPath: devMod

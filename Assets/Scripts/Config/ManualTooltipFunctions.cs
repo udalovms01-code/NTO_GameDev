@@ -22,10 +22,9 @@ namespace Config
             G.main.invincibleMod = EditorPrefs.GetBool("InvincibleMode");
         }
 
-        public static void OnRestartClck()
+        public static void Abcdef()
         {
-            if (G.main == null) return;
-            G.main.ChangeScene(-1);
+            
         }
     }
 }
