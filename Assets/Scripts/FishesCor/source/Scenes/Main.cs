@@ -98,6 +98,7 @@ public class Main : MonoBehaviour
     [Header("testing stuff")] 
     public bool devMod = false;
     public bool Testing = false;
+    public bool invincibleMod = false;
     public bool Strategies = false;
     public bool SmartDraw = true;
     public bool Tutor = false;
@@ -269,9 +270,12 @@ public class Main : MonoBehaviour
         
         if (!pauseHunger)
         {
-            _gameStateService.SetHunger(_gameStateService.Hunger -
-                                        (Time.deltaTime / 100 * fishCorConfig.hungerSpeed));
-            timeLeft -= Time.deltaTime;
+            if (!invincibleMod)
+            {
+                _gameStateService.SetHunger(_gameStateService.Hunger -
+                                            (Time.deltaTime / 100 * fishCorConfig.hungerSpeed));
+                timeLeft -= Time.deltaTime;
+            }
         }
     }
 
@@ -779,6 +783,15 @@ public class Main : MonoBehaviour
         fishes.Remove(interactiveObject);
         fishCount--;
     }*/
+    public void Logg(string s)
+    {
+        Debug.Log(s);
+    }
+
+    public void RestartPlayerPrefs()
+    {
+        PlayerPrefs.SetInt("start_tutorial", 0);
+    }
 }
 
 [System.Serializable]

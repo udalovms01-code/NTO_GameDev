@@ -1,0 +1,507 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8954906cac5624daa0c6acdd895593, type: 3}
+  m_Name: Manul Toolbar
+  m_EditorClassIdentifier: 
+  settingsExpanded: 0
+  currentVersion: 1.4.0
+  settings:
+    leftBeginOffset: 10
+    rightBeginOffset: -5
+    betweenOffset: 5
+    defaultButtonStyle: 18
+    defaultToggleStyle: 37
+    defaultLabelStyle: 13
+    defaultPopupStyle: 29
+    defaultNumberStyle: 33
+    defaultTextStyle: 33
+    showConsoleMessages: 1
+    disableToolbar: 0
+    mutedColor: {r: 1, g: 1, b: 1, a: 0.6}
+    overrideLeftType: 0
+    SOForLeftSide: {fileID: 0}
+    SOSetForLeftSide: {fileID: 0}
+    overrideRightType: 0
+    SOForRightSide: {fileID: 0}
+    SOSetForRightSide: {fileID: 0}
+  leftSide:
+  - isActive: 1
+    isExpanded: 1
+    type: 3
+    labelType: 0
+    labelText: 'Scenes:'
+    labelIcon: {fileID: 0}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 0
+    editorStyle: 0
+    styleName: 
+    skin: {fileID: 0}
+    useWidth: 0
+    width: 46
+    useColors: 0
+    globalColor: {r: 0, g: 0, b: 0, a: 0}
+    contentColor: {r: 0, g: 0, b: 0, a: 0}
+    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    useTooltip: 0
+    linesCount: 0
+    labelTooltip: 
+    togglePrefName: Resources
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 1
+      buttonObject: {fileID: 102900000, guid: 01ac5e3725f0241438f3b7311544713c, type: 3}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: 
+      methodName: 
+      listActionName: 
+      isPartOfList: 0
+    showNameField: 0
+    intNamesList:
+    - itemName: a
+      itemIndex: 0
+    - itemName: b
+      itemIndex: 0
+    useOnChangeActions: 1
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 2
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0
+  - isActive: 1
+    isExpanded: 0
+    type: 1
+    labelType: 0
+    labelText: MainMenu
+    labelIcon: {fileID: 0}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 0
+    editorStyle: 0
+    styleName: 
+    skin: {fileID: 11400000, guid: 47977708799c0594ca557ad8ff213791, type: 2}
+    useWidth: 0
+    width: 36.2
+    useColors: 1
+    globalColor: {r: 1, g: 1, b: 1, a: 1}
+    contentColor: {r: 1, g: 1, b: 1, a: 1}
+    backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    useTooltip: 0
+    linesCount: 0
+    labelTooltip: tttt
+    togglePrefName: 
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 1
+      buttonObject: {fileID: 102900000, guid: 6880e09e666d4044c91b365d1cbc0223, type: 3}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: 
+      methodName: 
+      listActionName: 
+      isPartOfList: 0
+    showNameField: 0
+    intNamesList: []
+    useOnChangeActions: 0
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 0
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0
+  - isActive: 1
+    isExpanded: 0
+    type: 1
+    labelType: 0
+    labelText: Game
+    labelIcon: {fileID: 0}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 0
+    editorStyle: 0
+    styleName: 
+    skin: {fileID: 0}
+    useWidth: 0
+    width: 0
+    useColors: 0
+    globalColor: {r: 0, g: 0, b: 0, a: 0}
+    contentColor: {r: 0, g: 0, b: 0, a: 0}
+    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    useTooltip: 0
+    linesCount: 0
+    labelTooltip: 
+    togglePrefName: Resources
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 1
+      buttonObject: {fileID: 102900000, guid: 01ac5e3725f0241438f3b7311544713c, type: 3}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: 
+      methodName: 
+      listActionName: 
+      isPartOfList: 0
+    showNameField: 0
+    intNamesList:
+    - itemName: a
+      itemIndex: 0
+    - itemName: b
+      itemIndex: 0
+    useOnChangeActions: 1
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 2
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0
+  - isActive: 1
+    isExpanded: 0
+    type: 1
+    labelType: 0
+    labelText: CorTest
+    labelIcon: {fileID: 2800000, guid: ec10434446d24da4d990e0eb08fcd0e6, type: 3}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 0
+    editorStyle: 2
+    styleName: 
+    skin: {fileID: 0}
+    useWidth: 0
+    width: 0
+    useColors: 0
+    globalColor: {r: 0, g: 0, b: 0, a: 0}
+    contentColor: {r: 0, g: 0, b: 0, a: 0}
+    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    useTooltip: 0
+    linesCount: 0
+    labelTooltip: 
+    togglePrefName: Resources
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 1
+      buttonObject: {fileID: 102900000, guid: 12a1136ac073436448fdb71d007b3f18, type: 3}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: 
+      methodName: 
+      listActionName: 
+      isPartOfList: 0
+    showNameField: 0
+    intNamesList:
+    - itemName: a
+      itemIndex: 0
+    - itemName: b
+      itemIndex: 0
+    useOnChangeActions: 1
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 2
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0
+  rightSide:
+  - isActive: 1
+    isExpanded: 0
+    type: 1
+    labelType: 0
+    labelText: Toolbar
+    labelIcon: {fileID: 0}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 0
+    editorStyle: 0
+    styleName: Style Name
+    skin: {fileID: 0}
+    useWidth: 0
+    width: 25
+    useColors: 0
+    globalColor: {r: 1, g: 0, b: 0, a: 1}
+    contentColor: {r: 0.03184688, g: 1, b: 0, a: 1}
+    backgroundColor: {r: 0, g: 0.041553974, b: 1, a: 1}
+    useTooltip: 1
+    linesCount: 2
+    labelTooltip: Opens the Manul Toolbar Settings asset in which you can add, remove,
+      and modify your toolbar buttons.
+    togglePrefName: 
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 5
+      buttonObject: {fileID: 11400000, guid: 2fac116c5edda2d4c951022af02505a7, type: 2}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: Manul.Toolbar.ManulToolbar
+      methodName: FindManulToolbar
+      listActionName: 
+      isPartOfList: 0
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 4
+      buttonObject: {fileID: 11400000}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: 
+      methodName: 
+      listActionName: 
+      isPartOfList: 0
+    showNameField: 0
+    intNamesList: []
+    useOnChangeActions: 0
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 0
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0
+  - isActive: 1
+    isExpanded: 0
+    type: 1
+    labelType: 2
+    labelText: FishBoard
+    labelIcon: {fileID: 2800000, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 0
+    editorStyle: 0
+    styleName: Style Name
+    skin: {fileID: 11400000, guid: 47977708799c0594ca557ad8ff213791, type: 2}
+    useWidth: 1
+    width: 90
+    useColors: 1
+    globalColor: {r: 1, g: 1, b: 1, a: 1}
+    contentColor: {r: 0.49803925, g: 0.83921576, b: 0.98823535, a: 1}
+    backgroundColor: {r: 0.96981126, g: 0.96981126, b: 0.96981126, a: 1}
+    useTooltip: 0
+    linesCount: 2
+    labelTooltip: Opens the Manul Toolbar Settings asset in which you can add, remove,
+      and modify your toolbar buttons.
+    togglePrefName: 
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 1
+      buttonObject: {fileID: 1889776480958695148, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: Manul.Toolbar.ManulToolbar
+      methodName: FindManulToolbar
+      listActionName: 
+      isPartOfList: 0
+    showNameField: 0
+    intNamesList: []
+    useOnChangeActions: 0
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 0
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0
+  - isActive: 1
+    isExpanded: 0
+    type: 2
+    labelType: 0
+    labelText: DevMode
+    labelIcon: {fileID: 2800000, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 1
+    editorStyle: 34
+    styleName: Style Name
+    skin: {fileID: 11400000, guid: 47977708799c0594ca557ad8ff213791, type: 2}
+    useWidth: 0
+    width: 90
+    useColors: 0
+    globalColor: {r: 1, g: 1, b: 1, a: 1}
+    contentColor: {r: 0.49803925, g: 0.83921576, b: 0.98823535, a: 1}
+    backgroundColor: {r: 0.96981126, g: 0.96981126, b: 0.96981126, a: 1}
+    useTooltip: 0
+    linesCount: 2
+    labelTooltip: Opens the Manul Toolbar Settings asset in which you can add, remove,
+      and modify your toolbar buttons.
+    togglePrefName: DevMode
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 5
+      buttonObject: {fileID: 1889776480958695148, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: Config.ManualTooltipFunctions
+      methodName: OnDevModeToggleChanged
+      listActionName: 
+      isPartOfList: 2
+    showNameField: 0
+    intNamesList: []
+    useOnChangeActions: 1
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 0
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0
+  - isActive: 1
+    isExpanded: 1
+    type: 2
+    labelType: 0
+    labelText: StopHunger
+    labelIcon: {fileID: 2800000, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 1
+    editorStyle: 34
+    styleName: Style Name
+    skin: {fileID: 11400000, guid: 47977708799c0594ca557ad8ff213791, type: 2}
+    useWidth: 0
+    width: 90
+    useColors: 1
+    globalColor: {r: 1, g: 1, b: 1, a: 1}
+    contentColor: {r: 1, g: 1, b: 1, a: 1}
+    backgroundColor: {r: 0.96981126, g: 0.96981126, b: 0.96981126, a: 1}
+    useTooltip: 0
+    linesCount: 2
+    labelTooltip: Opens the Manul Toolbar Settings asset in which you can add, remove,
+      and modify your toolbar buttons.
+    togglePrefName: InvincibleMode
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 5
+      buttonObject: {fileID: 1889776480958695148, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: Config.ManualTooltipFunctions
+      methodName: OnInvincibleModeToggleChanged
+      listActionName: 
+      isPartOfList: 2
+    showNameField: 0
+    intNamesList: []
+    useOnChangeActions: 1
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 0
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0
+  - isActive: 1
+    isExpanded: 1
+    type: 1
+    labelType: 0
+    labelText: ResetPlayerPrefs
+    labelIcon: {fileID: 2800000, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    labelIconUsePath: 0
+    labelIconPath: 
+    useStyle: 0
+    editorStyle: 34
+    styleName: Style Name
+    skin: {fileID: 11400000, guid: 47977708799c0594ca557ad8ff213791, type: 2}
+    useWidth: 0
+    width: 90
+    useColors: 0
+    globalColor: {r: 1, g: 1, b: 1, a: 1}
+    contentColor: {r: 1, g: 1, b: 1, a: 1}
+    backgroundColor: {r: 0.96981126, g: 0.96981126, b: 0.96981126, a: 1}
+    useTooltip: 0
+    linesCount: 2
+    labelTooltip: Opens the Manul Toolbar Settings asset in which you can add, remove,
+      and modify your toolbar buttons.
+    togglePrefName: InvincibleMode
+    actions:
+    - mouseButton: 0
+      keyboardButton: 0
+      buttonType: 5
+      buttonObject: {fileID: 1889776480958695148, guid: 2eaa44b35a404b941bf54f8c1d979cec, type: 3}
+      buttonEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      objectName: 
+      className: Config.ManualTooltipFunctions
+      methodName: OnRestartPlayerPrefs
+      listActionName: 
+      isPartOfList: 0
+    showNameField: 0
+    intNamesList: []
+    useOnChangeActions: 1
+    numberType: 0
+    sliderIntMin: 0
+    sliderIntMax: 0
+    sliderFloatMin: 0
+    sliderFloatMax: 0
+    otherType: 0
+    defaultSliderValue: 0
+    defaultSliderValueInt: 0
+    useOtherLabel: 0
+    useResetButton: 0
+    currentFrameRate: 0

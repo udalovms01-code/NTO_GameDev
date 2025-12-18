@@ -18,7 +18,6 @@ public class Level0 : CMSEntity
 
     IEnumerator Script()
     {
-        Debug.Log("hello");
         CMSEntity entity = CMS.Get<CMSEntity>(G.main.levelEntity.Get<TagTutorialLevel>().set);
         G.hud.DisableHud();
         
