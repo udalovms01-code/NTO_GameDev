@@ -11,14 +11,6 @@ namespace Gameplay
         
         public static EndScreen Instance { get; private set; }
         
-        private DeathControl _deathControl;
-        
-        [Inject]
-        private void Construct(DeathControl deathControl)
-        {
-            _deathControl = deathControl;
-        }
-        
         private void Awake()
         {
             Instance = this;
@@ -33,7 +25,7 @@ namespace Gameplay
         
         public void LoadMenu()
         {
-            _deathControl.StartDeath();
+            DeathControl.Instance.StartDeath();
         }
     }
 }
