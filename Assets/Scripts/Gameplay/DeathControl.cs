@@ -20,7 +20,7 @@ namespace Gameplay
             {
                 if (v - 0.001f < 0)
                 {
-                    EndScreen.Instance.ShowEndScreen(false);
+                    StartDeath();
                 }
             };
         }

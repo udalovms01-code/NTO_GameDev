@@ -1,11 +1,10 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
 namespace Gameplay
 {
-    public class CameraSwitch : IInitializable, IDisposable
+    public class CameraSwitch : IInitializable
     {
         private Transform _camera3d; 
         private Transform _camera2d;
@@ -59,12 +58,6 @@ namespace Gameplay
             ChangeCamera2d(false);
             ChangeCamera3d(true);
             _camera2d.gameObject.SetActive(false);
-        }
-
-        public void Dispose()
-        {
-            PlayerMovement.Instance.enabled = false;
-            MouseLook.Instance.SetActive(false);
         }
     }
 }

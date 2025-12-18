@@ -49,7 +49,11 @@ namespace Gameplay
             if (CurrentDay == day) return;
             if (CurrentDay == 8)
             {
-                EndScreen.Instance.ShowEndScreen(true);
+                FadeController.Instance.FadeIn(() =>
+                {
+                    FadeController.Instance.FadeOut();
+                    SceneManager.LoadScene(0);
+                });
                 return;
             }
             
