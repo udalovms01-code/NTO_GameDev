@@ -792,6 +792,14 @@ public class Main : MonoBehaviour
     {
         PlayerPrefs.SetInt("start_tutorial", 0);
     }
+    public void ChangeScene(int sceneNum)
+    {
+        SceneChange?.Invoke(); 
+        if (sceneNum == -1)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        else
+            SceneManager.LoadScene(sceneNum);
+    }
 }
 
 [System.Serializable]
