@@ -30,6 +30,7 @@ namespace Gameplay
             FadeController.Instance.FadeIn(() =>
             {
                 FadeController.Instance.FadeOut();
+                EndScreen.Instance.ShowEndScreen(false);
                 SceneManager.LoadScene(0);
             });
         }
