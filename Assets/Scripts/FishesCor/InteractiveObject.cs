@@ -48,7 +48,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
         draggable = GetComponent<DraggableSmoothDamp>();
         originScale = transform.localScale;
 
-        G.main.SceneChange += KillTweens;
+        G.main.OnSceneChange += KillTweens;
     }
 
     public void SetState(FishState fishState)
@@ -242,7 +242,7 @@ public class InteractiveObject : MonoBehaviour, IClickable
 
     private void OnDisable()
     {
-        G.main.SceneChange -= KillTweens;
+        G.main.OnSceneChange -= KillTweens;
     }
 
     public void MakeVirused()

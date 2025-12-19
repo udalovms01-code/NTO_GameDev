@@ -48,7 +48,7 @@ public class Main : MonoBehaviour
     public Interactor interactor;
 
     public UnityAction<InteractiveObject> OnReleaseDrag;
-    public UnityAction SceneChange; 
+    public UnityAction OnSceneChange; 
     public UnityAction OnGameEnd;
     
     
@@ -247,7 +247,7 @@ public class Main : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneChange?.Invoke();
+                OnSceneChange?.Invoke();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
 
@@ -418,7 +418,7 @@ public class Main : MonoBehaviour
 
             if (i == 999)
             {
-                SceneChange?.Invoke();
+                OnSceneChange?.Invoke();
                 SceneManager.LoadScene(0);
             }
 
@@ -794,7 +794,7 @@ public class Main : MonoBehaviour
     }
     public void ChangeScene(int sceneNum)
     {
-        SceneChange?.Invoke(); 
+        OnSceneChange?.Invoke(); 
         if (sceneNum == -1)
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         else

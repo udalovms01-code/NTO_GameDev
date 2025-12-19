@@ -137,5 +137,18 @@ namespace UI.Gameplay
                     break;
             }
         }
+
+        private void OnDisable()
+        {
+            if (_gameStateService != null)
+            {
+                _gameStateService.OnStateChanged -= SetState;
+                _gameStateService.OnHungerChanged -= ChangeSliderState;
+                _gameStateService.OnHungerChangedByFishvalue -= ChangeSliderByFishvalue;
+            }
+
+            KillPulseTween();
+            uiImageRect.DOKill();
+        }
     }
 }

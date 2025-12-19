@@ -39,14 +39,14 @@ public class FishSpriteAnimator : MonoBehaviour
         view.OnActivate += Activate;
         view.OnDestroy += KillAll;
         
-        G.main.SceneChange += KillAll;
+        G.main.OnSceneChange += KillAll;
 
         SetIdleAnim();
     }
 
     private void OnDisable()
     {
-        G.main.SceneChange -= KillAll;
+        G.main.OnSceneChange -= KillAll;
     }
 
     public void KillAll()

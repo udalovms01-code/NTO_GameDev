@@ -62,5 +62,10 @@ namespace Gameplay
         {
             return fadeImage.DOFade(0f, duration).SetEase(Ease.Linear).OnComplete(onComplete.Invoke);
         }
+
+        private void OnDisable()
+        {
+            fadeImage.DOKill();
+        }
     }
 }

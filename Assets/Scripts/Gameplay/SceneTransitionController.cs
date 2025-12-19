@@ -25,7 +25,7 @@ namespace Gameplay
                 return;
             }
 
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             Instance = this;
             fadeController = GetComponent<FadeController>();
             initialVolume = AudioListener.volume;
@@ -75,5 +75,6 @@ namespace Gameplay
 
             isTransitionActive = false;
         }
+        
     }
 }

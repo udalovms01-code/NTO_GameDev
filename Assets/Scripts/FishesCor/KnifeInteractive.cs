@@ -16,7 +16,7 @@ public class KnifeInteractive : MonoBehaviour
     void Start()
     {
         originScale = transform.localScale;
-        G.main.SceneChange += () => { transform.DOKill();};
+        G.main.OnSceneChange += () => { transform.DOKill();};
     }
 
     public void Punch()

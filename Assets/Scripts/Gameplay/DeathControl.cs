@@ -29,6 +29,10 @@ namespace Gameplay
         {
             FadeController.Instance.FadeIn(() =>
             {
+                if (G.main != null)
+                {
+                    G.main.OnSceneChange?.Invoke();
+                }
                 FadeController.Instance.FadeOut();
                 EndScreen.Instance.ShowEndScreen(false);
                 SceneManager.LoadScene(0);
