@@ -15,28 +15,38 @@ public class UIPauseMenu : MonoBehaviour
             Show();
     }
 
+    public void ResetRunBtn()
+    {
+        Time.timeScale = 1;
+        G.main.ChangeScene(0);
+    }
+
     void Show()
     {
-        sfx.value = G.save.volSfx;
-        music.value = G.save.volMusic;
+        //sfx.value = G.save.volSfx;
+        //music.value = G.save.volMusic;
         
         G.IsPaused = true;
         gameObject.SetActive(true);
+        Time.timeScale = 0;
+        Debug.Log(1);
     }
 
     void Update()
     {
-        G.save.volSfx = sfx.value;
-        G.save.volMusic = music.value;
+        //G.save.volSfx = sfx.value;
+        //G.save.volMusic = music.value;
         
-        G.audio.SetVolume(AudioType.SFX, G.save.volSfx);
-        G.audio.SetVolume(AudioType.Music, G.save.volMusic);
-        G.audio.SetVolume(AudioType.Ambient, G.save.volMusic);
+        //G.audio.SetVolume(AudioType.SFX, G.save.volSfx);
+        //G.audio.SetVolume(AudioType.Music, G.save.volMusic);
+        //G.audio.SetVolume(AudioType.Ambient, G.save.volMusic);
     }
 
     void Hide()
     {
-        G.IsPaused = true;
+        G.IsPaused = false;
         gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
+    
 }

@@ -63,7 +63,7 @@ namespace Gameplay
 
         public void Dispose()
         {
-            PlayerMovement.Instance.enabled = false;
+            //PlayerMovement.Instance.enabled = false;
             MouseLook.Instance.SetActive(false);
         }
     }

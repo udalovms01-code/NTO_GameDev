@@ -156,6 +156,7 @@ public class Main : MonoBehaviour
 
     void Start()
     {
+        G.IsPaused = false;
         if (Testing)
             StartCoroutine(TurnCoroutine());
         else
